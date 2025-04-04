@@ -1,0 +1,34 @@
+server:
+  port: 8080
+  forward-headers-strategy: framework
+  servlet:
+    jsp:
+      init-parameters:
+        development: true   # JSP 파일 변경 시 서버 재시작 없이 반영
+spring:
+  application:
+    name: lmanager
+  jpa:
+    show-sql: false
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        format_sql: false
+  profiles:
+    active: local
+  main:
+    banner-mode: OFF
+
+logging:
+  file:
+    name: spring
+    path: /app/logs
+  pattern:
+    console: "[%d{yyyy-MM-dd HH:mm:ss.SSS}] [%-5level] [%logger{36}] - %msg%n"
+    file: "[%d{yyyy-MM-dd HH:mm:ss.SSS}] [%-5level] [%logger{36}] - %msg%n"
+  level:
+    org.hibernate: ERROR
+    org.hibernate.engine.jdbc: ERROR
+    org.springframework.jdbc: ERROR
+    org.springframework.orm.jpa: ERROR
