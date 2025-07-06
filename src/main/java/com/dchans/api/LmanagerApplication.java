@@ -1,4 +1,4 @@
-package com.dchans.lmanager;
+package com.dchans.api;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
