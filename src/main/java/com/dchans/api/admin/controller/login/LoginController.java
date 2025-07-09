@@ -1,6 +1,6 @@
 package com.dchans.api.admin.controller.login;
 
-import com.dchans.api.admin.dto.common.ApiResponse;
+import com.dchans.api.admin.dto.common.ApiResponseDto;
 import com.dchans.api.admin.dto.login.LoginDto;
 import com.dchans.api.admin.service.login.LoginService;
 import org.slf4j.Logger;
@@ -24,13 +24,13 @@ public class LoginController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<ApiResponse<LoginDto.LoginResponseDto>> login(@RequestBody LoginDto loginDto) {
+    public ResponseEntity<ApiResponseDto<LoginDto.LoginResponseDto>> login(@RequestBody LoginDto loginDto) {
         try {
             //return ResponseEntity.status(HttpStatus.OK).body(ApiResponse.success(loginService.selectManagerOne(loginDto)));
-            return ResponseEntity.status(HttpStatus.OK).body(ApiResponse.error(200, "성공"));
+            return ResponseEntity.status(HttpStatus.OK).body(ApiResponseDto.error(200, "성공"));
         } catch (Exception e) {
-            Integer code = 500;
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ApiResponse.error(code, e.getMessage()));
+            int code = 500;
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ApiResponseDto.error(code, e.getMessage()));
         }
     }
 

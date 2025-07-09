@@ -1,6 +1,6 @@
 package com.dchans.api.admin.interceptor;
 
-import com.dchans.api.admin.dto.common.ApiResponse;
+import com.dchans.api.admin.dto.common.ApiResponseDto;
 import com.dchans.api.common.JwtTokenService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpServletRequest;
@@ -68,12 +68,12 @@ public class AdminInterceptor implements HandlerInterceptor {
 
             // 토큰 없음
             if (token == null || token.trim().isEmpty()) {
-                sendErrorResponse(response, 401,  "Authorization 헤더가 필요합니다.");
+                sendErrorResponse(response, 401, "Authorization 헤더가 필요합니다.");
                 return false;
             }
             // Bearer 형식 아님
             if (!token.startsWith("Bearer ")) {
-                sendErrorResponse(response, 401,  "Bearer 토큰 형식이어야 합니다.");
+                sendErrorResponse(response, 401, "Bearer 토큰 형식이어야 합니다.");
                 return false;
             }
             if (!jwtTokenService.validateToken(token)) {
@@ -92,7 +92,7 @@ public class AdminInterceptor implements HandlerInterceptor {
     private void sendErrorResponse(HttpServletResponse response, int code, String message) throws IOException {
         response.setContentType("application/json;charset=UTF-8");
 
-        ApiResponse<Void> errorResponse = ApiResponse.error(code, message);
+        ApiResponseDto<Void> errorResponse = ApiResponseDto.error(code, message);
         String jsonResponse = objectMapper.writeValueAsString(errorResponse);
 
         response.getWriter().write(jsonResponse);

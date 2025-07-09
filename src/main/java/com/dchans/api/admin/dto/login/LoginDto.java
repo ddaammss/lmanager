@@ -1,7 +1,5 @@
 package com.dchans.api.admin.dto.login;
 
-import lombok.Builder;
-
 public record LoginDto(
         String name,
         String password,
