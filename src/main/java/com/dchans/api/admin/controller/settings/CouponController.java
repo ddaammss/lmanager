@@ -3,7 +3,6 @@ package com.dchans.api.admin.controller.settings;
 import com.dchans.api.admin.dto.common.ApiResponseDto;
 import com.dchans.api.admin.dto.common.PageApiResponseDto;
 import com.dchans.api.admin.dto.common.PageResponse;
-import com.dchans.api.admin.dto.jwt.TokenResponseDto;
 import com.dchans.api.admin.dto.settings.coupon.CouponDto;
 import com.dchans.api.admin.service.settings.coupon.CouponService;
 import org.slf4j.Logger;
@@ -32,9 +31,9 @@ public class CouponController {
         return ResponseEntity.ok(PageApiResponseDto.success(pageResponse));
     }
 
-    @PostMapping("/regist")
-    public ResponseEntity<ApiResponseDto<Integer>> insertCoupon(@RequestBody CouponDto.CouponRequestDto requestDto) {
-        return ResponseEntity.status(HttpStatus.OK).body(ApiResponseDto.success(couponService.insertCoupon(requestDto)));
+    @PostMapping("/upsert")
+    public ResponseEntity<ApiResponseDto<Integer>> upsertCoupon(@RequestBody CouponDto.CouponCreateDto requestDto) {
+        return ResponseEntity.status(HttpStatus.OK).body(ApiResponseDto.success(couponService.upsertCoupon(requestDto)));
     }
 
 //

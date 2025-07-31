@@ -36,7 +36,7 @@ public class CouponServiceImpl implements CouponService {
     }
 
     @Override
-    public Integer insertCoupon(CouponDto.CouponRequestDto requestDto) {
-        return couponDao.selectCouponCount(NAMESPACE + "insertCoupon", requestDto);
+    public Integer upsertCoupon(CouponDto.CouponCreateDto requestDto) {
+        return couponDao.upsertCoupon(NAMESPACE + "upsertCoupon", requestDto);
     }
 }

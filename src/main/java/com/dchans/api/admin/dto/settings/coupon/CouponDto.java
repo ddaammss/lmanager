@@ -103,4 +103,20 @@ public record CouponDto(
         private Long issueCount;      // 발급 건수
         private BigDecimal totalDiscountAmount;  // 총 할인 금액
     }
+
+    @Getter
+    @Setter
+    public static class CouponCreateDto {
+        private String category;
+        private String couponCode;
+        private String couponName;
+        private String couponType;
+        private String discountValue;
+        private String maxDiscountAmount;
+        private String minOrderAmount;
+        private String useLimitDays;
+        private String startDate;
+        private String endDate;
+        private String status;
+    }
 }

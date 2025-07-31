@@ -38,4 +38,49 @@
         </if>
     </select>
 
+    <insert id="upsertCoupon" parameterType="com.dchans.api.admin.dto.settings.coupon.CouponDto$CouponCreateDto" >
+        insert into coupon_master (
+            category,
+            coupon_code,
+            coupon_name,
+            coupon_type,
+            discount_value,
+            max_discount_amount,
+            min_order_amount,
+            use_limit_days,
+            start_date,
+            end_date,
+            status
+        )values(
+            #{category},
+            <choose>
+            <when test="couponCode != null and couponCode != ''">
+                #{couponCode}
+            </when>
+            <otherwise>
+                concat('CPN',date_format(current_timestamp, '%Y%m%d'),lpad((select coalesce(max(id), 0) + 1 from coupon_master), 4, '0'))
+            </otherwise>
+        </choose>,
+            #{couponName},
+            #{couponType},
+            #{discountValue},
+            #{maxDiscountAmount},
+            #{minOrderAmount},
+            #{useLimitDays},
+            #{startDate},
+            #{endDate},
+            #{status}
+        )
+        on duplicate key update
+        category = #{category},
+        coupon_name = #{couponName},
+        coupon_type = #{couponType},
+        discount_value = #{discountValue},
+        max_discount_amount = #{maxDiscountAmount},
+        min_order_amount = #{minOrderAmount},
+        use_limit_days = #{useLimitDays},
+        start_date = #{startDate},
+        end_date = #{endDate},
+        status = #{status}
+    </insert>
 </mapper>
