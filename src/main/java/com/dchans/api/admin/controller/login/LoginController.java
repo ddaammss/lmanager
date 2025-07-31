@@ -1,6 +1,7 @@
 package com.dchans.api.admin.controller.login;
 
 import com.dchans.api.admin.dto.common.ApiResponseDto;
+import com.dchans.api.admin.dto.jwt.TokenResponseDto;
 import com.dchans.api.admin.dto.login.LoginDto;
 import com.dchans.api.admin.service.login.LoginService;
 import org.slf4j.Logger;
@@ -13,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/admin/api/v1")
+@RequestMapping("/admin/api")
 public class LoginController {
 
     private final LoginService loginService;
@@ -24,10 +25,9 @@ public class LoginController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<ApiResponseDto<LoginDto.LoginResponseDto>> login(@RequestBody LoginDto loginDto) {
+    public ResponseEntity<ApiResponseDto<TokenResponseDto>> login(@RequestBody LoginDto.LoginRequestDto requestDto) {
         try {
-            //return ResponseEntity.status(HttpStatus.OK).body(ApiResponse.success(loginService.selectManagerOne(loginDto)));
-            return ResponseEntity.status(HttpStatus.OK).body(ApiResponseDto.error(200, "성공"));
+            return ResponseEntity.status(HttpStatus.OK).body(ApiResponseDto.success(loginService.selectManagerOne(requestDto)));
         } catch (Exception e) {
             int code = 500;
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ApiResponseDto.error(code, e.getMessage()));

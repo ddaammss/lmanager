@@ -18,7 +18,8 @@ public class WebConfig implements WebMvcConfigurer {
         // 관리자 인터셉터 (관리자 페이지만)
         registry.addInterceptor(adminInterceptor)
                 .addPathPatterns("/admin/api/v1/**")
-                .excludePathPatterns("/admin/api/v1/login");
+                .excludePathPatterns("/admin/api/v1/login","/admin/api/settings/coupon/list");
+
 
         // API 인터셉터 (Flutter 앱 API만)
         /*registry.addInterceptor(apiAuthInterceptor)
