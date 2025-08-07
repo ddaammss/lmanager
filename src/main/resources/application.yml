@@ -41,7 +41,7 @@ spring:
 jwt:
   secret: mySecretKey123!@#SecureTokenForJWTAuthentication2024
   access-token:
-    validity: 1800000  # 30분 (30 * 60 * 1000)
+    validity: 7200000  # 30분 (30 * 60 * 1000)
   refresh-token:
     validity: 604800000  # 7일 (7 * 24 * 60 * 60 * 1000)
 
@@ -50,3 +50,7 @@ mybatis:
   type-aliases-package: com.dchans.api.admin.dto
   configuration:
     map-underscore-to-camel-case: true
+
+logging:
+  level:
+    org.springframework: INFO

@@ -15,6 +15,6 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<PageApiResponseDto<Object>> handleGeneral(Exception e) {
-        return ResponseEntity.status(500).body(PageApiResponseDto.error(500, e.getMessage()));
+        return ResponseEntity.status(500).body(PageApiResponseDto.error(500, "Internal Server Error"));
     }
 }
