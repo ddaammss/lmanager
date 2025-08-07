@@ -6,5 +6,7 @@ import com.dchans.api.admin.dto.settings.coupon.CouponDto;
 public interface CouponService {
     PageResponse<CouponDto.CouponResponseDto> selectCouponList(CouponDto.CouponRequestDto requestDto);
 
+    CouponDto.CouponResponseDto selectCouponDetail(CouponDto.CouponRequestDto requestDto);
+
     Integer upsertCoupon(CouponDto.CouponCreateDto requestDto);
 }

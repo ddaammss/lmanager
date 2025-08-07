@@ -95,8 +95,8 @@ public record CouponDto(
         private String memo;
         private Long createdBy;
         private Long updatedBy;
-        private LocalDateTime createdAt;
-        private LocalDateTime updatedAt;
+        private String createdAt;
+        private String updatedAt;
 
         // 통계 정보 (선택사항)
         private Long useCount;        // 사용 건수

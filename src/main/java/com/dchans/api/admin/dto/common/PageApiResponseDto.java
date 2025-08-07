@@ -10,17 +10,17 @@ public record PageApiResponseDto<T>(
         String message,
         List<T> data,           // 실제 데이터 목록
         int currentPage,        // 페이징 정보들
-        int totalPages,
-        long totalItems,
+        int totalPage,
+        long totalCount,
         int pageSize,
         LocalDateTime timestamp
 ) {
     // 페이징 성공 응답
     public static <T> PageApiResponseDto<T> success(
-            List<T> data, int currentPage, int totalPages, long totalItems, int pageSize) {
+            List<T> data, int currentPage, int totalPage, long totalCount, int pageSize) {
         return new PageApiResponseDto<>(
                 200, true, "Success",
-                data, currentPage, totalPages, totalItems, pageSize,
+                data, currentPage, totalPage, totalCount, pageSize,
                 LocalDateTime.now()
         );
     }
@@ -31,8 +31,8 @@ public record PageApiResponseDto<T>(
                 200, true, "Success",
                 pageResponse.getData(),
                 pageResponse.getCurrentPage(),
-                pageResponse.getTotalPages(),
-                pageResponse.getTotalItems(),
+                pageResponse.getTotalPage(),
+                pageResponse.getTotalCount(),
                 pageResponse.getPageSize(),
                 LocalDateTime.now()
         );

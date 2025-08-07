@@ -27,13 +27,19 @@ public class CouponController {
 
     @PostMapping("/list")
     public ResponseEntity<PageApiResponseDto<CouponDto.CouponResponseDto>> selectCouponList(@RequestBody CouponDto.CouponRequestDto requestDto) {
-        PageResponse<CouponDto.CouponResponseDto> pageResponse = couponService.selectCouponList(requestDto);
-        return ResponseEntity.ok(PageApiResponseDto.success(pageResponse));
+        PageResponse<CouponDto.CouponResponseDto> responseDto = couponService.selectCouponList(requestDto);
+        return ResponseEntity.ok(PageApiResponseDto.success(responseDto));
+    }
+
+    @PostMapping("/detail")
+    public ResponseEntity<ApiResponseDto<CouponDto.CouponResponseDto>> selectCouponDetail(@RequestBody CouponDto.CouponRequestDto requestDto) {
+        CouponDto.CouponResponseDto responseDto = couponService.selectCouponDetail(requestDto);
+        return ResponseEntity.ok(ApiResponseDto.success(responseDto));
     }
 
     @PostMapping("/upsert")
     public ResponseEntity<ApiResponseDto<Integer>> upsertCoupon(@RequestBody CouponDto.CouponCreateDto requestDto) {
-        return ResponseEntity.status(HttpStatus.OK).body(ApiResponseDto.success(couponService.upsertCoupon(requestDto)));
+        return ResponseEntity.ok(ApiResponseDto.success(couponService.upsertCoupon(requestDto)));
     }
 
 //

@@ -3,19 +3,19 @@
 <mapper namespace="com.settings.coupon">
 
     <select id="selectCouponList" parameterType="com.dchans.api.admin.dto.settings.coupon.CouponDto$CouponRequestDto" resultType="com.dchans.api.admin.dto.settings.coupon.CouponDto$CouponResponseDto">
-        select * from coupon_master
+        select id, coupon_code, coupon_name, category, coupon_type, start_date, end_date, status, to_char(created_at,'YYYY-MM-DD') as createdAt from coupon_master
         where 1 = 1
         <if test="startDate != null and startDate != ''">
-            AND start_date >= #{startDate}
+            and start_date >= #{startDate}
         </if>
         <if test="endDate != null and endDate != ''">
-            AND end_date <![CDATA[<=]]> #{endDate}
+            and end_date <![CDATA[<=]]> #{endDate}
         </if>
         <if test="category != null and category != ''">
-            AND category = #{category}
+            and category = #{category}
         </if>
         <if test="status != null and status != ''">
-            AND status = #{status}
+            and status = #{status}
         </if>
         order by created_at desc
         limit #{pageSize} offset #{offset}
@@ -25,17 +25,23 @@
         select count(*) from coupon_master
         where 1 = 1
         <if test="startDate != null and startDate != ''">
-            AND start_date >= #{startDate}
+            and start_date >= #{startDate}
         </if>
         <if test="endDate != null and endDate != ''">
-            AND end_date <![CDATA[<=]]> #{endDate}
+            and end_date <![CDATA[<=]]> #{endDate}
         </if>
         <if test="category != null and category != ''">
-            AND category = #{category}
+            and category = #{category}
         </if>
         <if test="status != null and status != ''">
-            AND status = #{status}
+            and status = #{status}
         </if>
+    </select>
+
+
+    <select id="selectCouponDetail" parameterType="com.dchans.api.admin.dto.settings.coupon.CouponDto$CouponRequestDto" resultType="com.dchans.api.admin.dto.settings.coupon.CouponDto$CouponResponseDto">
+        select id, coupon_code, coupon_name, category, coupon_type, start_date, end_date, status, to_char(created_at,'YYYY-MM-DD') as createdAt from coupon_master
+        where coupon_code = #{couponCode}
     </select>
 
     <insert id="upsertCoupon" parameterType="com.dchans.api.admin.dto.settings.coupon.CouponDto$CouponCreateDto" >

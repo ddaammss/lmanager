@@ -21,6 +21,10 @@ public class CouponDao extends AbstractMapper {
         return selectOne(s, requestDto);
     }
 
+    public CouponDto.CouponResponseDto selectCouponDetail(String s, CouponDto.CouponRequestDto requestDto) {
+        return selectOne(s, requestDto);
+    }
+
     public Integer upsertCoupon(String s, CouponDto.CouponCreateDto requestDto) {
         return insert(s, requestDto);
     }

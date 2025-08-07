@@ -17,8 +17,8 @@ public class WebConfig implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         // 관리자 인터셉터 (관리자 페이지만)
         registry.addInterceptor(adminInterceptor)
-                .addPathPatterns("/admin/api/v1/**")
-                .excludePathPatterns("/admin/api/v1/login","/admin/api/settings/coupon/list");
+                .addPathPatterns("/admin/api/v1/**");
+                //.excludePathPatterns("/admin/api/v1/login","/admin/api/settings/coupon/list");
 
 
         // API 인터셉터 (Flutter 앱 API만)
@@ -29,9 +29,9 @@ public class WebConfig implements WebMvcConfigurer {
 
     @Override
     public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/api/**")
+        registry.addMapping("/**")
                 .allowedOrigins(
-                        "http://localhost:3000",     // Vue 개발서버
+                        "http://localhost:5173",     // Vue 개발서버
                         "https://admin.yourdomain.com" // Vue 배포 도메인
                 )
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
