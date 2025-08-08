@@ -74,7 +74,7 @@ public record CouponDto(
         private String typeName;      // 변환된 타입명
         private BigDecimal discountValue;
         private String discountDisplay;  // 표시용 할인값 (10% 또는 5000원)
-        private BigDecimal maxDiscountAmount;
+        private String maxDiscountAmount;
         private BigDecimal minOrderAmount;
         private Integer issueType;
         private String issueTypeName;  // 변환된 발급타입명
@@ -82,8 +82,10 @@ public record CouponDto(
         private Integer maxIssuePerUser;
         private Integer maxUseCount;
         private Integer useLimitDays;
+        private LocalDate issueDate;
         private LocalDate startDate;
         private LocalDate endDate;
+        private String expireDate;
         private Integer status;
         private String statusName;    // 변환된 상태명
         private Boolean isActive;

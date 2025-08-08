@@ -3,7 +3,25 @@
 <mapper namespace="com.settings.coupon">
 
     <select id="selectCouponList" parameterType="com.dchans.api.admin.dto.settings.coupon.CouponDto$CouponRequestDto" resultType="com.dchans.api.admin.dto.settings.coupon.CouponDto$CouponResponseDto">
-        select id, coupon_code, coupon_name, category, coupon_type, start_date, end_date, status, to_char(created_at,'YYYY-MM-DD') as createdAt from coupon_master
+        select id, coupon_code, coupon_name, coupon_type, max_issue_count, issue_date,  concat(start_date,'-',end_date) as expireDate, to_char(created_at,'YYYY-MM-DD') as createdAt,
+            case when status = '0' then '발급대기'
+                when status = '1' then '발급중'
+                when status = '2' then '발급중지'
+                when status = '3' then '만료'
+                else '삭제'
+                end statusName,
+            case when category = '0' then '신점'
+                when category = '1' then '철학관'
+                when category = '2' then '타로'
+                when category = '3' then '굿당'
+                when category = '4' then '기도터'
+                else '사찰'
+                end categoryName,
+                case when coupon_type = '0' then concat(format(discount_value, 0) ,'%')
+                    else concat(format(discount_value, 0),'원')
+                    end discountDisplay,
+            concat(format(max_discount_amount, 0),'원') as maxDiscountAmount
+        from coupon_master
         where 1 = 1
         <if test="startDate != null and startDate != ''">
             and start_date >= #{startDate}
