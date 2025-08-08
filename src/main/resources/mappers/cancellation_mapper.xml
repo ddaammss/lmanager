@@ -29,7 +29,7 @@
         <if test="reservationType != null and reservationType != ''">
             and reservation_type = #{reservationType}
         </if>
-        and reservation_type in ('0','1')
+        and reservation_type in ('2')
         order by created_at desc
         limit #{pageSize} offset #{offset}
     </select>

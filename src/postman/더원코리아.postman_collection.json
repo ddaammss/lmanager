@@ -1,0 +1,203 @@
+{
+	"info": {
+		"_postman_id": "28c41882-35aa-4321-b790-29096deafc08",
+		"name": "더원코리아",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "21006290"
+	},
+	"item": [
+		{
+			"name": "로그인",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer sfefdfwffwefsfsf",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \r\n    \"id\":\"admin\",\r\n    \"password\":\"123123\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/admin/api/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"admin",
+						"api",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "쿠폰리스트",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"startDate\" : \"2025-01-01\",\r\n    \"endDate\" : \"2025-06-31\",\r\n    \"category\" : \"\",\r\n    \"status\" : \"\",\r\n    \"page\" : \"2\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/admin/api/settings/coupon/list",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"admin",
+						"api",
+						"settings",
+						"coupon",
+						"list"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "예약리스트",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"type1\" : \"0\",\r\n    \"type2\" : \"1\",\r\n    \"name\" : \"조인성\",\r\n    \"reservationStartDate\":\"2025-08-13\",\r\n    \"reservationEndDate\":\"2025-09-03\",\r\n    \"page\" : \"1\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/admin/api/reservation/list",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"admin",
+						"api",
+						"reservation",
+						"list"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "취소리스트",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"type1\" : \"0\",\r\n    \"type2\" : \"1\",\r\n    \"reservationStartDate\":\"2025-08-13\",\r\n    \"reservationEndDate\":\"2025-09-03\",\r\n    \"page\" : \"1\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/admin/api/cancellation/list",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"admin",
+						"api",
+						"cancellation",
+						"list"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "예약상세",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"reservationNo\" : \"R2025080001\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/admin/api/reservation/detail",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"admin",
+						"api",
+						"reservation",
+						"detail"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "쿠폰upsert",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"category\": \"1\",\r\n    \"couponName\": \"신규가입\",\r\n    \"couponType\": \"1\",\r\n    \"discountValue\": 10,\r\n    \"maxDiscountAmount\": 5000,\r\n    \"minOrderAmount\": 30000,\r\n    \"useLimitDays\": 30,\r\n    \"startDate\": \"2025-08-01\",\r\n    \"endDate\": \"2025-12-31\",\r\n    \"status\": \"1\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/admin/api/settings/coupon/regist",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"admin",
+						"api",
+						"settings",
+						"coupon",
+						"regist"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
