@@ -79,13 +79,11 @@ public record ReservationDto(
         private String reserverPhone;
         private Integer storeNo;
         private String storeNm; // 입점사명 (조인해서 가져올 경우)
-        private LocalDate reservationStartDate;
-        private LocalDate reservationEndDate;
-        private LocalDate confirmStartDate;
-        private LocalDate confirmEndDate;
+        private LocalDate reservationDate;
+        private LocalDate confirmDate;
         private Integer guestCount;
         private BigDecimal totalAmount;
-        private BigDecimal paymentAmount;
+        private String paymentAmount;
         private Integer categoryType;
         private String categoryTypeNm;
         private Integer resultType;
@@ -93,8 +91,8 @@ public record ReservationDto(
         private Integer reservationType;
         private String reservationTypeNm;
         private String cancelReason;
-        private LocalDateTime createdAt;
-        private LocalDateTime updatedAt;
+        private String createdAt;
+        private String updatedAt;
         private String createdBy;
         private String updatedBy;
     }

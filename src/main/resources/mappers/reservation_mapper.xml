@@ -3,7 +3,13 @@
 <mapper namespace="com.reservation">
 
     <select id="selectReservationList" parameterType="com.dchans.api.admin.dto.reservation.ReservationDto$ReservationRequestDto" resultType="com.dchans.api.admin.dto.reservation.ReservationDto$ReservationResponseDto">
-        select id, reservation_no, reserver_name, reserver_phone, store_no, reservation_start_date, reservation_end_date, confirm_start_date, confirm_end_date, guest_count, payment_amount, category_type, result_type, reservation_type, to_char(created_at,'YYYY-MM-DD') as createdAt from reservation
+        select id, reservation_no, reserver_name, reserver_phone, store_no, reservation_date, confirm_date, guest_count, format(payment_amount, 0) as paymentAmount, result_type,
+               case when reservation_type = '0' then '예약대기'
+                    when reservation_type = '1' then '예약확정'
+                    else '예약취소'
+                    end reservationTypeNm,
+               to_char(created_at,'YYYY-MM-DD') as createdAt
+        from reservation
         where 1 = 1
         <if test="name != null and name != ''">
             <if test='type1 == "0"'>
@@ -13,18 +19,23 @@
                 and store_no = #{name}
             </if>
         </if>
-
         <if test='type2 != null and type2.equals("0")'>
-            and confirm_start_date >= #{startDate} and confirm_end_date <![CDATA[<=]]> #{endDate}
+            and confirm_date >= #{startDate} and confirm_date <![CDATA[<=]]> #{endDate}
         </if>
         <if test='type2 != null and type2.equals("1")'>
-            and reservation_start_date >= #{startDate} and reservation_end_date <![CDATA[<=]]> #{endDate}
+            and reservation_date >= #{startDate} and reservation_date <![CDATA[<=]]> #{endDate}
         </if>
         <if test="categoryType != null and categoryType.size() > 0">
-            and category_type = #{categoryType}
+            AND category_type IN
+            <foreach collection="categoryType" item="category" open="(" close=")" separator=",">
+                #{category}
+            </foreach>
         </if>
         <if test="resultType != null and resultType.size() > 0">
-            and result_type = #{resultType}
+            AND result_type IN
+            <foreach collection="resultType" item="result" open="(" close=")" separator=",">
+                #{result}
+            </foreach>
         </if>
         <if test="reservationType != null and reservationType != ''">
             and reservation_type = #{reservationType}
@@ -46,16 +57,22 @@
             </if>
         </if>
         <if test='type2 != null and type2.equals("0")'>
-            and confirm_start_date >= #{startDate} and confirm_end_date <![CDATA[<=]]> #{endDate}
+            and confirm_date >= #{startDate} and confirm_date <![CDATA[<=]]> #{endDate}
         </if>
         <if test='type2 != null and type2.equals("1")'>
-            and reservation_start_date >= #{startDate} and reservation_end_date <![CDATA[<=]]> #{endDate}
+            and reservation_date >= #{startDate} and reservation_date <![CDATA[<=]]> #{endDate}
         </if>
         <if test="categoryType != null and categoryType.size() > 0">
-            and category_type = #{categoryType}
+            AND category_type IN
+            <foreach collection="categoryType" item="category" open="(" close=")" separator=",">
+                #{category}
+            </foreach>
         </if>
         <if test="resultType != null and resultType.size() > 0">
-            and result_type = #{resultType}
+            AND result_type IN
+            <foreach collection="resultType" item="result" open="(" close=")" separator=",">
+                #{result}
+            </foreach>
         </if>
         <if test="reservationType != null and reservationType != ''">
             and reservation_type = #{reservationType}
