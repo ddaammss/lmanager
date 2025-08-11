@@ -15,15 +15,15 @@
         </if>
 
         <if test='type2 != null and type2.equals("0")'>
-            and confirm_start_date >= #{confirmStartDate} and confirm_end_date <![CDATA[<=]]> #{confirmEndDate}
+            and confirm_start_date >= #{startDate} and confirm_end_date <![CDATA[<=]]> #{endDate}
         </if>
         <if test='type2 != null and type2.equals("1")'>
-            and reservation_start_date >= #{reservationStartDate} and reservation_end_date <![CDATA[<=]]> #{reservationEndDate}
+            and reservation_start_date >= #{startDate} and reservation_end_date <![CDATA[<=]]> #{endDate}
         </if>
-        <if test="categoryType != null and categoryType != ''">
+        <if test="categoryType != null and categoryType.size() > 0">
             and category_type = #{categoryType}
         </if>
-        <if test="resultType != null and resultType != ''">
+        <if test="resultType != null and resultType.size() > 0">
             and result_type = #{resultType}
         </if>
         <if test="reservationType != null and reservationType != ''">
@@ -46,15 +46,15 @@
             </if>
         </if>
         <if test='type2 != null and type2.equals("0")'>
-            and confirm_start_date >= #{confirmStartDate} and confirm_end_date <![CDATA[<=]]> #{confirmEndDate}
+            and confirm_start_date >= #{startDate} and confirm_end_date <![CDATA[<=]]> #{endDate}
         </if>
         <if test='type2 != null and type2.equals("1")'>
-            and reservation_start_date >= #{reservationStartDate} and reservation_end_date <![CDATA[<=]]> #{reservationEndDate}
+            and reservation_start_date >= #{startDate} and reservation_end_date <![CDATA[<=]]> #{endDate}
         </if>
-        <if test="categoryType != null and categoryType != ''">
+        <if test="categoryType != null and categoryType.size() > 0">
             and category_type = #{categoryType}
         </if>
-        <if test="resultType != null and resultType != ''">
+        <if test="resultType != null and resultType.size() > 0">
             and result_type = #{resultType}
         </if>
         <if test="reservationType != null and reservationType != ''">

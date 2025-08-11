@@ -3,7 +3,7 @@
 <mapper namespace="com.settings.coupon">
 
     <select id="selectCouponList" parameterType="com.dchans.api.admin.dto.settings.coupon.CouponDto$CouponRequestDto" resultType="com.dchans.api.admin.dto.settings.coupon.CouponDto$CouponResponseDto">
-        select id, coupon_code, coupon_name, coupon_type, format(max_issue_count, 0)as maxIssueCount, issue_date,  concat(start_date,'-',end_date) as expireDate, to_char(created_at,'YYYY-MM-DD') as createdAt,
+        select id, coupon_code, coupon_name, coupon_type, format(max_issue_count,0) as maxIssueCount, issue_date,  concat(start_date,'-',end_date) as expireDate, to_char(created_at,'YYYY-MM-DD') as createdAt,
             case when status = '0' then '발급대기'
                 when status = '1' then '발급중'
                 when status = '2' then '발급중지'
@@ -17,9 +17,9 @@
                 when category = '4' then '기도터'
                 else '사찰'
                 end categoryName,
-                case when coupon_type = '0' then concat(format(discount_value, 0) ,'%')
-                    else concat(format(discount_value, 0),'원')
-                    end discountDisplay,
+            case when coupon_type = '0' then concat(format(discount_value, 0) ,'%')
+                else concat(format(discount_value, 0),'원')
+                end discountDisplay,
             concat(format(max_discount_amount, 0),'원') as maxDiscountAmount
         from coupon_master
         where 1 = 1
@@ -58,7 +58,11 @@
 
 
     <select id="selectCouponDetail" parameterType="com.dchans.api.admin.dto.settings.coupon.CouponDto$CouponRequestDto" resultType="com.dchans.api.admin.dto.settings.coupon.CouponDto$CouponResponseDto">
-        select id, coupon_code, coupon_name, category, coupon_type, start_date, end_date, status, to_char(created_at,'YYYY-MM-DD') as createdAt from coupon_master
+        select id, coupon_code, coupon_name, category, coupon_type, max_issue_count, issue_date, start_date, end_date, status, to_char(created_at,'YYYY-MM-DD') as createdAt,
+               discount_value,
+               max_discount_amount,
+               min_order_amount
+        from coupon_master
         where coupon_code = #{couponCode}
     </select>
 
@@ -70,11 +74,12 @@
             coupon_type,
             discount_value,
             max_discount_amount,
+            max_issue_count,
             min_order_amount,
-            use_limit_days,
             start_date,
             end_date,
-            status
+            status,
+            issue_date
         )values(
             #{category},
             <choose>
@@ -82,18 +87,19 @@
                 #{couponCode}
             </when>
             <otherwise>
-                concat('CPN',date_format(current_timestamp, '%Y%m%d'),lpad((select coalesce(max(id), 0) + 1 from coupon_master), 4, '0'))
+                concat('CPN_',date_format(current_timestamp, '%Y%m%d'),lpad((select coalesce(max(id), 0) + 1 from coupon_master), 4, '0'))
             </otherwise>
         </choose>,
             #{couponName},
             #{couponType},
             #{discountValue},
             #{maxDiscountAmount},
+            #{maxIssueCount},
             #{minOrderAmount},
-            #{useLimitDays},
             #{startDate},
             #{endDate},
-            #{status}
+            #{status},
+            #{issueDate}
         )
         on duplicate key update
         category = #{category},
@@ -101,10 +107,11 @@
         coupon_type = #{couponType},
         discount_value = #{discountValue},
         max_discount_amount = #{maxDiscountAmount},
+        max_issue_count = #{maxIssueCount},
         min_order_amount = #{minOrderAmount},
-        use_limit_days = #{useLimitDays},
         start_date = #{startDate},
         end_date = #{endDate},
-        status = #{status}
+        status = #{status},
+        issue_date = #{issueDate}
     </insert>
 </mapper>

@@ -53,6 +53,7 @@ public record CouponDto(
         private String endDate;
         private String category;
         private String status;
+        private String couponCode;
         private int page = 1;        // 요청 페이지 (1부터 시작)
         private int pageSize = 10;   // 페이지당 개수
         private int offset;
@@ -75,10 +76,10 @@ public record CouponDto(
         private BigDecimal discountValue;
         private String discountDisplay;  // 표시용 할인값 (10% 또는 5000원)
         private String maxDiscountAmount;
-        private BigDecimal minOrderAmount;
+        private String minOrderAmount;
         private Integer issueType;
         private String issueTypeName;  // 변환된 발급타입명
-        private Integer maxIssueCount;
+        private String maxIssueCount;
         private Integer maxIssuePerUser;
         private Integer maxUseCount;
         private Integer useLimitDays;
@@ -115,10 +116,12 @@ public record CouponDto(
         private String couponType;
         private String discountValue;
         private String maxDiscountAmount;
+        private String maxIssueCount;
         private String minOrderAmount;
-        private String useLimitDays;
+        private String issueDate;
         private String startDate;
         private String endDate;
         private String status;
+
     }
 }

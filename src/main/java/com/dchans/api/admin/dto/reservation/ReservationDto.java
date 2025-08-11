@@ -6,6 +6,7 @@ import lombok.Setter;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 public record ReservationDto(
         Long id,
@@ -52,12 +53,10 @@ public record ReservationDto(
         private String type1;
         private String type2;
         private String name;
-        private String confirmStartDate;
-        private String confirmEndDate;
-        private String reservationStartDate;
-        private String reservationEndDate;
-        private String categoryType;
-        private String resultType;
+        private String startDate;
+        private String endDate;
+        private List<String> categoryType;
+        private List<String> resultType;
         private String reservationType;
         private int page = 1;        // 요청 페이지 (1부터 시작)
         private int pageSize = 10;   // 페이지당 개수
