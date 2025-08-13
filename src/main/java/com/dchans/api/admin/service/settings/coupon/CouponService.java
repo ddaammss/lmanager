@@ -9,4 +9,6 @@ public interface CouponService {
     CouponDto.CouponResponseDto selectCouponDetail(CouponDto.CouponRequestDto requestDto);
 
     Integer upsertCoupon(CouponDto.CouponCreateDto requestDto);
+
+    Integer deleteCoupon(CouponDto.CouponDeleteDto requestDto);
 }

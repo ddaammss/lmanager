@@ -44,4 +44,9 @@ public class CouponServiceImpl implements CouponService {
     public Integer upsertCoupon(CouponDto.CouponCreateDto requestDto) {
         return couponDao.upsertCoupon(NAMESPACE + "upsertCoupon", requestDto);
     }
+
+    @Override
+    public Integer deleteCoupon(CouponDto.CouponDeleteDto requestDto) {
+        return couponDao.deleteCoupon(NAMESPACE + "deleteCoupon", requestDto);
+    }
 }

@@ -42,6 +42,11 @@ public class CouponController {
         return ResponseEntity.ok(ApiResponseDto.success(couponService.upsertCoupon(requestDto)));
     }
 
+    @PostMapping("/delete")
+    public ResponseEntity<ApiResponseDto<Integer>> deleteCoupon(@RequestBody CouponDto.CouponDeleteDto requestDto) {
+        return ResponseEntity.ok(ApiResponseDto.success(couponService.deleteCoupon(requestDto)));
+    }
+
 //
 //    @GetMapping("/{id}")
 //    public ResponseEntity<CouponSettingsDto> getCouponSettingsById(@PathVariable Long id) {

@@ -106,4 +106,11 @@ public record ReservationDto(
         private String reservationType;
     }
 
+    @Getter
+    @Setter
+    public static class ReservationDeleteDto {
+        private List<String> reservationNoList;
+    }
+
+
 }

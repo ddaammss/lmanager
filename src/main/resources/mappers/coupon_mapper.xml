@@ -87,7 +87,7 @@
                 #{couponCode}
             </when>
             <otherwise>
-                concat('CPN_',date_format(current_timestamp, '%Y%m%d'),lpad((select coalesce(max(id), 0) + 1 from coupon_master), 4, '0'))
+                concat('CPN_',date_format(current_timestamp, '%Y%m%d'),lpad((select coalesce(max(seq), 0) + 1 from coupon_master), 4, '0'))
             </otherwise>
         </choose>,
             #{couponName},
@@ -114,4 +114,13 @@
         status = #{status},
         issue_date = #{issueDate}
     </insert>
+
+    <delete id="deleteCoupon">
+        delete from coupon_master
+        where 1 = 1
+        AND coupon_code in
+        <foreach collection="couponCodeList" item="couponCode" open="(" close=")" separator=",">
+            #{couponCode}
+        </foreach>
+    </delete>
 </mapper>

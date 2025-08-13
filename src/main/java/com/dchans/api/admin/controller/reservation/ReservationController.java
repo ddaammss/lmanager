@@ -42,4 +42,9 @@ public class ReservationController {
         return ResponseEntity.ok(ApiResponseDto.success(reservationService.updateReservation(requestDto)));
     }
 
+    @PostMapping("/delete")
+    public ResponseEntity<ApiResponseDto<Integer>> deleteReservation(@RequestBody ReservationDto.ReservationDeleteDto requestDto) {
+        return ResponseEntity.ok(ApiResponseDto.success(reservationService.deleteReservation(requestDto)));
+    }
+
 }

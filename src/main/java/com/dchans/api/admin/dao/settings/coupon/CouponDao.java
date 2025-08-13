@@ -28,4 +28,8 @@ public class CouponDao extends AbstractMapper {
     public Integer upsertCoupon(String s, CouponDto.CouponCreateDto requestDto) {
         return insert(s, requestDto);
     }
+
+    public Integer deleteCoupon(String s, CouponDto.CouponDeleteDto requestDto) {
+        return delete(s, requestDto);
+    }
 }

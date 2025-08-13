@@ -44,4 +44,9 @@ public class ReservationServiceImpl implements ReservationService {
     public Integer updateReservation(ReservationDto.ReservationRequestDto requestDto) {
         return reservationDao.updateReservation(NAMESPACE + "updateReservation", requestDto);
     }
+
+    @Override
+    public Integer deleteReservation(ReservationDto.ReservationDeleteDto requestDto) {
+        return reservationDao.deleteReservation(NAMESPACE + "deleteReservation", requestDto);
+    }
 }

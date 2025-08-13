@@ -94,4 +94,13 @@
         update reservation set result_type = #{resultType}, reservation_type = #{reservationType}
         where reservation_no = #{reservationNo}
     </update>
+
+    <delete id="deleteReservation">
+        delete from reservation
+        where 1 = 1
+        AND reservation_no in
+        <foreach collection="reservationNoList" item="reservationNo" open="(" close=")" separator=",">
+            #{reservationNo}
+        </foreach>
+    </delete>
 </mapper>

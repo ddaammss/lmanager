@@ -29,4 +29,8 @@ public class ReservationDao extends AbstractMapper {
     public Integer updateReservation(String s, ReservationDto.ReservationRequestDto requestDto) {
         return update(s, requestDto);
     }
+
+    public Integer deleteReservation(String s, ReservationDto.ReservationDeleteDto requestDto) {
+        return delete(s, requestDto);
+    }
 }

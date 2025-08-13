@@ -6,6 +6,7 @@ import lombok.Setter;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 public record CouponDto(
         Long id,
@@ -124,4 +125,12 @@ public record CouponDto(
         private String status;
 
     }
+
+    @Getter
+    @Setter
+    public static class CouponDeleteDto {
+        private List<String> couponCodeList;
+
+    }
+
 }
