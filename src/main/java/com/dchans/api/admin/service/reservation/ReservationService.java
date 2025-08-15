@@ -9,7 +9,7 @@ public interface ReservationService {
 
     ReservationDto.ReservationResponseDto selectReservationDetail(ReservationDto.ReservationRequestDto requestDto);
 
-    Integer updateReservation(ReservationDto.ReservationRequestDto requestDto);
+    Integer updateReservation(ReservationDto.ReservationUpdateDto requestDto);
 
     Integer deleteReservation(ReservationDto.ReservationDeleteDto requestDto);
 }

@@ -26,7 +26,7 @@ public class ReservationDao extends AbstractMapper {
         return selectOne(s, requestDto);
     }
 
-    public Integer updateReservation(String s, ReservationDto.ReservationRequestDto requestDto) {
+    public Integer updateReservation(String s, ReservationDto.ReservationUpdateDto requestDto) {
         return update(s, requestDto);
     }
 

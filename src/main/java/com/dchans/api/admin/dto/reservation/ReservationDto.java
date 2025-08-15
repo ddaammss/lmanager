@@ -62,7 +62,7 @@ public record ReservationDto(
         private int pageSize = 10;   // 페이지당 개수
         private int offset;
 
-        private String reservationNo;
+        private String reservationCode;
 
 
         public int getOffset() {
@@ -74,11 +74,10 @@ public record ReservationDto(
     @Setter
     public static class ReservationResponseDto {
         private Long id;
-        private String reservationNo;
+        private String reservationCode;
         private String reserverName;
         private String reserverPhone;
-        private Integer storeNo;
-        private String storeNm; // 입점사명 (조인해서 가져올 경우)
+        private String storeName; // 입점사명 (조인해서 가져올 경우)
         private LocalDate reservationDate;
         private LocalDate confirmDate;
         private Integer guestCount;
@@ -101,7 +100,7 @@ public record ReservationDto(
     @Setter
     public static class ReservationUpdateDto {
         private String id;
-        private String reservationNo;
+        private String reservationCode;
         private String resultType;
         private String reservationType;
     }
@@ -109,7 +108,7 @@ public record ReservationDto(
     @Getter
     @Setter
     public static class ReservationDeleteDto {
-        private List<String> reservationNoList;
+        private List<String> reservationCodeList;
     }
 
 

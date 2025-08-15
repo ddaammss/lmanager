@@ -3,20 +3,24 @@
 <mapper namespace="com.reservation">
 
     <select id="selectReservationList" parameterType="com.dchans.api.admin.dto.reservation.ReservationDto$ReservationRequestDto" resultType="com.dchans.api.admin.dto.reservation.ReservationDto$ReservationResponseDto">
-        select reservation_no, reserver_name, reserver_phone, store_no, reservation_date, confirm_date, guest_count, format(payment_amount, 0) as paymentAmount, result_type,
+        select reservation_code, reserver_name, reserver_phone, reservation_date, confirm_date, guest_count, format(payment_amount, 0) as paymentAmount,
+                case when result_type = '0' then '미결제'
+                else '결제완료'
+                end resultTypeNm,
                case when reservation_type = '0' then '예약대기'
                     when reservation_type = '1' then '예약확정'
                     else '예약취소'
                     end reservationTypeNm,
-               to_char(created_at,'YYYY-MM-DD') as createdAt
-        from reservation
+               to_char(a.created_at,'YYYY-MM-DD') as createdAt,
+               b.store_name
+        from reservation a inner join store b on a.store_code = b.store_code
         where 1 = 1
         <if test="name != null and name != ''">
             <if test='type1 == "0"'>
                 and reserver_name = #{name}
             </if>
             <if test='type1 == "1"'>
-                and store_no = #{name}
+                and b.store_name like concat('%', #{name}, '%')
             </if>
         </if>
         <if test='type2 != null and type2.equals("0")'>
@@ -43,19 +47,19 @@
         <if test="reservationType != null and reservationType != ''">
             and reservation_type = #{reservationType}
         </if>
-        order by created_at desc
+        order by a.created_at desc
         limit #{pageSize} offset #{offset}
     </select>
 
     <select id="selectReservationCount" parameterType="com.dchans.api.admin.dto.reservation.ReservationDto$ReservationRequestDto" resultType="int">
-        select count(*) from reservation
+        select count(*) from reservation a inner join store b on a.store_code = b.store_code
         where 1 = 1
         <if test="name != null and name != ''">
             <if test='type1 == "0"'>
                 and reserver_name = #{name}
             </if>
             <if test='type1 == "1"'>
-                and store_no = #{name}
+                and b.store_name like concat('%', #{name}, '%')
             </if>
         </if>
         <if test='type2 != null and type2.equals("0")'>
@@ -86,21 +90,24 @@
 
 
     <select id="selectReservationDetail" parameterType="com.dchans.api.admin.dto.reservation.ReservationDto$ReservationRequestDto" resultType="com.dchans.api.admin.dto.reservation.ReservationDto$ReservationResponseDto">
-        select reservation_no, reserver_name, reserver_phone, store_no, reservation_date, confirm_date, guest_count, format(payment_amount, 0) as paymentAmount, category_type, result_type, reservation_type, to_char(created_at,'YYYY-MM-DD') as createdAt from reservation
-        where reservation_no = #{reservationNo}
+        select reservation_code, reserver_name, reserver_phone, b.store_name, reservation_date, confirm_date, guest_count, format(payment_amount, 0) as paymentAmount,
+               a.category_type, result_type, reservation_type,
+               to_char(a.created_at,'YYYY-MM-DD') as createdAt
+        from reservation a inner join store b on a.store_code = b.store_code
+        where reservation_code = #{reservationCode}
     </select>
 
     <update id="updateReservation" parameterType="com.dchans.api.admin.dto.reservation.ReservationDto$ReservationUpdateDto">
         update reservation set result_type = #{resultType}, reservation_type = #{reservationType}
-        where reservation_no = #{reservationNo}
+        where reservation_code = #{reservationCode}
     </update>
 
     <delete id="deleteReservation">
         delete from reservation
         where 1 = 1
-        AND reservation_no in
-        <foreach collection="reservationNoList" item="reservationNo" open="(" close=")" separator=",">
-            #{reservationNo}
+        AND reservation_code in
+        <foreach collection="reservationCodeList" item="reservationCode" open="(" close=")" separator=",">
+            #{reservationCode}
         </foreach>
     </delete>
 </mapper>

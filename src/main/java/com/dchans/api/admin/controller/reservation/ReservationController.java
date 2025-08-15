@@ -38,7 +38,7 @@ public class ReservationController {
     }
 
     @PostMapping("/update")
-    public ResponseEntity<ApiResponseDto<Integer>> updateReservation(@RequestBody ReservationDto.ReservationRequestDto requestDto) {
+    public ResponseEntity<ApiResponseDto<Integer>> updateReservation(@RequestBody ReservationDto.ReservationUpdateDto requestDto) {
         return ResponseEntity.ok(ApiResponseDto.success(reservationService.updateReservation(requestDto)));
     }
 

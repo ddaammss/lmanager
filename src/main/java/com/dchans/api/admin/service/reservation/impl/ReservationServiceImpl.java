@@ -41,7 +41,7 @@ public class ReservationServiceImpl implements ReservationService {
     }
 
     @Override
-    public Integer updateReservation(ReservationDto.ReservationRequestDto requestDto) {
+    public Integer updateReservation(ReservationDto.ReservationUpdateDto requestDto) {
         return reservationDao.updateReservation(NAMESPACE + "updateReservation", requestDto);
     }
 
