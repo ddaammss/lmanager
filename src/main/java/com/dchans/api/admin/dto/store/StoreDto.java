@@ -75,17 +75,19 @@ public record StoreDto(
     @Getter
     @Setter
     public static class StoreCreateDto {
-        private String category;
-        private String couponCode;
-        private String couponName;
-        private String couponType;
-        private String discountValue;
-        private String maxDiscountAmount;
-        private String maxIssueCount;
-        private String minOrderAmount;
-        private String issueDate;
-        private String startDate;
-        private String endDate;
+        private String storeCode;
+        private String storeName;
+        private String categoryType;
+        private String ceoName;
+        private String phone;
+        private String email;
+        private String zipCode;
+        private String address;
+        private String addressDetail;
+        private String description;
+        private String memo;
+        private String startTime;
+        private String endTime;
         private String status;
 
     }
@@ -102,6 +104,8 @@ public record StoreDto(
         private String zipCode;
         private String address;
         private String addressDetail;
+        private String description;
+        private String memo;
         private String status;
     }
 

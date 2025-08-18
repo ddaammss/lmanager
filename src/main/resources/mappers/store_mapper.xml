@@ -86,8 +86,8 @@
 
     <update id="upsertStore" parameterType="com.dchans.api.admin.dto.store.StoreDto$StoreUpdateDto">
         update store
-        set store_name = #{storeName}, ceo_name = #{ceoName}, phone = #{phone}, email = #{email}, zip_code = #{zipCode}, address = #{address}, address_detail = #{addressDetail},
-            description = #{description}, start_time = #{startTime}, end_time = #{endTime}, status = #{status}
+        set store_name = #{storeName}, category_type = #{categoryType}, ceo_name = #{ceoName}, phone = #{phone}, email = #{email}, zip_code = #{zipCode}, address = #{address}, address_detail = #{addressDetail},
+            description = #{description}, memo = #{memo}, start_time = #{startTime}, end_time = #{endTime}, status = #{status}
         where store_code = #{storeCode}
     </update>
 
