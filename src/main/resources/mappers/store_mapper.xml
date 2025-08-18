@@ -84,9 +84,11 @@
         where store_code = #{storeCode}
     </select>
 
-    <update id="updateStore" parameterType="com.dchans.api.admin.dto.store.StoreDto$StoreUpdateDto">
-        update reservation set result_type = #{resultType}, reservation_type = #{reservationType}
-        where reservation_no = #{reservationNo}
+    <update id="upsertStore" parameterType="com.dchans.api.admin.dto.store.StoreDto$StoreUpdateDto">
+        update store
+        set store_name = #{storeName}, ceo_name = #{ceoName}, phone = #{phone}, email = #{email}, zip_code = #{zipCode}, address = #{address}, address_detail = #{addressDetail},
+            description = #{description}, start_time = #{startTime}, end_time = #{endTime}, status = #{status}
+        where store_code = #{storeCode}
     </update>
 
     <delete id="deleteStore">

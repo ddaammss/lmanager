@@ -15,7 +15,8 @@
                 when category = '2' then '타로'
                 when category = '3' then '굿당'
                 when category = '4' then '기도터'
-                else '사찰'
+                when category = '5' then '사찰'
+                else 'ALL'
                 end categoryName,
             case when coupon_type = '0' then concat(format(discount_value, 0) ,'%')
                 else concat(format(discount_value, 0),'원')

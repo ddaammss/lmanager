@@ -94,9 +94,15 @@ public record StoreDto(
     @Setter
     public static class StoreUpdateDto {
         private String id;
-        private String reservationNo;
-        private String resultType;
-        private String reservationType;
+        private String storeCode;
+        private String storeName;
+        private String ceoName;
+        private String phone;
+        private String email;
+        private String zipCode;
+        private String address;
+        private String addressDetail;
+        private String status;
     }
 
     @Getter
