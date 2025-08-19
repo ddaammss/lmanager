@@ -108,6 +108,4 @@ public record StoreDto(
         private String name;
         private String price;
     }
-
-
 }
