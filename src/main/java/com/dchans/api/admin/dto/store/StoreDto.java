@@ -3,8 +3,6 @@ package com.dchans.api.admin.dto.store;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -70,6 +68,9 @@ public record StoreDto(
         private Long updatedBy;
         private String createdAt;
         private String updatedAt;
+
+        private List<StoreProductDto> products;
+
     }
 
     @Getter
@@ -89,24 +90,7 @@ public record StoreDto(
         private String startTime;
         private String endTime;
         private String status;
-
-    }
-
-    @Getter
-    @Setter
-    public static class StoreUpdateDto {
-        private String id;
-        private String storeCode;
-        private String storeName;
-        private String ceoName;
-        private String phone;
-        private String email;
-        private String zipCode;
-        private String address;
-        private String addressDetail;
-        private String description;
-        private String memo;
-        private String status;
+        private List<StoreProductDto> products;
     }
 
     @Getter
@@ -115,5 +99,15 @@ public record StoreDto(
         private List<String> storeCodeList;
 
     }
+
+    @Getter
+    @Setter
+    public static class StoreProductDto {
+        private String storeCode;
+        private String productCode;
+        private String name;
+        private String price;
+    }
+
 
 }

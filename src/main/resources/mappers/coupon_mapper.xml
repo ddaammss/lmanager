@@ -119,7 +119,7 @@
     <delete id="deleteCoupon">
         delete from coupon_master
         where 1 = 1
-        AND coupon_code in
+        and coupon_code in
         <foreach collection="couponCodeList" item="couponCode" open="(" close=")" separator=",">
             #{couponCode}
         </foreach>

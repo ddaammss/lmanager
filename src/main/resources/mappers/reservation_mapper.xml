@@ -33,13 +33,13 @@
             and confirm_date >= #{startDate} and confirm_date <![CDATA[<=]]> #{endDate}
         </if>
         <if test="categoryType != null and categoryType.size() > 0">
-            AND category_type in
+            and category_type in
             <foreach collection="categoryType" item="category" open="(" close=")" separator=",">
                 #{category}
             </foreach>
         </if>
         <if test="resultType != null and resultType.size() > 0">
-            AND result_type in
+            and result_type in
             <foreach collection="resultType" item="result" open="(" close=")" separator=",">
                 #{result}
             </foreach>
@@ -72,13 +72,13 @@
             and confirm_date >= #{startDate} and confirm_date <![CDATA[<=]]> #{endDate}
         </if>
         <if test="categoryType != null and categoryType.size() > 0">
-            AND category_type in
+            and category_type in
             <foreach collection="categoryType" item="category" open="(" close=")" separator=",">
                 #{category}
             </foreach>
         </if>
         <if test="resultType != null and resultType.size() > 0">
-            AND result_type in
+            and result_type in
             <foreach collection="resultType" item="result" open="(" close=")" separator=",">
                 #{result}
             </foreach>
@@ -105,7 +105,7 @@
     <delete id="deleteReservation">
         delete from reservation
         where 1 = 1
-        AND reservation_code in
+        and reservation_code in
         <foreach collection="reservationCodeList" item="reservationCode" open="(" close=")" separator=",">
             #{reservationCode}
         </foreach>

@@ -1,15 +1,14 @@
 package com.dchans.api.admin.service.store.impl;
 
-import com.dchans.api.admin.dao.settings.coupon.CouponDao;
 import com.dchans.api.admin.dao.store.StoreDao;
 import com.dchans.api.admin.dto.common.PageResponse;
-import com.dchans.api.admin.dto.settings.coupon.CouponDto;
 import com.dchans.api.admin.dto.store.StoreDto;
-import com.dchans.api.admin.service.settings.coupon.CouponService;
 import com.dchans.api.admin.service.store.StoreService;
 import jakarta.annotation.Resource;
+import org.apache.catalina.Store;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -38,13 +37,32 @@ public class StoreServiceImpl implements StoreService {
         );
     }
 
+
     @Override
     public StoreDto.StoreResponseDto selectStoreDetail(StoreDto.StoreRequestDto requestDto) {
-        return storeDao.selectStoreDetail(NAMESPACE + "selectStoreDetail", requestDto);
+        StoreDto.StoreResponseDto detail = storeDao.selectStoreDetail(NAMESPACE + "selectStoreDetail", requestDto);
+        List<StoreDto.StoreProductDto> storeProductList = storeDao.selectStoreProductList(NAMESPACE + "selectStoreProductList", requestDto);
+        detail.setProducts(storeProductList);
+//        for(StoreDto.StoreProductDto var : storeProductList) {
+//            StoreDto.StoreProductDto storeProductDto = new StoreDto.StoreProductDto();
+//            storeProductDto.setName(var.getName());
+//            storeProductDto.setPrice(var.getPrice());
+//        }
+        return detail;
     }
 
     @Override
     public Integer upsertStore(StoreDto.StoreCreateDto requestDto) {
+        List<StoreDto.StoreProductDto> storeProduct = new ArrayList<>();
+        for (StoreDto.StoreProductDto var : requestDto.getProducts()) {
+            StoreDto.StoreProductDto storeProductDto = new StoreDto.StoreProductDto();
+            storeProductDto.setStoreCode(requestDto.getStoreCode());
+            storeProductDto.setName(var.getName());
+            storeProductDto.setPrice(var.getPrice());
+            storeProduct.add(storeProductDto);
+        }
+        storeDao.deleteStoreProduct(NAMESPACE + "deleteStoreProduct", requestDto);
+        storeDao.insertStoreProduct(NAMESPACE + "insertStoreProduct", storeProduct);
         return storeDao.upsertStore(NAMESPACE + "upsertStore", requestDto);
     }
 
