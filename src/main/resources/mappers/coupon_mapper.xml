@@ -22,7 +22,7 @@
                 else concat(format(discount_value, 0),'원')
                 end discountDisplay,
             concat(format(max_discount_amount, 0),'원') as maxDiscountAmount
-        from coupon_master
+        from coupon
         where 1 = 1
         <if test="startDate != null and startDate != ''">
             and start_date >= #{startDate}
@@ -41,7 +41,7 @@
     </select>
 
     <select id="selectCouponCount" parameterType="com.dchans.api.admin.dto.settings.coupon.CouponDto$CouponRequestDto" resultType="int">
-        select count(*) from coupon_master
+        select count(*) from coupon
         where 1 = 1
         <if test="startDate != null and startDate != ''">
             and start_date >= #{startDate}
@@ -63,12 +63,12 @@
                discount_value,
                max_discount_amount,
                min_order_amount
-        from coupon_master
+        from coupon
         where coupon_code = #{couponCode}
     </select>
 
     <insert id="upsertCoupon" parameterType="com.dchans.api.admin.dto.settings.coupon.CouponDto$CouponCreateDto" >
-        insert into coupon_master (
+        insert into coupon (
             category,
             coupon_code,
             coupon_name,
@@ -88,7 +88,7 @@
                 #{couponCode}
             </when>
             <otherwise>
-                concat('CPN_',date_format(current_timestamp, '%Y%m%d'),lpad((select coalesce(max(seq), 0) + 1 from coupon_master), 4, '0'))
+                concat('CPN_',date_format(current_timestamp, '%Y%m%d'),lpad((select coalesce(max(seq), 0) + 1 from coupon), 4, '0'))
             </otherwise>
         </choose>,
             #{couponName},
@@ -117,7 +117,7 @@
     </insert>
 
     <delete id="deleteCoupon">
-        delete from coupon_master
+        delete from coupon
         where 1 = 1
         and coupon_code in
         <foreach collection="couponCodeList" item="couponCode" open="(" close=")" separator=",">
