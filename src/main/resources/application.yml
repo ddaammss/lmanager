@@ -18,10 +18,9 @@ spring:
   profiles:
     active: local
   datasource:
-    # Railway MariaDB 연결 정보
-    url: jdbc:mariadb://yamanote.proxy.rlwy.net:28016/railway
-    username: root
-    password: G372x-~gXCvZTsIy2G5XYPQu85qqNE9T
+    url: jdbc:mariadb://amita-database-1.ch6q6ewgayea.ap-northeast-2.rds.amazonaws.com/amita
+    username: amita
+    password: ENC(3tn2y9PplRZ8FHYz9LmGC1cbRgailHj432TIH5otFFnzO9Rf0IaXOzMEHu9Ed/Bv)
     driver-class-name: org.mariadb.jdbc.Driver
 
     # 연결 풀 설정 (HikariCP)
@@ -46,3 +45,7 @@ mybatis:
   type-aliases-package: com.dchans.api.admin.dto
   configuration:
     map-underscore-to-camel-case: true
+jasypt:
+  encryptor:
+    # 환경변수에서 가져오되, 없으면 에러
+    password: ${JASYPT_ENCRYPTOR_PASSWORD}
