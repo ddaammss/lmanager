@@ -21,6 +21,8 @@ jobs:
           ssh -o StrictHostKeyChecking=no -i key ${USER}@${HOST} '
             cd /home/ec2-user/lmanager
             git pull
+            chmod +x ./gradlew 
+            ./gradlew build -x test  # ← 이 줄 추가
             sudo docker build -t app .
             sudo docker stop app || true
             sudo docker rm app || true
