@@ -1,0 +1,28 @@
+# .github/workflows/deploy.yml
+name: Deploy
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Deploy to EC2
+        env:
+          PRIVATE_KEY: ${{ secrets.EC2_SSH_KEY }}
+          HOST: ${{ secrets.EC2_HOST }}
+          USER: ${{ secrets.EC2_USER }}
+        run: |
+          echo "$PRIVATE_KEY" > key && chmod 600 key
+          ssh -i key ${USER}@${HOST} '
+            cd /home/ec2-user/lmanager
+            git pull
+            sudo docker build -t app .
+            sudo docker stop app || true
+            sudo docker rm app || true
+            sudo docker run -d --name app -p 8080:8080 app
+          '
