@@ -8,8 +8,6 @@ COPY . .
 RUN chmod +x ./gradlew && \
     ./gradlew build -x test
 
-
-
 # 실행 스테이지  
 FROM eclipse-temurin:17-jre-alpine
 
@@ -18,11 +16,13 @@ WORKDIR /app
 # 빌드 스테이지에서 JAR 파일 복사
 COPY --from=build /app/build/libs/*.jar app.jar
 
-EXPOSE 8080
+COPY ssl-certs/ /etc/letsencrypt/live/amita86tg.duckdns.org/
+
+EXPOSE 443
 
 ENV JAVA_OPTS="-Xms512m -Xmx1024m -Dspring.profiles.active=prod"
 
-ENTRYPOINT ["java", "-jar", "app.jar"]
+ENTRYPOINT ["sh", "-c", "java $JAVA_OPTS -jar app.jar"]
 
 
 

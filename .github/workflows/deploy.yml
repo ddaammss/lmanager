@@ -16,6 +16,7 @@ jobs:
           PRIVATE_KEY: ${{ secrets.EC2_SSH_KEY }}
           HOST: ${{ secrets.EC2_HOST }}
           USER: ${{ secrets.EC2_USER }}
+          JASYPT_PASSWORD: ${{ secrets.JASYPT_PASSWORD }}
         run: |
           echo "$PRIVATE_KEY" > key && chmod 600 key
           ssh -o StrictHostKeyChecking=no -i key ${USER}@${HOST} '
@@ -34,5 +35,5 @@ jobs:
             sudo docker build -t app .
             sudo docker stop app || true
             sudo docker rm app || true
-            sudo docker run -d --name app -p 8080:8080 app
+            sudo docker run -d --name app -p 8080:8080 -e JASYPT_ENCRYPTOR_PASSWORD='${JASYPT_PASSWORD}' app
           '
