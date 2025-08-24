@@ -9,3 +9,6 @@ EXPOSE 8080
 ENV JAVA_OPTS="-Xms512m -Xmx1024m -Dspring.profiles.active=prod"
 
 ENTRYPOINT ["java", "-jar", "app.jar"]
+
+
+
