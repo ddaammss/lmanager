@@ -32,6 +32,7 @@ jobs:
             fi
             chmod +x ./gradlew 
             ./gradlew build -x test 
+            cp -r /etc/letsencrypt/live/amita86tg.duckdns.org/* ./ssl-certs/
             sudo docker build -t app .
             sudo docker stop app || true
             sudo docker rm app || true
