@@ -8,6 +8,8 @@ COPY . .
 RUN chmod +x ./gradlew && \
     ./gradlew build -x test
 
+
+
 # 실행 스테이지  
 FROM eclipse-temurin:17-jre-alpine
 
