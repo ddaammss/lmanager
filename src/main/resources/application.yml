@@ -18,6 +18,7 @@ spring:
     url: jdbc:mariadb://amita-database-1.ch6q6ewgayea.ap-northeast-2.rds.amazonaws.com/amita
     username: amita
     password: ENC(3tn2y9PplRZ8FHYz9LmGC1cbRgailHj432TIH5otFFnzO9Rf0IaXOzMEHu9Ed/Bv)
+    #password: amita86tg
     driver-class-name: org.mariadb.jdbc.Driver
 
     # 연결 풀 설정 (HikariCP)
