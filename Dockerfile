@@ -16,7 +16,7 @@ WORKDIR /app
 # 빌드 스테이지에서 JAR 파일 복사
 COPY --from=build /app/build/libs/*.jar app.jar
 
-COPY ssl-certs/ /etc/letsencrypt/live/amita86tg.duckdns.org/
+#COPY ssl-certs/ /etc/letsencrypt/live/amita86tg.duckdns.org/
 
 EXPOSE 443
 
