@@ -20,6 +20,7 @@ jobs:
           echo "$PRIVATE_KEY" > key && chmod 600 key
           ssh -o StrictHostKeyChecking=no -i key ${USER}@${HOST} '
             cd /home/ec2-user/lmanager
+            sudo chown -R ec2-user:ec2-user .
             git config --global --add safe.directory /home/ec2-user/lmanager
             git pull
             if [ $? -eq 0 ]; then
