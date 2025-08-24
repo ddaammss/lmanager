@@ -22,7 +22,7 @@ jobs:
             cd /home/ec2-user/lmanager
             git pull
             chmod +x ./gradlew 
-            ./gradlew build -x test  # ← 이 줄 추가
+            ./gradlew build -x test 
             sudo docker build -t app .
             sudo docker stop app || true
             sudo docker rm app || true
