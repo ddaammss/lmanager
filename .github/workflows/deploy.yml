@@ -18,7 +18,7 @@ jobs:
           USER: ${{ secrets.EC2_USER }}
         run: |
           echo "$PRIVATE_KEY" > key && chmod 600 key
-          ssh -i key ${USER}@${HOST} '
+          ssh -o StrictHostKeyChecking=no -i key ${USER}@${HOST} '
             cd /home/ec2-user/lmanager
             git pull
             sudo docker build -t app .

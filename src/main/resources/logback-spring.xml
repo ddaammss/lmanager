@@ -36,7 +36,7 @@
 
 
 
-    
+
     <!-- 로거 설정 -->
     <logger name="org.hibernate" level="ERROR"/>
     <logger name="org.hibernate.engine.jdbc" level="ERROR"/>
