@@ -12,8 +12,6 @@ spring:
     properties:
       hibernate:
         format_sql: false
-  profiles:
-    active: local
   datasource:
     url: jdbc:mariadb://amita-database-1.ch6q6ewgayea.ap-northeast-2.rds.amazonaws.com/amita
     username: amita

@@ -37,3 +37,4 @@ out/
 .vscode/
 /logs/
 PasswordEncryptor
+src/main/java/PasswordEncryptor.java
