@@ -29,4 +29,3 @@ jobs:
           sudo docker build -t app . && \
           sudo docker stop app || true && \
           sudo docker rm app || true && \
-          sudo docker run -d --name app -p 8080:8080 -e JASYPT_ENCRYPTOR_PASSWORD='${JASYPT_PASSWORD}' app"
