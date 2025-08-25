@@ -15,8 +15,9 @@ jobs:
           PRIVATE_KEY: ${{ secrets.EC2_SSH_KEY }}
           HOST: ${{ secrets.EC2_HOST }}
           USER: ${{ secrets.EC2_USER }}
-          JASYPT_PASSWORD: ${{ secrets.JASYPT_PASSWORD }}
+          JASYPT_ENCRYPTOR_PASSWORD: ${{ secrets.JASYPT_ENCRYPTOR_PASSWORD }}
         run: |
+          echo "JASYPT_ENCRYPTOR_PASSWORD value: ${JASYPT_ENCRYPTOR_PASSWORD}"  # 디버깅용
           echo "$PRIVATE_KEY" > key && chmod 600 key
           ssh -o StrictHostKeyChecking=no -i key ${USER}@${HOST} \
           "cd /home/ec2-user/lmanager && \
@@ -29,3 +30,4 @@ jobs:
           sudo docker build -t app . && \
           sudo docker stop app || true && \
           sudo docker rm app || true && \
+          sudo docker run -d --name app -p 8080:8080 -e JASYPT_ENCRYPTOR_PASSWORD='${JASYPT_ENCRYPTOR_PASSWORD}' app"
