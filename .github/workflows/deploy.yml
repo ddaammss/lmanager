@@ -19,24 +19,18 @@ jobs:
           JASYPT_PASSWORD: ${{ secrets.JASYPT_PASSWORD }}
         run: |
           echo "$PRIVATE_KEY" > key && chmod 600 key
-          ssh -o StrictHostKeyChecking=no -i key ${USER}@${HOST} "
-            cd /home/ec2-user/lmanager
-            sudo chown -R ec2-user:ec2-user .
-            git config --global --add safe.directory /home/ec2-user/lmanager
-            git pull
-            if [ $? -eq 0 ]; then
-            echo "✅ Git Pull 성공"
-            else
-            echo "❌ Git Pull 실패"
-            exit 1  # 실패시 배포 중단
-            fi
-            chmod +x ./gradlew 
-            ./gradlew build -x test
-            mkdir ./ssl-certs
-            chmod 644 /home/ec2-user/keystore.p12
-            cp /home/ec2-user/keystore.p12 ./ssl-certs/
-            sudo docker build -t app .
-            sudo docker stop app || true
-            sudo docker rm app || true
-            sudo docker run -d --name app -p 8080:8080 -e JASYPT_ENCRYPTOR_PASSWORD='${JASYPT_PASSWORD}' app
-          "
+          ssh -o StrictHostKeyChecking=no -i key ${USER}@${HOST} \
+          "export JASYPT_PWD='${JASYPT_PASSWORD}' && \
+          cd /home/ec2-user/lmanager && \
+          sudo chown -R ec2-user:ec2-user . && \
+          git config --global --add safe.directory /home/ec2-user/lmanager && \
+          git pull && \
+          chmod +x ./gradlew && \
+          ./gradlew build -x test && \
+          mkdir -p ./ssl-certs && \
+          chmod 644 /home/ec2-user/keystore.p12 && \
+          cp /home/ec2-user/keystore.p12 ./ssl-certs/ && \
+          sudo docker build -t app . && \
+          sudo docker stop app || true && \
+          sudo docker rm app || true && \
+          sudo docker run -d --name app -p 8080:8080 -e JASYPT_ENCRYPTOR_PASSWORD=\$JASYPT_PWD app"
