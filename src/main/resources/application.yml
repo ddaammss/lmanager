@@ -28,6 +28,7 @@ spring:
       connection-timeout: 20000
       validation-timeout: 3000
       leak-detection-threshold: 60000
+      connection-init-sql: SELECT 1
 
 jwt:
   secret: mySecretKey123!@#SecureTokenForJWTAuthentication2024
