@@ -19,7 +19,7 @@ jobs:
           JASYPT_PASSWORD: ${{ secrets.JASYPT_PASSWORD }}
         run: |
           echo "$PRIVATE_KEY" > key && chmod 600 key
-          ssh -o StrictHostKeyChecking=no -i key ${USER}@${HOST} '
+          ssh -o StrictHostKeyChecking=no -i key ${USER}@${HOST} "
             cd /home/ec2-user/lmanager
             sudo chown -R ec2-user:ec2-user .
             git config --global --add safe.directory /home/ec2-user/lmanager
@@ -39,4 +39,4 @@ jobs:
             sudo docker stop app || true
             sudo docker rm app || true
             sudo docker run -d --name app -p 8080:8080 -e JASYPT_ENCRYPTOR_PASSWORD='${JASYPT_PASSWORD}' app
-          '
+          "
