@@ -9,43 +9,6 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public record MemberDto(
-        Long id,
-        String couponCode,
-        String couponName,
-        Integer category,
-        String categoryName,  // 변환된 카테고리명
-        Integer couponType,
-        String typeName,      // 변환된 타입명
-        BigDecimal discountValue,
-        String discountDisplay,  // 표시용 할인값 (10% 또는 5000원)
-        BigDecimal maxDiscountAmount,
-        BigDecimal minOrderAmount,
-        Integer issueType,
-        String issueTypeName,  // 변환된 발급타입명
-        Integer maxIssueCount,
-        Integer maxIssuePerUser,
-        Integer maxUseCount,
-        Integer useLimitDays,
-        LocalDate startDate,
-        LocalDate endDate,
-        Integer status,
-        String statusName,    // 변환된 상태명
-        Boolean isActive,
-        String activeName,    // 변환된 활성상태명
-        Boolean isDuplicable,
-        Boolean isStackable,
-        String description,
-        String termsConditions,
-        String memo,
-        Long createdBy,
-        Long updatedBy,
-        LocalDateTime createdAt,
-        LocalDateTime updatedAt,
-
-        // 통계 정보 (선택사항)
-        Long useCount,        // 사용 건수
-        Long issueCount,      // 발급 건수
-        BigDecimal totalDiscountAmount  // 총 할인 금액
 ) {
     @Getter
     @Setter

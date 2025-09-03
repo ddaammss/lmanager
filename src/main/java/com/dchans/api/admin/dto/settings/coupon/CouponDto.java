@@ -74,7 +74,7 @@ public record CouponDto(
         private String categoryName;  // 변환된 카테고리명
         private Integer couponType;
         private String typeName;      // 변환된 타입명
-        private BigDecimal discountValue;
+        private String discountValue;
         private String discountDisplay;  // 표시용 할인값 (10% 또는 5000원)
         private String maxDiscountAmount;
         private String minOrderAmount;

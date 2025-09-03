@@ -59,10 +59,10 @@
 
 
     <select id="selectCouponDetail" parameterType="com.dchans.api.admin.dto.settings.coupon.CouponDto$CouponRequestDto" resultType="com.dchans.api.admin.dto.settings.coupon.CouponDto$CouponResponseDto">
-        select coupon_code, coupon_name, category, coupon_type, max_issue_count, issue_date, start_date, end_date, status, to_char(created_at,'YYYY-MM-DD') as createdAt,
-               discount_value,
-               max_discount_amount,
-               min_order_amount
+        select coupon_code, coupon_name, category, coupon_type, format(max_issue_count, 0) as maxIssueCount, issue_date, start_date, end_date, status, to_char(created_at,'YYYY-MM-DD') as createdAt,
+               format(discount_value, 0) as discountValue,
+               format(max_discount_amount, 0) as maxDiscountAmount,
+               format(min_order_amount, 0) as minOrderAmount
         from coupon
         where coupon_code = #{couponCode}
     </select>

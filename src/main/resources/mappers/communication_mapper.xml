@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.communication">
+
+    <select id="selectCommunicationList" resultType="com.dchans.api.admin.dto.event.CommunicationDto$CommunicationResponseDto">
+        select seq, title, created_by,
+            case when status = '0' then '접수완료'
+                when status = '1' then '처리중'
+                else '답변완료'
+                end statusNm,
+            case when category_type = '0' then '오류/수정'
+                 else '결제'
+                 end categoryTypeNm,
+                to_char(created_at,'YYYY-MM-DD') as createdAt
+        from communication
+        limit #{pageSize} offset #{offset}
+    </select>
+
+    <select id="selectCommunicationCount" resultType="int">
+        select count(*) from communication
+        where 1 = 1
+    </select>
+
+
+    <select id="selectCommunicationDetail" parameterType="com.dchans.api.admin.dto.event.CommunicationDto$CommunicationRequestDto" resultType="com.dchans.api.admin.dto.event.CommunicationDto$CommunicationResponseDto">
+        select seq, title, content, answer,
+               status,
+               case when category_type = '0' then '오류/수정'
+                    else '결제'
+                   end categoryTypeNm,
+               to_char(created_at,'YYYY-MM-DD') as createdAt,
+               created_by
+        from communication
+        where seq = #{seq}
+    </select>
+
+    <update id="updateCommunication" parameterType="com.dchans.api.admin.dto.event.CommunicationDto$CommunicationUpdateDto">
+        update communication set status = #{status}, answer = #{answer}
+        where seq = #{seq}
+    </update>
+</mapper>
