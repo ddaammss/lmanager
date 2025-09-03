@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.point">
+
+    <select id="selectPointSetting"  resultType="com.dchans.api.admin.dto.member.PointDto$PointResponseDto">
+        select point_name, point_unit, format(min_use_point, 0) as minUsePoint, format(max_hold_point, 0) as maxHoldPoint, buy_point, status
+        from point
+        where seq = 1
+    </select>
+
+    <update id="updatePoint" parameterType="com.dchans.api.admin.dto.member.PointDto$PointUpdateDto">
+        update point set
+            point_name = #{pointName},
+            point_unit = #{pointUnit},
+            min_use_point = #{minUsePoint},
+            max_hold_point = #{maxHoldPoint},
+            buy_point = #{buyPoint},
+            status = #{status}
+        where seq = 1
+    </update>
+</mapper>

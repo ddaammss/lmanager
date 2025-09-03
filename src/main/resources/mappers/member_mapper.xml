@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.member">
+
+    <select id="selectMemberList" parameterType="com.dchans.api.admin.dto.member.MemberDto$MemberRequestDto" resultType="com.dchans.api.admin.dto.member.MemberDto$MemberResponseDto">
+        select seq,member_id, member_name, nickname, age, region, format(emoney, 0) as emoney, format(point, 0) as point, phone, email, last_login_at, login_count,
+                case when gender = '0' then '남성'
+                     else '여성'
+                     end genderNm,
+                case when member_type = '0' then '일반회원'
+                     else '탈퇴회원'
+                     end memberTypeNm,
+                to_char(created_at,'YYYY-MM-DD') as createdAt
+        from member
+        where 1 = 1
+        <if test="name != null and name != ''">
+            <if test='type1 == "0"'>
+                and member_id like concat('%', #{name}, '%')
+            </if>
+            <if test='type1 == "1"'>
+                and member_name like concat('%', #{name}, '%')
+            </if>
+        </if>
+        <if test='type2 != null and type2.equals("0")'>
+            and to_char(created_at,'YYYY-MM-DD') >= #{startDate} and to_char(created_at,'YYYY-MM-DD') <![CDATA[<=]]> #{endDate}
+        </if>
+        <if test='type2 != null and type2.equals("1")'>
+            and last_login_at >= #{startDate} and last_login_at <![CDATA[<=]]> #{endDate}
+        </if>
+        <if test='type2 != null and type2.equals("2")'>
+            and birth_date >= #{startDate} and birth_date <![CDATA[<=]]> #{endDate}
+        </if>
+        <if test="memberType != null and memberType != ''">
+            and member_type = #{memberType}
+        </if>
+        <if test="gender != null and gender != ''">
+            and gender = #{gender}
+        </if>
+        <if test='orderType != null and orderType.equals("0")'>
+            order by created_at desc
+        </if>
+        <if test='orderType != null and orderType.equals("1")'>
+            order by last_login_at desc
+        </if>
+        <if test='orderType != null and orderType.equals("2")'>
+            order by login_count desc
+        </if>
+        <if test='orderType != null and orderType.equals("3")'>
+            order by member_name desc
+        </if>
+        <if test='orderType != null and orderType.equals("4")'>
+            order by member_id desc
+        </if>
+        <if test='orderType != null and orderType.equals("5")'>
+            order by age desc
+        </if>
+        <if test='orderType != null and orderType.equals("6")'>
+            order by member_type desc
+        </if>
+        limit #{pageSize} offset #{offset}
+    </select>
+
+    <select id="selectMemberCount" parameterType="com.dchans.api.admin.dto.member.MemberDto$MemberRequestDto" resultType="int">
+        select count(*) from member
+        where 1 = 1
+        <if test="name != null and name != ''">
+            <if test='type1 == "0"'>
+                and member_id like concat('%', #{name}, '%')
+            </if>
+            <if test='type1 == "1"'>
+                and member_name like concat('%', #{name}, '%')
+            </if>
+        </if>
+        <if test='type2 != null and type2.equals("0")'>
+            and to_char(created_at,'YYYY-MM-DD') >= #{startDate} and to_char(created_at,'YYYY-MM-DD') <![CDATA[<=]]> #{endDate}
+        </if>
+        <if test='type2 != null and type2.equals("1")'>
+            and last_login_at >= #{startDate} and last_login_at <![CDATA[<=]]> #{endDate}
+        </if>
+        <if test='type2 != null and type2.equals("2")'>
+            and birth_date >= #{startDate} and birth_date <![CDATA[<=]]> #{endDate}
+        </if>
+        <if test="memberType != null and memberType != ''">
+            and member_type = #{memberType}
+        </if>
+        <if test="gender != null and gender != ''">
+            and gender = #{gender}
+        </if>
+        <if test='orderType != null and orderType.equals("1")'>
+            order by last_login_at desc
+        </if>
+        <if test='orderType != null and orderType.equals("2")'>
+            order by login_count desc
+        </if>
+        <if test='orderType != null and orderType.equals("3")'>
+            order by member_name desc
+        </if>
+        <if test='orderType != null and orderType.equals("4")'>
+            order by member_id desc
+        </if>
+        <if test='orderType != null and orderType.equals("5")'>
+            order by age desc
+        </if>
+        <if test='orderType != null and orderType.equals("6")'>
+            order by member_type desc
+        </if>
+    </select>
+
+
+    <select id="selectMemberDetail" parameterType="com.dchans.api.admin.dto.member.MemberDto$MemberRequestDto" resultType="com.dchans.api.admin.dto.member.MemberDto$MemberResponseDto">
+        select member_id, member_name, gender, member_type, nickname, age, region, format(emoney, 0) as emoney, format(point, 0) as point,
+               phone, email,
+               case when gender = '0' then '남성'
+                    else '여성'
+                    end genderNm,
+               case when member_type = '0' then '일반회원'
+                    else '탈퇴회원'
+                    end memberTypeNm,
+               last_login_at,
+               login_count,
+               to_char(created_at,'YYYY-MM-DD') as createdAt
+        from member
+        where member_id = #{memberId}
+    </select>
+
+    <update id="updateMember" parameterType="com.dchans.api.admin.dto.member.MemberDto$MemberUpdateDto">
+        update member set member_type = #{memberType}
+        where member_id = #{memberId}
+    </update>
+
+    <delete id="deleteMember">
+        delete from member
+        where 1 = 1
+        and member_id in
+        <foreach collection="memberIdList" item="memberId" open="(" close=")" separator=",">
+            #{memberId}
+        </foreach>
+    </delete>
+</mapper>
