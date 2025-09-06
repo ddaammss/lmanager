@@ -31,13 +31,13 @@ public class SalesController {
     }
 
     @PostMapping("/detail")
-    public ResponseEntity<ApiResponseDto<SalesDto.SalesResponseDto>> selectCouponDetail(@RequestBody SalesDto.SalesRequestDto requestDto) {
+    public ResponseEntity<ApiResponseDto<SalesDto.SalesResponseDto>> selectSalesDetail(@RequestBody SalesDto.SalesRequestDto requestDto) {
         SalesDto.SalesResponseDto responseDto = salesService.selectSalesDetail(requestDto);
         return ResponseEntity.ok(ApiResponseDto.success(responseDto));
     }
 
     @PostMapping("/upsert")
-    public ResponseEntity<ApiResponseDto<Integer>> upsertCoupon(@RequestBody SalesDto.SalesCreateDto requestDto) {
+    public ResponseEntity<ApiResponseDto<Integer>> upsertSales(@RequestBody SalesDto.SalesCreateDto requestDto) {
         return ResponseEntity.ok(ApiResponseDto.success(salesService.upsertSales(requestDto)));
     }
 }
