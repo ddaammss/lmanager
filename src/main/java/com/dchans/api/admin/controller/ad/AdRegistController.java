@@ -4,6 +4,7 @@ import com.dchans.api.admin.dto.ad.AdDto;
 import com.dchans.api.admin.dto.common.ApiResponseDto;
 import com.dchans.api.admin.dto.common.PageApiResponseDto;
 import com.dchans.api.admin.dto.common.PageResponse;
+import com.dchans.api.admin.dto.member.MemberDto;
 import com.dchans.api.admin.service.ad.AdService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,8 +37,14 @@ public class AdRegistController {
         return ResponseEntity.ok(ApiResponseDto.success(responseDto));
     }
 
-    @PostMapping("/upsert")
-    public ResponseEntity<ApiResponseDto<Integer>> upsertAdRegist(@RequestBody AdDto.AdCreateDto requestDto) {
-        return ResponseEntity.ok(ApiResponseDto.success(adService.upsertAdRegist(requestDto)));
+    @PostMapping("/update")
+    public ResponseEntity<ApiResponseDto<Integer>> updateAdRegist(@RequestBody AdDto.AdUpdateDto requestDto) {
+        return ResponseEntity.ok(ApiResponseDto.success(adService.updateAdRegist(requestDto)));
     }
+
+    @PostMapping("/delete")
+    public ResponseEntity<ApiResponseDto<Integer>> deleteAdRegist(@RequestBody AdDto.AdDeleteDto requestDto) {
+        return ResponseEntity.ok(ApiResponseDto.success(adService.deleteAdRegist(requestDto)));
+    }
+
 }

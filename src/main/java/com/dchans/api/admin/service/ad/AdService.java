@@ -14,5 +14,7 @@ public interface AdService {
 
     AdDto.AdResponseDto selectAdRegistDetail(AdDto.AdRequestDto requestDto);
 
-    Integer upsertAdRegist(AdDto.AdCreateDto requestDto);
+    Integer updateAdRegist(AdDto.AdUpdateDto requestDto);
+
+    Integer deleteAdRegist(AdDto.AdDeleteDto requestDto);
 }

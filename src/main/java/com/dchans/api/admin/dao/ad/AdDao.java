@@ -27,7 +27,7 @@ public class AdDao extends AbstractMapper {
     }
 
     public Integer updateAdRequest(String s, AdDto.AdUpdateDto requestDto) {
-        return insert(s, requestDto);
+        return update(s, requestDto);
     }
 
 
@@ -45,7 +45,11 @@ public class AdDao extends AbstractMapper {
         return selectOne(s, requestDto);
     }
 
-    public Integer upsertAdRegist(String s, AdDto.AdCreateDto requestDto) {
-        return insert(s, requestDto);
+    public Integer updateAdRegist(String s, AdDto.AdUpdateDto requestDto) {
+        return update(s, requestDto);
+    }
+
+    public Integer deleteAdRegist(String s, AdDto.AdDeleteDto requestDto) {
+        return delete(s, requestDto);
     }
 }

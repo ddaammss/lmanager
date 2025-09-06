@@ -72,8 +72,13 @@ public class AdServiceImpl implements AdService {
     }
 
     @Override
-    public Integer upsertAdRegist(AdDto.AdCreateDto requestDto) {
-        return salesDao.upsertAdRegist(NAMESPACE + "upsertAdRequest", requestDto);
+    public Integer updateAdRegist(AdDto.AdUpdateDto requestDto) {
+        return salesDao.updateAdRegist(NAMESPACE + "updateAdRegist", requestDto);
+    }
+
+    @Override
+    public Integer deleteAdRegist(AdDto.AdDeleteDto requestDto) {
+        return salesDao.deleteAdRegist(NAMESPACE + "deleteAdRegist", requestDto);
     }
 
 }

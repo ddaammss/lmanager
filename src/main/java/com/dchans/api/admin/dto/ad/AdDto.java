@@ -32,7 +32,7 @@ public record AdDto(
         private String storeCode;
         private String startDate;
         private String endDate;
-        private String status;
+        private Integer status;
         private String categoryType;
         private String ranking;
         private String createdAt;
@@ -54,7 +54,17 @@ public record AdDto(
     @Setter
     public static class AdUpdateDto {
         private String seq;
+        private String startDate;
+        private String endDate;
+        private String categoryType;
+        private String ranking;
         private String status;
+    }
+
+    @Getter
+    @Setter
+    public static class AdDeleteDto {
+        private List<String> seqList;
     }
 
 }
