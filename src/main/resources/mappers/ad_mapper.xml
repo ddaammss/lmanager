@@ -40,9 +40,6 @@
         where seq = #{seq}
     </update>
 
-
-
-
     <select id="selectAdRegistList" parameterType="com.dchans.api.admin.dto.ad.AdDto$AdRequestDto" resultType="com.dchans.api.admin.dto.ad.AdDto$AdResponseDto">
         select s.seq, s.store_code, b.store_name, s.category_type, s.status, concat(s.start_date, '~', s.end_date) as period, ranking,
                group_concat(
