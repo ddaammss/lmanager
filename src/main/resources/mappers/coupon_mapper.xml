@@ -21,7 +21,7 @@
             case when coupon_type = '0' then concat(format(discount_value, 0) ,'%')
                 else concat(format(discount_value, 0),'원')
                 end discountDisplay,
-            concat(format(max_discount_amount, 0),'원') as maxDiscountAmount
+            format(max_discount_amount, 0) as maxDiscountAmount
         from coupon
         where 1 = 1
         <if test="startDate != null and startDate != ''">
@@ -84,13 +84,13 @@
         )values(
             #{category},
             <choose>
-            <when test="couponCode != null and couponCode != ''">
-                #{couponCode}
-            </when>
-            <otherwise>
-                concat('CPN_',date_format(current_timestamp, '%Y%m%d'),lpad((select coalesce(max(seq), 0) + 1 from coupon), 4, '0'))
-            </otherwise>
-        </choose>,
+                <when test="couponCode != null and couponCode != ''">
+                    #{couponCode}
+                </when>
+                <otherwise>
+                    concat('CPN_',date_format(current_timestamp, '%Y%m%d'),lpad((select coalesce(max(seq), 0) + 1 from coupon), 4, '0'))
+                </otherwise>
+            </choose>,
             #{couponName},
             #{couponType},
             #{discountValue},

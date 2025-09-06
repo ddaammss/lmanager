@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sales">
+
+    <select id="selectSalesList" parameterType="com.dchans.api.admin.dto.sales.SalesDto$SalesRequestDto" resultType="com.dchans.api.admin.dto.sales.SalesDto$SalesResponseDto">
+        select * from (
+            select a.seq, sales_date, store_name, pay_type,
+                case pay_type
+                when '0' then '실시간계좌이체'
+                when '1' then '무통장입금'
+                when '2' then '카드'
+                else '휴대폰'
+                end as payName,
+                format(sales_price, 0) as salesPrice,
+                date_format(a.created_at,'%Y-%m-%d') as createdAt,
+                1 as sort_order
+            from sales a INNER JOIN store b ON a.store_code = b.store_code
+            where 1=1
+            <if test="name != null and name != ''">
+                and store_name like concat('%', #{name}, '%')
+            </if>
+            <if test="startDate != null and startDate != ''">
+                and sales_date >= #{startDate, jdbcType=DATE}
+            </if>
+            <if test="endDate != null and endDate != ''">
+                and sales_date <![CDATA[<=]]> #{endDate, jdbcType=DATE}
+            </if>
+            <if test="payType != null and payType.size() > 0">
+                and pay_type in
+                <foreach collection="payType" item="pay" open="(" close=")" separator=",">
+                    #{pay}
+                </foreach>
+            </if>
+            union all
+            select '' as seq, '합계' as salesDate, '' as storeName, '' as payType,
+                '' as payName,
+                ifnull(format(sum(sales_price), 0), 0) as salesPrice,
+                '' as createdAt,
+                2 as sort_order
+            from sales a inner join store b ON a.store_code = b.store_code
+            where 1=1
+            <if test="name != null and name != ''">
+                and store_name like concat('%', #{name}, '%')
+            </if>
+            <if test="startDate != null and startDate != ''">
+                and sales_date >= #{startDate, jdbcType=DATE}
+            </if>
+            <if test="endDate != null and endDate != ''">
+                and sales_date <![CDATA[<=]]> #{endDate, jdbcType=DATE}
+            </if>
+            <if test="payType != null and payType.size() > 0">
+                and pay_type in
+                <foreach collection="payType" item="pay" open="(" close=")" separator=",">
+                    #{pay}
+                </foreach>
+            </if>
+        ) t
+        where 1=1
+        order by  sort_order, seq desc
+    </select>
+
+    <select id="selectSalesCount" parameterType="com.dchans.api.admin.dto.sales.SalesDto$SalesRequestDto" resultType="int">
+        select count(*) from (
+            select sales_date, store_name, pay_type,
+                case pay_type
+                when '0' then '실시간계좌이체'
+                when '1' then '무통장입금'
+                when '2' then '카드'
+                else '휴대폰'
+                end as payName,
+                format(sales_price, 0) as salesPrice,
+                date_format(a.created_at,'%Y-%m-%d') as createdAt,
+                a.created_at as sort_date,
+                1 as sort_order
+                from sales a INNER JOIN store b ON a.store_code = b.store_code
+            union all
+            select '합계' as salesDate, '' as storeName, '' as payName, '' as payType, ifnull(format(sum(sales_price), 0), 0) as salesPrice,
+            '' as createdAt,
+            now() as sort_date,
+            2 as sort_order
+            from sales a inner join store b ON a.store_code = b.store_code
+        ) t
+        where 1=1
+        and (sales_date = '합계' or store_name = '' or pay_type = '')
+        <if test="name != null and name != ''">
+            and store_name like concat('%', #{name}, '%')
+        </if>
+        <if test="startDate != null and startDate != ''">
+            and sales_date >= #{startDate,}
+        </if>
+        <if test="endDate != null and endDate != ''">
+            and sales_date <![CDATA[<=]]> #{endDate}
+        </if>
+        <if test="payType != null and payType.size() > 0">
+            and pay_type in
+            <foreach collection="payType" item="pay" open="(" close=")" separator=",">
+                #{pay}
+            </foreach>
+        </if>
+    </select>
+
+    <select id="selectSalesDetail" parameterType="com.dchans.api.admin.dto.sales.SalesDto$SalesRequestDto" resultType="com.dchans.api.admin.dto.sales.SalesDto$SalesResponseDto">
+        select
+            a.seq,
+            sales_date,
+            format(sales_price, 0) as salesPrice,
+            store_name,
+            a.store_code,
+            pay_type,
+            case pay_type
+                when '0' then '결제수단'
+                when '1' then '무통장입금'
+                when '2' then '카드'
+                else '휴대폰'
+                end payName
+        from sales a inner join store b on a.store_code = b.store_code
+        where a.seq = #{seq}
+    </select>
+
+
+    <insert id="upsertSales" parameterType="com.dchans.api.admin.dto.sales.SalesDto$SalesCreateDto" >
+        insert into sales (
+            seq,
+            sales_date,
+            sales_price,
+            store_code,
+            pay_type
+        )values(
+            #{seq},
+            #{salesDate},
+            #{salesPrice},
+            #{storeCode},
+            #{payType}
+        )
+        on duplicate key update
+            sales_date = #{salesDate},
+            sales_price = #{salesPrice},
+            pay_type = #{payType}
+    </insert>
+</mapper>
