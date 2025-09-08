@@ -48,7 +48,7 @@
             </foreach>
             )
         </if>
-        group by s.store_code, s.store_name, s.category_type, s.status, s.ceo_name, s.phone, s.address, s.created_at
+        group by s.seq, s.store_name, s.category_type, s.status, s.ceo_name, s.phone, s.address, s.created_at
         order by created_at desc
         limit #{pageSize} offset #{offset}
     </select>
@@ -79,6 +79,7 @@
 
     <select id="selectStoreDetail" parameterType="com.dchans.api.admin.dto.store.StoreDto$StoreRequestDto" resultType="com.dchans.api.admin.dto.store.StoreDto$StoreResponseDto">
         select
+            s.seq,
             s.store_code,
             s.store_name,
             s.category_type,
@@ -109,8 +110,8 @@
 
     <insert id="upsertStore" parameterType="com.dchans.api.admin.dto.store.StoreDto$StoreCreateDto" >
         insert into store (
-            store_name,
             store_code,
+            store_name,
             category_type,
             ceo_name,
             phone,
@@ -124,15 +125,8 @@
             end_time,
             status
         )values(
+            #{storeCode},
             #{storeName},
-        <choose>
-            <when test="storeCode != null and storeCode != ''">
-                #{storeCode}
-            </when>
-            <otherwise>
-                concat('ST_',date_format(current_timestamp, '%Y%m%d'),lpad((select coalesce(max(seq), 0) + 1 from store), 4, '0'))
-            </otherwise>
-        </choose>,
             #{categoryType},
             #{ceoName},
             #{phone},
@@ -169,12 +163,11 @@
     </delete>
 
     <insert id="insertStoreProduct" parameterType="com.dchans.api.admin.dto.store.StoreDto$StoreProductDto">
-        insert into store_product (store_code, product_code, product_name, product_price)
+        insert into store_product (store_code, product_name, product_price)
         values
         <foreach collection="list" item="item" index="idx" separator=",">
             (
             #{item.storeCode},
-            concat('ST_PRO_',date_format(current_timestamp, '%Y%m%d'),lpad((select coalesce(max(seq), 0) + 1 from store_product), 4, '0')),
             #{item.name},
             #{item.price}
             )

@@ -13,7 +13,7 @@ spring:
       hibernate:
         format_sql: false
   datasource:
-    url: jdbc:mariadb://amita-database-1.ch6q6ewgayea.ap-northeast-2.rds.amazonaws.com/amita
+    url: jdbc:mariadb://amita-database-1.ch6q6ewgayea.ap-northeast-2.rds.amazonaws.com/amita?serverTimezone=Asia/Seoul
     username: amita
     password: ENC(3tn2y9PplRZ8FHYz9LmGC1cbRgailHj432TIH5otFFnzO9Rf0IaXOzMEHu9Ed/Bv)
     #password: amita86tg

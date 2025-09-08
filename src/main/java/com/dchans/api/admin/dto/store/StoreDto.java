@@ -7,28 +7,12 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public record StoreDto(
-        String storeCode,
-        String storeName,
-        Integer categoryType,
-        String categoryName,  // 변환된 카테고리명
-        Integer status,
-        String statusName,    // 변환된 상태명
-        String businessNumber,
-        String ceoName,
-        String phone,
-        String email,
-        String zipCode,
-        String address,
-        String addressDetail,
-        String memo,
-        Long createdBy,
-        Long updatedBy,
-        LocalDateTime createdAt,
-        LocalDateTime updatedAt
 ) {
     @Getter
     @Setter
     public static class StoreRequestDto {
+        private String seq;
+        private String storeCode;
         private String startDate;
         private String endDate;
         private String name;
@@ -42,12 +26,12 @@ public record StoreDto(
             return (page - 1) * pageSize;
         }
 
-        private String storeCode;
     }
 
     @Getter
     @Setter
     public static class StoreResponseDto {
+        private String seq;
         private String storeCode;
         private String storeName;
         private String categoryType;
@@ -91,6 +75,7 @@ public record StoreDto(
         private String endTime;
         private String status;
         private List<StoreProductDto> products;
+        private List<StoreImageDto> images;
     }
 
     @Getter
@@ -104,8 +89,15 @@ public record StoreDto(
     @Setter
     public static class StoreProductDto {
         private String storeCode;
-        private String productCode;
         private String name;
+        private String price;
+    }
+
+    @Getter
+    @Setter
+    public static class StoreImageDto {
+        private String storeCode;
+        private String imagePath;
         private String price;
     }
 }
