@@ -1,26 +1,26 @@
 package com.dchans.api.admin.service.event.impl;
 
-import com.dchans.api.admin.dao.event.CommunicationDao;
+import com.dchans.api.admin.dao.event.EventDao;
+import com.dchans.api.admin.dto.event.EventDto;
 import com.dchans.api.admin.dto.common.PageResponse;
-import com.dchans.api.admin.dto.event.CommunicationDto;
-import com.dchans.api.admin.service.event.CommunicationService;
+import com.dchans.api.admin.service.event.EventService;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class CommunicationServiceImpl implements CommunicationService {
-    @Resource(name = "CommunicationDao")
-    private CommunicationDao communicationDao ;
+public class EventServiceImpl implements EventService {
+    @Resource(name = "EventDao")
+    private EventDao eventDao;
 
-    private static final String NAMESPACE = "com.communication.";
+    private static final String NAMESPACE = "com.event.";
 
     @Override
-    public PageResponse<CommunicationDto.CommunicationResponseDto> selectCommunicationList(CommunicationDto.CommunicationRequestDto requestDto) {
-        List<CommunicationDto.CommunicationResponseDto> response = communicationDao.selectCommunicationList(NAMESPACE + "selectCommunicationList", requestDto);
+    public PageResponse<EventDto.EventResponseDto> selectEventList(EventDto.EventRequestDto requestDto) {
+        List<EventDto.EventResponseDto> response = eventDao.selectEventList(NAMESPACE + "selectEventList", requestDto);
 
-        long totalCount = communicationDao.selectCommunicationCount(NAMESPACE + "selectCommunicationCount", requestDto);
+        long totalCount = eventDao.selectEventCount(NAMESPACE + "selectEventCount", requestDto);
 
         // 3. 페이징 정보 계산
         int totalPages = (int) Math.ceil((double) totalCount / requestDto.getPageSize());
@@ -36,12 +36,12 @@ public class CommunicationServiceImpl implements CommunicationService {
     }
 
     @Override
-    public CommunicationDto.CommunicationResponseDto selectCommunicationDetail(CommunicationDto.CommunicationRequestDto requestDto) {
-        return communicationDao.selectCommunicationDetail(NAMESPACE + "selectCommunicationDetail", requestDto);
+    public EventDto.EventResponseDto selectEventDetail(EventDto.EventRequestDto requestDto) {
+        return eventDao.selectEventDetail(NAMESPACE + "selectEventDetail", requestDto);
     }
 
     @Override
-    public Integer updateCommunication(CommunicationDto.CommunicationUpdateDto requestDto) {
-        return communicationDao.updateCommunication(NAMESPACE + "updateCommunication", requestDto);
+    public Integer updateEvent(EventDto.EventUpdateDto requestDto) {
+        return eventDao.updateEvent(NAMESPACE + "updateEvent", requestDto);
     }
 }

@@ -3,11 +3,11 @@ package com.dchans.api.admin.dto.event;
 import lombok.Getter;
 import lombok.Setter;
 
-public record CommunicationDto(
+public record EventDto(
 ) {
     @Getter
     @Setter
-    public static class CommunicationRequestDto {
+    public static class EventRequestDto {
         private String seq;
         private int page = 1;        // 요청 페이지 (1부터 시작)
         private int pageSize = 10;   // 페이지당 개수
@@ -20,7 +20,7 @@ public record CommunicationDto(
 
     @Getter
     @Setter
-    public static class CommunicationResponseDto {
+    public static class EventResponseDto {
         private String seq;
         private String title;
         private String content;
@@ -36,7 +36,7 @@ public record CommunicationDto(
 
     @Getter
     @Setter
-    public static class CommunicationUpdateDto {
+    public static class EventUpdateDto {
         private String seq;
         private String answer;
         private String status;

@@ -1,114 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.store">
+<mapper namespace="com.event">
 
-    <select id="selectStoreList" parameterType="com.dchans.api.admin.dto.store.StoreDto$StoreRequestDto" resultType="com.dchans.api.admin.dto.store.StoreDto$StoreResponseDto">
-        select store_code, store_name, category_type, status, ceo_name, phone, email, concat(address, '' , address_detail) as address,
-            group_concat(
-                case c.category_code
-                when '0' then '신점'
-                when '1' then '철학관'
-                when '2' then '타로'
-                when '3' then '굿당'
-                when '4' then '기도터'
-                else '사찰'
-                end
-                order by c.category_code
-                separator ', '
-            ) as categoryName,
-            case status
-            when 0 then '활성'
-            when 1 then '비활성'
-            end as statusName,
+    <select id="selectEventList" parameterType="com.dchans.api.admin.dto.store.EventDto$EventRequestDto" resultType="com.dchans.api.admin.dto.store.EventDto$EventResponseDto">
+        select event_name,  concat(start_date,'-',end_date) as eventDate,
             to_char(created_at,'YYYY-MM-DD') as createdAt
-        from store s
-        cross join (
-            select '0' as category_code union all
-            select '1' union all select '2' union all
-            select '3' union all select '4' union all select '5'
-        ) c
-        where 1=1
-        and find_in_set(c.category_code, s.category_type) > 0
-        <if test="name != null and name != ''">
-            and store_name like concat('%', #{name}, '%')
-        </if>
-        <if test="address != null and address != ''">
-            and address like concat('%', #{address}, '%')
-        </if>
-        <if test="startDate != null and startDate != ''">
-            and to_char(created_at,'YYYY-MM-DD') >= #{startDate}
-        </if>
-        <if test="endDate != null and endDate != ''">
-            and to_char(created_at,'YYYY-MM-DD') <![CDATA[<=]]> #{endDate}
-        </if>
-        <if test="categoryType != null and categoryType.size() > 0">
-            and (
-            <foreach collection="categoryType" item="category" separator=" OR ">
-                FIND_IN_SET(#{category}, s.category_type) > 0
-            </foreach>
-            )
-        </if>
-        group by s.seq, s.store_name, s.category_type, s.status, s.ceo_name, s.phone, s.address, s.created_at
+        from event
         order by created_at desc
         limit #{pageSize} offset #{offset}
     </select>
 
-    <select id="selectStoreCount" parameterType="com.dchans.api.admin.dto.store.StoreDto$StoreRequestDto" resultType="int">
-        select count(*) from store
-        where 1 = 1
-        <if test="name != null and name != ''">
-            and store_name like concat('%', #{name}, '%')
-        </if>
-        <if test="address != null and address != ''">
-            and address like concat('%', #{address}, '%')
-        </if>
-        <if test="startDate != null and startDate != ''">
-            and to_char(created_at,'YYYY-MM-DD') >= #{startDate}
-        </if>
-        <if test="endDate != null and endDate != ''">
-            and to_char(created_at,'YYYY-MM-DD') <![CDATA[<=]]> #{endDate}
-        </if>
-        <if test="categoryType != null and categoryType.size() > 0">
-            and (
-            <foreach collection="categoryType" item="category" separator=" OR ">
-                FIND_IN_SET(#{category}, category_type) > 0
-            </foreach>
-            )
-        </if>
+    <select id="selectEventCount" parameterType="com.dchans.api.admin.dto.store.EventDto$EventRequestDto" resultType="int">
+        select count(*) from event
     </select>
 
-    <select id="selectStoreDetail" parameterType="com.dchans.api.admin.dto.store.StoreDto$StoreRequestDto" resultType="com.dchans.api.admin.dto.store.StoreDto$StoreResponseDto">
+    <select id="selectEventDetail" parameterType="com.dchans.api.admin.dto.store.EventDto$EventRequestDto" resultType="com.dchans.api.admin.dto.store.EventDto$EventResponseDto">
         select
-            s.seq,
-            s.store_code,
-            s.store_name,
-            s.category_type,
-            s.status,
-            s.ceo_name,
-            s.business_number,
-            s.zip_code,
-            s.phone,
-            s.email,
-            s.address,
-            s.address_detail,
-            s.description,
-            s.memo,
-            s.start_time,
-            s.end_time
-        from store s
-        where s.store_code = #{storeCode}
+            seq,
+            event_name,
+            start_time,
+            end_time
+        from event s
+        where seq = #{seq}
     </select>
 
-    <select id="selectStoreProductList" parameterType="com.dchans.api.admin.dto.store.StoreDto$StoreRequestDto" resultType="com.dchans.api.admin.dto.store.StoreDto$StoreProductDto">
+    <select id="selectEventImageList" parameterType="com.dchans.api.admin.dto.store.EventDto$EventRequestDto" resultType="com.dchans.api.admin.dto.store.EventDto$EventImageDto">
         select
             s.product_name as name,
             s.product_price as price
-        from store_product s
-        where s.store_code = #{storeCode}
+        from event_image
+        where seq = #{seq}
     </select>
 
 
-    <insert id="upsertStore" parameterType="com.dchans.api.admin.dto.store.StoreDto$StoreCreateDto" >
+    <insert id="upsertEvent" parameterType="com.dchans.api.admin.dto.store.EventDto$EventCreateDto" >
         insert into store (
             store_code,
             store_name,
@@ -156,14 +81,14 @@
             status = #{status}
     </insert>
 
-    <delete id="deleteStoreProduct">
-        delete from store_product
+    <delete id="deleteEventImage">
+        delete from event_image
         where 1 = 1
-        and store_code = #{storeCode}
+        and seq = #{seq}
     </delete>
 
-    <insert id="insertStoreProduct" parameterType="com.dchans.api.admin.dto.store.StoreDto$StoreProductDto">
-        insert into store_product (store_code, product_name, product_price)
+    <insert id="insertEventImage" parameterType="com.dchans.api.admin.dto.store.EventDto$EventImageDto">
+        insert into event_image (store_code, product_name, product_price)
         values
         <foreach collection="list" item="item" index="idx" separator=",">
             (
@@ -175,7 +100,7 @@
     </insert>
 
 
-    <delete id="deleteStore">
+    <delete id="deleteEvent">
         delete from store
         where 1 = 1
         and store_code in

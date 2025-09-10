@@ -2,13 +2,14 @@ package com.dchans.api.admin.service.event;
 
 import com.dchans.api.admin.dto.common.PageResponse;
 import com.dchans.api.admin.dto.event.CommunicationDto;
+import com.dchans.api.admin.dto.event.EventDto;
 
-public interface CommunicationService {
+public interface EventService {
 
 
-    PageResponse<CommunicationDto.CommunicationResponseDto> selectCommunicationList(CommunicationDto.CommunicationRequestDto requestDto);
+    PageResponse<EventDto.EventResponseDto> selectEventList(EventDto.EventRequestDto requestDto);
 
-    CommunicationDto.CommunicationResponseDto selectCommunicationDetail(CommunicationDto.CommunicationRequestDto requestDto);
+    EventDto.EventResponseDto selectEventDetail(EventDto.EventRequestDto requestDto);
 
-    Integer updateCommunication(CommunicationDto.CommunicationUpdateDto requestDto);
+    Integer updateEvent(EventDto.EventUpdateDto requestDto);
 }
