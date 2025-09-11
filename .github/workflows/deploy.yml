@@ -31,4 +31,4 @@ jobs:
           sudo docker build -t app . && \
           sudo docker stop app || true && \
           sudo docker rm app || true && \
-          sudo docker run -d --name app -p 443:443 -v /host/path/uploads:/app/uploads  -e JASYPT_ENCRYPTOR_PASSWORD='${JASYPT_ENCRYPTOR_PASSWORD}' app"
+          sudo docker run -d --name app -p 443:443 -v /home/ec2-user/lmanager/uploads:/app/uploads  -e JASYPT_ENCRYPTOR_PASSWORD='${JASYPT_ENCRYPTOR_PASSWORD}' app"
