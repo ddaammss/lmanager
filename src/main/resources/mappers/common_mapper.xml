@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.common">
+
+    <delete id="deleteImage">
+        delete from common_image
+        where 1 = 1
+        and parent_seq = #{parentSeq}
+    </delete>
+
+    <insert id="insertImage" parameterType="com.dchans.api.admin.dto.common.ImageDto">
+        insert into common_image (parent_seq, type, image_path)
+        values
+        <foreach collection="imagePath" item="path" index="idx" separator=",">
+            (
+            #{parentSeq},
+            #{type},
+            #{path}
+            )
+        </foreach>
+    </insert>
+
+
+
+</mapper>

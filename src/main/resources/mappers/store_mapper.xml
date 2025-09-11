@@ -3,7 +3,7 @@
 <mapper namespace="com.store">
 
     <select id="selectStoreList" parameterType="com.dchans.api.admin.dto.store.StoreDto$StoreRequestDto" resultType="com.dchans.api.admin.dto.store.StoreDto$StoreResponseDto">
-        select store_code, store_name, category_type, status, ceo_name, phone, email, concat(address, '' , address_detail) as address,
+        select seq, store_code, store_name, category_type, status, ceo_name, phone, email, concat(address, '' , address_detail) as address,
             group_concat(
                 case c.category_code
                 when '0' then '신점'
@@ -96,15 +96,20 @@
             s.start_time,
             s.end_time
         from store s
-        where s.store_code = #{storeCode}
+        where s.seq = #{parentSeq}
     </select>
 
     <select id="selectStoreProductList" parameterType="com.dchans.api.admin.dto.store.StoreDto$StoreRequestDto" resultType="com.dchans.api.admin.dto.store.StoreDto$StoreProductDto">
-        select
-            s.product_name as name,
-            s.product_price as price
-        from store_product s
-        where s.store_code = #{storeCode}
+        select product_name as name,
+               product_price as price
+        from store_product
+        where parent_seq = #{parentSeq}
+    </select>
+
+    <select id="selectStoreImageList" parameterType="com.dchans.api.admin.dto.store.StoreDto$StoreRequestDto" resultType="String">
+        select image_path
+        from common_image
+        where parent_seq = #{parentSeq}
     </select>
 
 
@@ -156,25 +161,6 @@
             status = #{status}
     </insert>
 
-    <delete id="deleteStoreProduct">
-        delete from store_product
-        where 1 = 1
-        and store_code = #{storeCode}
-    </delete>
-
-    <insert id="insertStoreProduct" parameterType="com.dchans.api.admin.dto.store.StoreDto$StoreProductDto">
-        insert into store_product (store_code, product_name, product_price)
-        values
-        <foreach collection="list" item="item" index="idx" separator=",">
-            (
-            #{item.storeCode},
-            #{item.name},
-            #{item.price}
-            )
-        </foreach>
-    </insert>
-
-
     <delete id="deleteStore">
         delete from store
         where 1 = 1
@@ -183,4 +169,22 @@
             #{storeCode}
         </foreach>
     </delete>
+
+    <delete id="deleteStoreProduct">
+        delete from store_product
+        where 1 = 1
+          and parent_seq = #{seq}
+    </delete>
+
+    <insert id="insertStoreProduct" parameterType="com.dchans.api.admin.dto.store.StoreDto$StoreProductDto">
+        insert into store_product (parent_seq, product_name, product_price)
+        values
+        <foreach collection="list" item="item" index="idx" separator=",">
+            (
+            #{item.parentSeq},
+            #{item.name},
+            #{item.price}
+            )
+        </foreach>
+    </insert>
 </mapper>

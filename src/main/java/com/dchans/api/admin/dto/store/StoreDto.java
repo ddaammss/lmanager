@@ -26,6 +26,7 @@ public record StoreDto(
             return (page - 1) * pageSize;
         }
 
+        private String parentSeq;
     }
 
     @Getter
@@ -54,12 +55,14 @@ public record StoreDto(
         private String updatedAt;
 
         private List<StoreProductDto> products;
+        private List<String> images;
 
     }
 
     @Getter
     @Setter
     public static class StoreCreateDto {
+        private String seq;
         private String storeCode;
         private String storeName;
         private String categoryType;
@@ -75,7 +78,7 @@ public record StoreDto(
         private String endTime;
         private String status;
         private List<StoreProductDto> products;
-        private List<StoreImageDto> images;
+        private List<String> images;
     }
 
     @Getter
@@ -88,6 +91,7 @@ public record StoreDto(
     @Getter
     @Setter
     public static class StoreProductDto {
+        private String parentSeq;
         private String storeCode;
         private String name;
         private String price;
@@ -98,6 +102,5 @@ public record StoreDto(
     public static class StoreImageDto {
         private String storeCode;
         private String imagePath;
-        private String price;
     }
 }

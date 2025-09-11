@@ -4,10 +4,7 @@ import com.dchans.api.admin.interceptor.AdminInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
-import org.springframework.web.servlet.config.annotation.ContentNegotiationConfigurer;
-import org.springframework.web.servlet.config.annotation.CorsRegistry;
-import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.config.annotation.*;
 
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
@@ -20,7 +17,7 @@ public class WebConfig implements WebMvcConfigurer {
         // 관리자 인터셉터 (관리자 페이지만)
         registry.addInterceptor(adminInterceptor)
                 //.addPathPatterns("/admin/api/**")
-                .excludePathPatterns("/admin/api/**");
+                .excludePathPatterns("/admin/api/**","/uploads/**");
 
 
         // API 인터셉터 (Flutter 앱 API만)
@@ -39,5 +36,10 @@ public class WebConfig implements WebMvcConfigurer {
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                 .allowedHeaders("*")
                 .allowCredentials(true);
+    }
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        registry.addResourceHandler("/uploads/**")
+                .addResourceLocations("file:uploads/");
     }
 }

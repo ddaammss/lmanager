@@ -54,37 +54,4 @@ public class StoreController {
     public ResponseEntity<ApiResponseDto<Integer>> deleteStore(@RequestBody StoreDto.StoreDeleteDto requestDto) {
         return ResponseEntity.ok(ApiResponseDto.success(storeService.deleteStore(requestDto)));
     }
-
-    @PostMapping("/upload/images")
-    public ResponseEntity<?> uploadImages(@RequestParam(value="images",  required = false) List<MultipartFile> images) {
-        try {
-            List<String> imagePaths = new ArrayList<>();
-
-            for (MultipartFile image : images) {
-                String savedPath = saveImageFile(image);
-                imagePaths.add(savedPath);
-            }
-
-            return ResponseEntity.ok(Map.of("imagePaths", imagePaths));
-        } catch (Exception e) {
-            return ResponseEntity.status(500).body("이미지 업로드 실패");
-        }
-    }
-
-    private String saveImageFile(MultipartFile file) throws IOException {
-        String uploadDir = "uploads/store/";
-        String fileName = UUID.randomUUID().toString() + "_" + file.getOriginalFilename();
-
-        String originalFileName = file.getOriginalFilename();
-        String extension = originalFileName.substring(originalFileName.lastIndexOf("."));
-
-        Path uploadPath = Paths.get(uploadDir);
-        if (!Files.exists(uploadPath)) {
-            Files.createDirectories(uploadPath);
-        }
-
-        Files.copy(file.getInputStream(), uploadPath.resolve(fileName));
-        return "/uploads/store/" + fileName; // DB에 저장할 경로
-    }
-
 }

@@ -43,7 +43,9 @@ public class StoreServiceImpl implements StoreService {
     public StoreDto.StoreResponseDto selectStoreDetail(StoreDto.StoreRequestDto requestDto) {
         StoreDto.StoreResponseDto detail = storeDao.selectStoreDetail(NAMESPACE + "selectStoreDetail", requestDto);
         List<StoreDto.StoreProductDto> storeProductList = storeDao.selectStoreProductList(NAMESPACE + "selectStoreProductList", requestDto);
+        List<String> storeImageList = storeDao.selectStoreImageList(NAMESPACE + "selectStoreImageList", requestDto);
         detail.setProducts(storeProductList);
+        detail.setImages(storeImageList);
         return detail;
     }
 
@@ -53,23 +55,11 @@ public class StoreServiceImpl implements StoreService {
         List<StoreDto.StoreProductDto> storeProduct = new ArrayList<>();
         for (StoreDto.StoreProductDto var : requestDto.getProducts()) {
             StoreDto.StoreProductDto storeProductDto = new StoreDto.StoreProductDto();
-            storeProductDto.setStoreCode(requestDto.getStoreCode());
+            storeProductDto.setParentSeq(requestDto.getSeq());
             storeProductDto.setName(var.getName());
             storeProductDto.setPrice(var.getPrice());
             storeProduct.add(storeProductDto);
         }
-
-        List<StoreDto.StoreImageDto> storeImage = new ArrayList<>();
-        for (StoreDto.StoreImageDto var : requestDto.getImages()) {
-            StoreDto.StoreImageDto storeImageDto = new StoreDto.StoreImageDto();
-            storeImageDto.setStoreCode(requestDto.getStoreCode());
-            storeImageDto.setImagePath(var.getImagePath());
-            storeImageDto.setPrice(var.getPrice());
-            storeImage.add(storeImageDto);
-        }
-        storeDao.deleteStoreImage(NAMESPACE + "deleteStoreImage", requestDto);
-        storeDao.insertStoreImage(NAMESPACE + "insertStoreImage", storeImage);
-
         storeDao.deleteStoreProduct(NAMESPACE + "deleteStoreProduct", requestDto);
         storeDao.insertStoreProduct(NAMESPACE + "insertStoreProduct", storeProduct);
 

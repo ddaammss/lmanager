@@ -25,6 +25,10 @@ public class StoreDao extends AbstractMapper {
         return selectList(s, requestDto);
     }
 
+    public List<String> selectStoreImageList(String s, StoreDto.StoreRequestDto requestDto) {
+        return selectList(s, requestDto);
+    }
+
     public StoreDto.StoreResponseDto selectStoreDetail(String s, StoreDto.StoreRequestDto requestDto) {
         return selectOne(s, requestDto);
     }
@@ -44,7 +48,6 @@ public class StoreDao extends AbstractMapper {
     public void insertStoreProduct(String s, List<StoreDto.StoreProductDto> storeProduct) {
         insert(s, storeProduct);
     }
-
 
     public void deleteStoreImage(String s, StoreDto.StoreCreateDto requestDto) {
         delete(s, requestDto);

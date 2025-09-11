@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.event">
 
-    <select id="selectEventList" parameterType="com.dchans.api.admin.dto.store.EventDto$EventRequestDto" resultType="com.dchans.api.admin.dto.store.EventDto$EventResponseDto">
+    <select id="selectEventList" parameterType="com.dchans.api.admin.dto.event.EventDto$EventRequestDto" resultType="com.dchans.api.admin.dto.event.EventDto$EventResponseDto">
         select event_name,  concat(start_date,'-',end_date) as eventDate,
             to_char(created_at,'YYYY-MM-DD') as createdAt
         from event
@@ -10,11 +10,11 @@
         limit #{pageSize} offset #{offset}
     </select>
 
-    <select id="selectEventCount" parameterType="com.dchans.api.admin.dto.store.EventDto$EventRequestDto" resultType="int">
+    <select id="selectEventCount" parameterType="com.dchans.api.admin.dto.event.EventDto$EventRequestDto" resultType="int">
         select count(*) from event
     </select>
 
-    <select id="selectEventDetail" parameterType="com.dchans.api.admin.dto.store.EventDto$EventRequestDto" resultType="com.dchans.api.admin.dto.store.EventDto$EventResponseDto">
+    <select id="selectEventDetail" parameterType="com.dchans.api.admin.dto.event.EventDto$EventRequestDto" resultType="com.dchans.api.admin.dto.event.EventDto$EventResponseDto">
         select
             seq,
             event_name,
@@ -24,7 +24,7 @@
         where seq = #{seq}
     </select>
 
-    <select id="selectEventImageList" parameterType="com.dchans.api.admin.dto.store.EventDto$EventRequestDto" resultType="com.dchans.api.admin.dto.store.EventDto$EventImageDto">
+    <select id="selectEventImageList" parameterType="com.dchans.api.admin.dto.event.EventDto$EventRequestDto" resultType="com.dchans.api.admin.dto.event.EventDto$EventImageDto">
         select
             s.product_name as name,
             s.product_price as price
@@ -33,7 +33,7 @@
     </select>
 
 
-    <insert id="upsertEvent" parameterType="com.dchans.api.admin.dto.store.EventDto$EventCreateDto" >
+    <insert id="upsertEvent" parameterType="com.dchans.api.admin.dto.event.EventDto$EventCreateDto" >
         insert into store (
             store_code,
             store_name,
@@ -87,7 +87,7 @@
         and seq = #{seq}
     </delete>
 
-    <insert id="insertEventImage" parameterType="com.dchans.api.admin.dto.store.EventDto$EventImageDto">
+    <insert id="insertEventImage" parameterType="com.dchans.api.admin.dto.event.EventDto$EventImageDto">
         insert into event_image (store_code, product_name, product_price)
         values
         <foreach collection="list" item="item" index="idx" separator=",">
