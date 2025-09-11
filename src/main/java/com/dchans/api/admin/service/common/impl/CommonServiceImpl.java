@@ -8,6 +8,8 @@ import com.dchans.api.admin.dto.store.StoreDto;
 import com.dchans.api.admin.service.common.CommonService;
 import com.dchans.api.admin.service.store.StoreService;
 import jakarta.annotation.Resource;
+import org.mybatis.logging.Logger;
+import org.mybatis.logging.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -25,7 +27,7 @@ import java.util.List;
 public class CommonServiceImpl implements CommonService {
     @Resource(name = "CommonDao")
     private CommonDao commonDao;
-
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
     private static final String NAMESPACE = "com.common.";
 
     @Override
@@ -63,7 +65,15 @@ public class CommonServiceImpl implements CommonService {
 
         Path uploadPath = Paths.get(uploadDir);
         if (!Files.exists(uploadPath)) {
-            Files.createDirectories(uploadPath);
+            System.out.println("디렉토리 생성 시도: " + uploadPath.toAbsolutePath());
+            try {
+                Files.createDirectories(uploadPath);
+                System.out.println("디렉토리 생성 성공: {}" + uploadPath.toAbsolutePath());
+            } catch (IOException e) {
+                System.out.println("디렉토리 생성 실패:");
+                throw e;
+            }
+
         }
 
         Files.copy(file.getInputStream(), uploadPath.resolve(fileName));

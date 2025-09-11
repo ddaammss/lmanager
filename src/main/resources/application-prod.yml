@@ -9,6 +9,7 @@ server:
     key-alias: amita-keystore
 logging:
   level:
+    root: INFO
     org.springframework: INFO
     org.apache.ibatis: INFO
     com.dchans.api.admin.mapper: INFO

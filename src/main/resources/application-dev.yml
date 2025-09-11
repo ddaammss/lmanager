@@ -3,6 +3,7 @@ server:
   forward-headers-strategy: framework
 logging:
   level:
+    root: INFO
     org.mybatis: DEBUG
     org.apache.ibatis: DEBUG
     com.dchans.api.admin.mapper: DEBUG

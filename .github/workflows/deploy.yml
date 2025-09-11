@@ -27,6 +27,8 @@ jobs:
           mkdir -p ./ssl-certs && \
           chmod 644 /home/ec2-user/keystore.p12 && \
           cp /home/ec2-user/keystore.p12 ./ssl-certs/ && \
+          docker cp app:/app/uploads ./uploads
+          docker cp app:/app/logs ./logs
           docker system prune -a --volumes
           sudo docker build -t app . && \
           sudo docker stop app || true && \
