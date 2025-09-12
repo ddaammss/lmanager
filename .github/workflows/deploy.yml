@@ -27,8 +27,8 @@ jobs:
           mkdir -p ./ssl-certs && \
           chmod 644 /home/ec2-user/keystore.p12 && \
           cp /home/ec2-user/keystore.p12 ./ssl-certs/ && \
-          docker system prune -a --volumes
-          sudo docker build -t app . --no-cache && \  # --no-cache 추가
+          sudo docker system prune -a --volumes -f && \  # 볼륨 및 이미지 삭제
           sudo docker stop app || true && \
           sudo docker rm app || true && \
-          sudo docker run -d --name app -p 443:443 -v /home/ec2-user/lmanager/uploads:/app/uploads  -e JASYPT_ENCRYPTOR_PASSWORD='${JASYPT_ENCRYPTOR_PASSWORD}' app"
+          sudo docker build -t app . --no-cache && \
+          sudo docker run -d --name app -p 443:443 -v /home/ec2-user/lmanager/uploads:/app/uploads -e JASYPT_ENCRYPTOR_PASSWORD='${JASYPT_ENCRYPTOR_PASSWORD}' app"
