@@ -46,3 +46,17 @@ jasypt:
   encryptor:
     # 환경변수에서 가져오되, 없으면 에러
     password: ${JASYPT_ENCRYPTOR_PASSWORD}
+
+logging:
+  level:
+    # SQL 실행 로그
+    jdbc.sqlonly: DEBUG
+    jdbc.sqltiming: DEBUG
+    jdbc.audit: DEBUG
+    jdbc.resultset: DEBUG
+
+    # MyBatis 상세 로그
+    org.apache.ibatis.logging.jdbc: DEBUG
+
+    # 트랜잭션 로그
+    org.springframework.transaction: DEBUG
