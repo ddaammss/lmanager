@@ -48,12 +48,4 @@ public class StoreDao extends AbstractMapper {
     public void insertStoreProduct(String s, List<StoreDto.StoreProductDto> storeProduct) {
         insert(s, storeProduct);
     }
-
-    public void deleteStoreImage(String s, StoreDto.StoreCreateDto requestDto) {
-        delete(s, requestDto);
-    }
-
-    public void insertStoreImage(String s, List<StoreDto.StoreImageDto> storeImage) {
-        insert(s, storeImage);
-    }
 }

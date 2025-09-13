@@ -6,6 +6,7 @@
         delete from common_image
         where 1 = 1
         and parent_seq = #{parentSeq}
+        and type = #{type}
     </delete>
 
     <insert id="insertImage" parameterType="com.dchans.api.admin.dto.common.ImageDto">

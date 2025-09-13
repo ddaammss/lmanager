@@ -4,6 +4,7 @@ import com.dchans.api.admin.dto.common.ApiResponseDto;
 import com.dchans.api.admin.dto.common.PageApiResponseDto;
 import com.dchans.api.admin.dto.common.PageResponse;
 import com.dchans.api.admin.dto.event.EventDto;
+import com.dchans.api.admin.dto.store.StoreDto;
 import com.dchans.api.admin.service.event.EventService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,8 +36,19 @@ public class EventController {
         return ResponseEntity.ok(ApiResponseDto.success(responseDto));
     }
 
+    @PostMapping("/insert")
+    public ResponseEntity<ApiResponseDto<Integer>> insertEvent(@RequestBody EventDto.EventCreateDto requestDto) {
+        return ResponseEntity.ok(ApiResponseDto.success(eventService.insertEvent(requestDto)));
+    }
+
     @PostMapping("/update")
     public ResponseEntity<ApiResponseDto<Integer>> updateEvent(@RequestBody EventDto.EventUpdateDto requestDto) {
         return ResponseEntity.ok(ApiResponseDto.success(eventService.updateEvent(requestDto)));
     }
+
+    @PostMapping("/delete")
+    public ResponseEntity<ApiResponseDto<Integer>> deleteEvent(@RequestBody EventDto.EventDeleteDto requestDto) {
+        return ResponseEntity.ok(ApiResponseDto.success(eventService.deleteEvent(requestDto)));
+    }
+
 }

@@ -1,15 +1,11 @@
 package com.dchans.api.admin.service.common.impl;
 
 import com.dchans.api.admin.dao.common.CommonDao;
-import com.dchans.api.admin.dao.store.StoreDao;
 import com.dchans.api.admin.dto.common.ImageDto;
-import com.dchans.api.admin.dto.common.PageResponse;
-import com.dchans.api.admin.dto.store.StoreDto;
 import com.dchans.api.admin.service.common.CommonService;
-import com.dchans.api.admin.service.store.StoreService;
 import jakarta.annotation.Resource;
-import org.mybatis.logging.Logger;
-import org.mybatis.logging.LoggerFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -49,6 +45,7 @@ public class CommonServiceImpl implements CommonService {
             }
         }
         requestDto.setImagePath(imagePaths);
+        requestDto.setType(type);
 
         commonDao.deleteImage(NAMESPACE + "deleteImage", requestDto);
         commonDao.insertImage(NAMESPACE + "insertImage", requestDto);
@@ -65,10 +62,10 @@ public class CommonServiceImpl implements CommonService {
 
         Path uploadPath = Paths.get(uploadDir);
         if (!Files.exists(uploadPath)) {
-            System.out.println("디렉토리 생성 시도: " + uploadPath.toAbsolutePath());
+            logger.info("디렉토리 생성 시도: {}", uploadPath.toAbsolutePath());
             try {
                 Files.createDirectories(uploadPath);
-                System.out.println("디렉토리 생성 성공: {}" + uploadPath.toAbsolutePath());
+                logger.info("디렉토리 생성 성공: {}" , uploadPath.toAbsolutePath());
             } catch (IOException e) {
                 System.out.println("디렉토리 생성 실패:");
                 throw e;

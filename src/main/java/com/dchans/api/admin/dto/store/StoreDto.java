@@ -96,11 +96,4 @@ public record StoreDto(
         private String name;
         private String price;
     }
-
-    @Getter
-    @Setter
-    public static class StoreImageDto {
-        private String storeCode;
-        private String imagePath;
-    }
 }

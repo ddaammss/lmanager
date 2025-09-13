@@ -110,6 +110,7 @@
         select image_path
         from common_image
         where parent_seq = #{parentSeq}
+        and type = 'store'
     </select>
 
 

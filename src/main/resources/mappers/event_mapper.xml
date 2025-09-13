@@ -3,7 +3,7 @@
 <mapper namespace="com.event">
 
     <select id="selectEventList" parameterType="com.dchans.api.admin.dto.event.EventDto$EventRequestDto" resultType="com.dchans.api.admin.dto.event.EventDto$EventResponseDto">
-        select event_name,  concat(start_date,'-',end_date) as eventDate,
+        select seq, event_name,  concat(start_date,'-',end_date) as eventDate, content,
             to_char(created_at,'YYYY-MM-DD') as createdAt
         from event
         order by created_at desc
@@ -18,94 +18,43 @@
         select
             seq,
             event_name,
-            start_time,
-            end_time
-        from event s
+            start_date,
+            end_date,
+            content
+        from event
         where seq = #{seq}
     </select>
 
-    <select id="selectEventImageList" parameterType="com.dchans.api.admin.dto.event.EventDto$EventRequestDto" resultType="com.dchans.api.admin.dto.event.EventDto$EventImageDto">
-        select
-            s.product_name as name,
-            s.product_price as price
-        from event_image
-        where seq = #{seq}
+    <select id="selectEventImageList" parameterType="com.dchans.api.admin.dto.event.EventDto$EventRequestDto" resultType="String">
+        select image_path
+        from common_image
+        where parent_seq = #{seq}
+        and type = 'event'
     </select>
-
-
-    <insert id="upsertEvent" parameterType="com.dchans.api.admin.dto.event.EventDto$EventCreateDto" >
-        insert into store (
-            store_code,
-            store_name,
-            category_type,
-            ceo_name,
-            phone,
-            email,
-            zip_code,
-            address,
-            address_detail,
-            description,
-            memo,
-            start_time,
-            end_time,
-            status
-        )values(
-            #{storeCode},
-            #{storeName},
-            #{categoryType},
-            #{ceoName},
-            #{phone},
-            #{email},
-            #{zipCode},
-            #{address},
-            #{addressDetail},
-            #{description},
-            #{memo},
-            #{startTime},
-            #{endTime},
-            #{status}
-        )
-        on duplicate key update
-            store_name = #{storeName},
-            category_type = #{categoryType},
-            ceo_name = #{ceoName},
-            phone = #{phone},
-            email = #{email},
-            zip_code = #{zipCode},
-            address = #{address},
-            address_detail = #{addressDetail},
-            description = #{description},
-            memo = #{memo},
-            start_time = #{startTime},
-            end_time = #{endTime},
-            status = #{status}
-    </insert>
-
-    <delete id="deleteEventImage">
-        delete from event_image
-        where 1 = 1
-        and seq = #{seq}
-    </delete>
-
-    <insert id="insertEventImage" parameterType="com.dchans.api.admin.dto.event.EventDto$EventImageDto">
-        insert into event_image (store_code, product_name, product_price)
-        values
-        <foreach collection="list" item="item" index="idx" separator=",">
-            (
-            #{item.storeCode},
-            #{item.name},
-            #{item.price}
-            )
-        </foreach>
-    </insert>
-
 
     <delete id="deleteEvent">
-        delete from store
+        delete from event
         where 1 = 1
-        and store_code in
-        <foreach collection="storeCodeList" item="storeCode" open="(" close=")" separator=",">
-            #{storeCode}
+        and seq in
+        <foreach collection="seqList" item="seq" open="(" close=")" separator=",">
+            #{seq}
         </foreach>
     </delete>
+
+    <insert id="insertEvent" parameterType="com.dchans.api.admin.dto.event.EventDto$EventCreateDto" useGeneratedKeys="true" keyProperty="seq">
+        insert into event (event_name, start_date, end_date, content)
+        values
+            (
+            #{eventName},
+            #{startDate},
+            #{endDate},
+            #{content}
+            )
+    </insert>
+
+    <update id="updateEvent" parameterType="com.dchans.api.admin.dto.event.EventDto$EventUpdateDto">
+        update event set event_name = #{eventName}, start_date = #{startDate}, end_date = #{endDate}, content = #{content}
+        where seq = #{seq}
+    </update>
+
 </mapper>
