@@ -17,18 +17,17 @@ public class BannerServiceImpl implements BannerService {
 
     @Override
     public BannerDto.BannerResponseDto selectMainBanner(BannerDto.BannerRequestDto requestDto) {
-        BannerDto.BannerResponseDto main = bannerDao.selectMainBanner(NAMESPACE + "selectMainBanner", requestDto);
-        List<String> imageList = bannerDao.selectMainBannerImageList(NAMESPACE + "selectMainBannerImageList", requestDto);
-        main.setImages(imageList);
-        return main;
-    }
+        BannerDto.BannerResponseDto banner = bannerDao.selectMainBanner(NAMESPACE + "selectMainBanner", requestDto);
+        List<String> mainImageList = bannerDao.selectMainBannerImageList(NAMESPACE + "selectMainBannerImageList", requestDto);
+        banner.setMainImages(mainImageList);
 
-    @Override
-    public BannerDto.BannerResponseDto selectSubBanner(BannerDto.BannerRequestDto requestDto) {
-        BannerDto.BannerResponseDto main = bannerDao.selectSubBanner(NAMESPACE + "selectSubBanner", requestDto);
-        List<String> imageList = bannerDao.selectSubBannerImageList(NAMESPACE + "selectSubBannerImageList", requestDto);
-        main.setImages(imageList);
-        return main;
+        BannerDto.BannerResponseDto sub = bannerDao.selectSubBanner(NAMESPACE + "selectSubBanner", requestDto);
+        banner.setSubSeq(sub.getSubSeq());
+        banner.setSubName(sub.getSubName());
+        banner.setSubContent(sub.getSubContent());
+        List<String> subImageList = bannerDao.selectSubBannerImageList(NAMESPACE + "selectSubBannerImageList", requestDto);
+        banner.setSubImages(subImageList);
+        return banner;
     }
 
     @Override

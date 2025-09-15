@@ -8,7 +8,6 @@ public interface BannerService {
 
     BannerDto.BannerResponseDto selectMainBanner(BannerDto.BannerRequestDto requestDto);
 
-    BannerDto.BannerResponseDto selectSubBanner(BannerDto.BannerRequestDto requestDto);
 
     Integer insertBanner(BannerDto.BannerCreateDto requestDto);
 

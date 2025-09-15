@@ -31,13 +31,6 @@ public class BannerController {
         return ResponseEntity.ok(ApiResponseDto.success(responseDto));
     }
 
-    @PostMapping("/sub")
-    public ResponseEntity<ApiResponseDto<BannerDto.BannerResponseDto>> selectSubBanner(@RequestBody BannerDto.BannerRequestDto requestDto) {
-        BannerDto.BannerResponseDto responseDto = bannerService.selectSubBanner(requestDto);
-        return ResponseEntity.ok(ApiResponseDto.success(responseDto));
-    }
-
-
     @PostMapping("/insert")
     public ResponseEntity<ApiResponseDto<Integer>> insertBanner(@RequestBody BannerDto.BannerCreateDto requestDto) {
         return ResponseEntity.ok(ApiResponseDto.success(bannerService.insertBanner(requestDto)));

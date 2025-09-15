@@ -24,6 +24,7 @@ public record BannerDto(
     @Setter
     public static class BannerResponseDto {
         private String seq;
+        private String subSeq;
         private String mainName;
         private String mainContent;
         private String subName;
@@ -31,7 +32,8 @@ public record BannerDto(
         private String createdAt;
         private String createdBy;
 
-        private List<String> images;
+        private List<String> mainImages;
+        private List<String> subImages;
     }
 
     @Getter
@@ -48,10 +50,8 @@ public record BannerDto(
     @Setter
     public static class BannerUpdateDto {
         private String seq;
-        private String mainName;
-        private String mainContent;
-        private String subName;
-        private String subContent;
+        private String name;
+        private String content;
         private String type;
     }
 }

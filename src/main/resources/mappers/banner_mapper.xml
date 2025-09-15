@@ -18,7 +18,7 @@
 
 
     <select id="selectSubBanner" parameterType="com.dchans.api.admin.dto.event.BannerDto$BannerRequestDto" resultType="com.dchans.api.admin.dto.event.BannerDto$BannerResponseDto">
-        select seq, name as subName, content as subContent
+        select seq as subSeq, name as subName, content as subContent
         from banner
         where seq = 2
         and type = 1
@@ -44,7 +44,7 @@
     </insert>
 
     <update id="updateBanner" parameterType="com.dchans.api.admin.dto.event.BannerDto$BannerUpdateDto">
-        update banner set name = #{mainName}, content = #{mainContent}
+        update banner set name = #{name}, content = #{content}
         where seq = #{seq}
         and type = #{type}
     </update>
