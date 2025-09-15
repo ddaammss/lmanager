@@ -43,9 +43,8 @@ public class BannerController {
         return ResponseEntity.ok(ApiResponseDto.success(bannerService.insertBanner(requestDto)));
     }
 
-    @PostMapping("/mainUpdate")
+    @PostMapping("/update")
     public ResponseEntity<ApiResponseDto<Integer>> updateBanner(@RequestBody BannerDto.BannerUpdateDto requestDto) {
         return ResponseEntity.ok(ApiResponseDto.success(bannerService.updateBanner(requestDto)));
     }
-
 }

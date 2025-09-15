@@ -21,6 +21,15 @@ public class BannerDao extends AbstractMapper {
         return selectList(s, requestDto);
     }
 
+    public BannerDto.BannerResponseDto selectSubBanner(String s, BannerDto.BannerRequestDto requestDto) {
+        return selectOne(s, requestDto);
+    }
+
+    public List<String> selectSubBannerImageList(String s, BannerDto.BannerRequestDto requestDto) {
+        return selectList(s, requestDto);
+    }
+
+
     public Integer insertBanner(String s, BannerDto.BannerCreateDto requestDto) {
         return insert(s, requestDto);
     }

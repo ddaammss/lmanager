@@ -17,6 +17,12 @@
     </select>
 
 
+    <select id="selectSubBanner" parameterType="com.dchans.api.admin.dto.event.BannerDto$BannerRequestDto" resultType="com.dchans.api.admin.dto.event.BannerDto$BannerResponseDto">
+        select seq, name as subName, content as subContent
+        from banner
+        where seq = 2
+        and type = 1
+    </select>
 
     <select id="selectSubBannerImageList" parameterType="com.dchans.api.admin.dto.event.BannerDto$BannerRequestDto" resultType="String">
         select image_path

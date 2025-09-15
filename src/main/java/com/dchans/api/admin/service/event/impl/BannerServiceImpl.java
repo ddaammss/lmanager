@@ -25,7 +25,10 @@ public class BannerServiceImpl implements BannerService {
 
     @Override
     public BannerDto.BannerResponseDto selectSubBanner(BannerDto.BannerRequestDto requestDto) {
-        return null;
+        BannerDto.BannerResponseDto main = bannerDao.selectSubBanner(NAMESPACE + "selectSubBanner", requestDto);
+        List<String> imageList = bannerDao.selectSubBannerImageList(NAMESPACE + "selectSubBannerImageList", requestDto);
+        main.setImages(imageList);
+        return main;
     }
 
     @Override
