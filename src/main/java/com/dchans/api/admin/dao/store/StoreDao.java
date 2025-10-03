@@ -48,4 +48,8 @@ public class StoreDao extends AbstractMapper {
     public void insertStoreProduct(String s, List<StoreDto.StoreProductDto> storeProduct) {
         insert(s, storeProduct);
     }
+
+    public int getStoreLastSeq(String s, StoreDto.StoreCreateDto requestDto) {
+        return selectOne(s, requestDto);
+    }
 }

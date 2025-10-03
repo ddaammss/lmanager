@@ -56,7 +56,7 @@
             </if>
         ) t
         where 1=1
-        order by  sort_order, seq desc
+        order by  sort_order, createdAt desc
     </select>
 
     <select id="selectSalesCount" parameterType="com.dchans.api.admin.dto.sales.SalesDto$SalesRequestDto" resultType="int">
@@ -115,6 +115,12 @@
                 end payName
         from sales a inner join store b on a.store_code = b.store_code
         where a.seq = #{seq}
+    </select>
+
+    <select id="selectStoreList" parameterType="com.dchans.api.admin.dto.sales.SalesDto$SalesRequestDto" resultType="com.dchans.api.admin.dto.sales.SalesDto$SalesResponseDto">
+        select store_code, store_name
+        from store
+        where status = '0'
     </select>
 
 

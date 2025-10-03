@@ -36,6 +36,12 @@ public class SalesController {
         return ResponseEntity.ok(ApiResponseDto.success(responseDto));
     }
 
+    @PostMapping("/store/list")
+    public ResponseEntity<PageApiResponseDto<SalesDto.SalesResponseDto>> selectStoreList(@RequestBody SalesDto.SalesRequestDto requestDto) {
+        PageResponse<SalesDto.SalesResponseDto> responseDto = salesService.selectStoreList(requestDto);
+        return ResponseEntity.ok(PageApiResponseDto.success(responseDto));
+    }
+
     @PostMapping("/upsert")
     public ResponseEntity<ApiResponseDto<Integer>> upsertSales(@RequestBody SalesDto.SalesCreateDto requestDto) {
         return ResponseEntity.ok(ApiResponseDto.success(salesService.upsertSales(requestDto)));

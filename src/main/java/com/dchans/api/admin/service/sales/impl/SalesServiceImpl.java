@@ -45,6 +45,20 @@ public class SalesServiceImpl implements SalesService {
     }
 
     @Override
+    public PageResponse<SalesDto.SalesResponseDto> selectStoreList(SalesDto.SalesRequestDto requestDto) {
+        List<SalesDto.SalesResponseDto> response = salesDao.selectStoreList(NAMESPACE + "selectStoreList", requestDto);
+
+        return new PageResponse<>(
+                response,                    // 데이터 목록
+                requestDto.getPage(),          // 현재 페이지
+                0,                    // 총 페이지 수
+                0,                    // 총 아이템 수
+                requestDto.getPageSize()       // 페이지 크기
+        );
+
+    }
+
+    @Override
     public Integer upsertSales(SalesDto.SalesCreateDto requestDto) {
         return salesDao.upsertSales(NAMESPACE + "upsertSales", requestDto);
     }

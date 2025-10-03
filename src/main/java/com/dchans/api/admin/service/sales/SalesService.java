@@ -8,5 +8,9 @@ public interface SalesService {
 
     SalesDto.SalesResponseDto selectSalesDetail(SalesDto.SalesRequestDto requestDto);
 
+    PageResponse<SalesDto.SalesResponseDto> selectStoreList(SalesDto.SalesRequestDto requestDto);
+
     Integer upsertSales(SalesDto.SalesCreateDto requestDto);
+
+
 }

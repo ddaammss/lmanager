@@ -52,6 +52,12 @@ public class StoreServiceImpl implements StoreService {
     @Override
     @Transactional
     public Integer upsertStore(StoreDto.StoreCreateDto requestDto) {
+        int seq = 1;
+        if (requestDto.getSeq() == null) {
+            seq = storeDao.getStoreLastSeq(NAMESPACE + "getStoreLastSeq", requestDto);
+            requestDto.setSeq(String.valueOf(seq));
+            requestDto.setStoreCode("ST" + seq);
+        }
         List<StoreDto.StoreProductDto> storeProduct = new ArrayList<>();
         for (StoreDto.StoreProductDto var : requestDto.getProducts()) {
             StoreDto.StoreProductDto storeProductDto = new StoreDto.StoreProductDto();
@@ -62,8 +68,8 @@ public class StoreServiceImpl implements StoreService {
         }
         storeDao.deleteStoreProduct(NAMESPACE + "deleteStoreProduct", requestDto);
         storeDao.insertStoreProduct(NAMESPACE + "insertStoreProduct", storeProduct);
-
-        return storeDao.upsertStore(NAMESPACE + "upsertStore", requestDto);
+        storeDao.upsertStore(NAMESPACE + "upsertStore", requestDto);
+        return seq;
     }
 
     @Override

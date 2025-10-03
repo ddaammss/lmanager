@@ -12,15 +12,15 @@ import java.util.List;
 @Service
 public class AdServiceImpl implements AdService {
     @Resource(name = "AdDao")
-    private AdDao salesDao;
+    private AdDao adDao;
 
     private static final String NAMESPACE = "com.ad.";
 
     @Override
     public PageResponse<AdDto.AdResponseDto> selectAdRequestList(AdDto.AdRequestDto requestDto) {
-        List<AdDto.AdResponseDto> response = salesDao.selectAdRequestList(NAMESPACE + "selectAdRequestList", requestDto);
+        List<AdDto.AdResponseDto> response = adDao.selectAdRequestList(NAMESPACE + "selectAdRequestList", requestDto);
 
-        long totalCount = salesDao.selectAdRequestCount(NAMESPACE + "selectAdRequestCount", requestDto);
+        long totalCount = adDao.selectAdRequestCount(NAMESPACE + "selectAdRequestCount", requestDto);
 
         // 3. 페이징 정보 계산
         int totalPages = (int) Math.ceil((double) totalCount / requestDto.getPageSize());
@@ -38,20 +38,20 @@ public class AdServiceImpl implements AdService {
 
     @Override
     public AdDto.AdResponseDto selectAdRequestDetail(AdDto.AdRequestDto requestDto) {
-        return salesDao.selectAdRequestDetail(NAMESPACE + "selectAdRequestDetail", requestDto);
+        return adDao.selectAdRequestDetail(NAMESPACE + "selectAdRequestDetail", requestDto);
     }
 
     @Override
     public Integer updateAdRequest(AdDto.AdUpdateDto requestDto) {
-        return salesDao.updateAdRequest(NAMESPACE + "updateAdRequest", requestDto);
+        return adDao.updateAdRequest(NAMESPACE + "updateAdRequest", requestDto);
     }
 
 
     @Override
     public PageResponse<AdDto.AdResponseDto> selectAdRegistList(AdDto.AdRequestDto requestDto) {
-        List<AdDto.AdResponseDto> response = salesDao.selectAdRegistList(NAMESPACE + "selectAdRegistList", requestDto);
+        List<AdDto.AdResponseDto> response = adDao.selectAdRegistList(NAMESPACE + "selectAdRegistList", requestDto);
 
-        long totalCount = salesDao.selectAdRegistCount(NAMESPACE + "selectAdRegistCount", requestDto);
+        long totalCount = adDao.selectAdRegistCount(NAMESPACE + "selectAdRegistCount", requestDto);
 
         // 3. 페이징 정보 계산
         int totalPages = (int) Math.ceil((double) totalCount / requestDto.getPageSize());
@@ -68,17 +68,16 @@ public class AdServiceImpl implements AdService {
 
     @Override
     public AdDto.AdResponseDto selectAdRegistDetail(AdDto.AdRequestDto requestDto) {
-        return salesDao.selectAdRegistDetail(NAMESPACE + "selectAdRegistDetail", requestDto);
+        return adDao.selectAdRegistDetail(NAMESPACE + "selectAdRegistDetail", requestDto);
     }
 
     @Override
     public Integer updateAdRegist(AdDto.AdUpdateDto requestDto) {
-        return salesDao.updateAdRegist(NAMESPACE + "updateAdRegist", requestDto);
+        return adDao.updateAdRegist(NAMESPACE + "updateAdRegist", requestDto);
     }
 
     @Override
     public Integer deleteAdRegist(AdDto.AdDeleteDto requestDto) {
-        return salesDao.deleteAdRegist(NAMESPACE + "deleteAdRegist", requestDto);
+        return adDao.deleteAdRegist(NAMESPACE + "deleteAdRegist", requestDto);
     }
-
 }

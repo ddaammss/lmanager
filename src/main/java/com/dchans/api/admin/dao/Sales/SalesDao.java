@@ -25,7 +25,13 @@ public class SalesDao extends AbstractMapper {
         return selectOne(s, requestDto);
     }
 
+    public List<SalesDto.SalesResponseDto> selectStoreList(String s, SalesDto.SalesRequestDto requestDto) {
+        return selectList(s, requestDto);
+    }
+
     public Integer upsertSales(String s, SalesDto.SalesCreateDto requestDto) {
         return insert(s, requestDto);
     }
+
+
 }

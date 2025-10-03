@@ -30,9 +30,6 @@ public class AdDao extends AbstractMapper {
         return update(s, requestDto);
     }
 
-
-
-
     public List<AdDto.AdResponseDto> selectAdRegistList(String s, AdDto.AdRequestDto requestDto) {
         return selectList(s, requestDto);
     }
