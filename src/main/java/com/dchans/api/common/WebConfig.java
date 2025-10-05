@@ -30,7 +30,7 @@ public class WebConfig implements WebMvcConfigurer {
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
                 .allowedOrigins(
-                        "http://localhost:5173",     // Vue 로컬
+                        "http://localhost:5173",  // Vue 로컬
                         "https://vuestic-kappa.vercel.app" // Vue vercel 도메인
                 )
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")

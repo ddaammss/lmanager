@@ -29,7 +29,9 @@ spring:
       validation-timeout: 3000
       leak-detection-threshold: 60000
       connection-init-sql: SELECT 1
-
+  servlet:
+    multipart:
+      max-file-size: 10MB      # 일반적
 jwt:
   secret: mySecretKey123!@#SecureTokenForJWTAuthentication2024
   access-token:
