@@ -77,6 +77,9 @@ public record StoreDto(
         private String startTime;
         private String endTime;
         private String status;
+        private Double latitude;
+        private Double longitude;
+
         private List<StoreProductDto> products;
         private List<String> images;
     }

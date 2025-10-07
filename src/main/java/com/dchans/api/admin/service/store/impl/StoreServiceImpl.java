@@ -4,13 +4,16 @@ import com.dchans.api.admin.dao.store.StoreDao;
 import com.dchans.api.admin.dto.common.PageResponse;
 import com.dchans.api.admin.dto.store.StoreDto;
 import com.dchans.api.admin.service.store.StoreService;
+import com.dchans.api.common.GeocodingService;
 import jakarta.annotation.Resource;
 import org.apache.catalina.Store;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class StoreServiceImpl implements StoreService {
@@ -18,6 +21,9 @@ public class StoreServiceImpl implements StoreService {
     private StoreDao storeDao;
 
     private static final String NAMESPACE = "com.store.";
+
+    @Autowired
+    private GeocodingService geocodingService;
 
     @Override
     public PageResponse<StoreDto.StoreResponseDto> selectStoreList(StoreDto.StoreRequestDto requestDto) {
@@ -52,6 +58,16 @@ public class StoreServiceImpl implements StoreService {
     @Override
     @Transactional
     public Integer upsertStore(StoreDto.StoreCreateDto requestDto) {
+        // 주소로 위경도 변환
+        if (requestDto.getAddress() != null && !requestDto.getAddress().isEmpty()) {
+            Map<String, Double> coordinates = geocodingService.getCoordinates(requestDto.getAddress());
+
+            if (coordinates != null) {
+                requestDto.setLatitude(coordinates.get("latitude"));
+                requestDto.setLongitude(coordinates.get("longitude"));
+            }
+        }
+
         int seq = 1;
         if (requestDto.getSeq() == null) {
             seq = storeDao.getStoreLastSeq(NAMESPACE + "getStoreLastSeq", requestDto);

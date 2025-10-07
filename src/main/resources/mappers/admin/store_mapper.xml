@@ -129,7 +129,9 @@
             memo,
             start_time,
             end_time,
-            status
+            status,
+            latitude,
+            longitude
         )values(
             #{storeCode},
             #{storeName},
@@ -144,7 +146,9 @@
             #{memo},
             #{startTime},
             #{endTime},
-            0
+            0,
+            #{latitude},
+            #{longitude}
         )
         on duplicate key update
             store_name = #{storeName},
@@ -159,7 +163,10 @@
             memo = #{memo},
             start_time = #{startTime},
             end_time = #{endTime},
-            status = #{status}
+            status = #{status},
+            latitude =#{latitude},
+            longitude =#{longitude}
+
     </insert>
 
     <delete id="deleteStore">
