@@ -1,4 +1,4 @@
-package com.dchans.api.app.dto.main;
+package com.dchans.api.app.dto.review;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -8,4 +8,5 @@ import lombok.Setter;
 public class AppReviewDto {
     private String userName;
     private String content;
+    private String imagePath;
 }

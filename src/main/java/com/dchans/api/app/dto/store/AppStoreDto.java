@@ -1,4 +1,4 @@
-package com.dchans.api.app.dto.main;
+package com.dchans.api.app.dto.store;
 
 import lombok.Getter;
 import lombok.Setter;

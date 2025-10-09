@@ -2,6 +2,8 @@ package com.dchans.api.app.controller.main;
 
 import com.dchans.api.admin.dto.common.ApiResponseDto;
 import com.dchans.api.app.dto.main.AppMainDto;
+import com.dchans.api.app.service.main.AppMainService;
+import com.dchans.api.app.service.product.AppProductService;
 import com.dchans.api.app.service.review.AppReviewService;
 import com.dchans.api.app.service.store.AppStoreService;
 import org.slf4j.Logger;
@@ -17,30 +19,29 @@ public class AppMainController {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    private final AppStoreService appStoreService;
-    private final AppReviewService appReviewService;
+//    private final AppStoreService appStoreService;
+//    private final AppReviewService appReviewService;
+//    private final AppProductService appProductService;
+    private final AppMainService appMainService;
 
-    public AppMainController(AppStoreService appStoreService, AppReviewService appReviewService) {
-        this.appStoreService = appStoreService;
-        this.appReviewService = appReviewService;
+    public AppMainController(AppMainService appMainService) {
+        this.appMainService = appMainService;
     }
-    //private final ProductService productService;
 
+//    public AppMainController(AppStoreService appStoreService, AppReviewService appReviewService, AppProductService appProductService) {
+//        this.appStoreService = appStoreService;
+//        this.appReviewService = appReviewService;
+//        this.appProductService = appProductService;
+//    }
 
     @PostMapping
-    public ResponseEntity<ApiResponseDto<AppMainDto>> getMainData() {
-        AppMainDto mainDto = new AppMainDto();
-//        mainDto.setStoreDto(store);
-//        mainDto.setProductDto();
-//        mainDto.setReviewDto();
-//        MainDto mainData = MainDto.builder()
-//                .allStores(storeService.getAllStores())
-//                .nearbyStores(storeService.getNearbyStores())
-//                .popularStores(storeService.getPopularStores())
-//                .recommendProducts(productService.getRecommendProducts())
-//                .bestReviews(reviewService.getBestReviews())
-//                .build();
-
+    public ResponseEntity<ApiResponseDto<AppMainDto>> getAppMainData() {
+        AppMainDto mainDto = AppMainDto.builder()
+                .allStoreDto(appMainService.selectAllStoreList())
+                .nearStoreDto(appMainService.selectNearStoreList())
+                .productDto(appMainService.selectProductList())
+                .reviewDto(appMainService.selectReviewList())
+                .build();
         return ResponseEntity.ok(ApiResponseDto.success(mainDto));
     }
 

@@ -4,7 +4,7 @@ import com.dchans.api.common.AbstractMapper;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
-@Repository("ReviewDao")
+@Repository("AppReviewDao")
 public class AppReviewDao extends AbstractMapper {
     public AppReviewDao(SqlSessionTemplate sqlSession) {
         super(sqlSession);
