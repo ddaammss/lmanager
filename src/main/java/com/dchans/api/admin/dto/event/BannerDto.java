@@ -25,14 +25,18 @@ public record BannerDto(
     public static class BannerResponseDto {
         private String seq;
         private String subSeq;
+        private String mainSeq2;
         private String mainName;
         private String mainContent;
+        private String mainName2;
+        private String mainContent2;
         private String subName;
         private String subContent;
         private String createdAt;
         private String createdBy;
 
         private List<String> mainImages;
+        private List<String> mainImages2;
         private List<String> subImages;
     }
 

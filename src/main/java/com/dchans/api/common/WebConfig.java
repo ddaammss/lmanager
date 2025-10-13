@@ -17,7 +17,7 @@ public class WebConfig implements WebMvcConfigurer {
         // 관리자 인터셉터 (관리자 페이지만)
         registry.addInterceptor(adminInterceptor)
                 //.addPathPatterns("/admin/api/**")
-                .excludePathPatterns("/admin/api/**","/uploads/**");
+                .excludePathPatterns("/admin/api/**","/app/api/**","/uploads/**");
 
 
         // API 인터셉터 (Flutter 앱 API만)

@@ -16,6 +16,19 @@
         and type = 'mainBanner'
     </select>
 
+    <select id="selectMainBanner2" parameterType="com.dchans.api.admin.dto.event.BannerDto$BannerRequestDto" resultType="com.dchans.api.admin.dto.event.BannerDto$BannerResponseDto">
+        select seq as mainSeq2, name as mainName2, content as mainContent2
+        from banner
+        where seq = 3
+        and type = 2
+    </select>
+
+    <select id="selectMainBanner2ImageList" parameterType="com.dchans.api.admin.dto.event.BannerDto$BannerRequestDto" resultType="String">
+        select image_path
+        from common_image
+        where parent_seq = 3
+        and type = 'mainBanner2'
+    </select>
 
     <select id="selectSubBanner" parameterType="com.dchans.api.admin.dto.event.BannerDto$BannerRequestDto" resultType="com.dchans.api.admin.dto.event.BannerDto$BannerResponseDto">
         select seq as subSeq, name as subName, content as subContent

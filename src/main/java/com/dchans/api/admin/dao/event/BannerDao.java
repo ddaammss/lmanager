@@ -17,7 +17,15 @@ public class BannerDao extends AbstractMapper {
         return selectOne(s, requestDto);
     }
 
+    public BannerDto.BannerResponseDto selectMainBanner2(String s, BannerDto.BannerRequestDto requestDto) {
+        return selectOne(s, requestDto);
+    }
+
     public List<String> selectMainBannerImageList(String s, BannerDto.BannerRequestDto requestDto) {
+        return selectList(s, requestDto);
+    }
+
+    public List<String> selectMainBanner2ImageList(String s, BannerDto.BannerRequestDto requestDto) {
         return selectList(s, requestDto);
     }
 
@@ -37,4 +45,7 @@ public class BannerDao extends AbstractMapper {
     public Integer updateBanner(String s, BannerDto.BannerUpdateDto requestDto) {
         return update(s, requestDto);
     }
+
+
+
 }
