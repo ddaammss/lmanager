@@ -15,6 +15,7 @@ import java.util.List;
 @Setter
 @Builder
 public class AppMainDto {
+    private List<AppStoreDto> popularStoreDto;
     private List<AppStoreDto> allStoreDto;
     private List<AppStoreDto> nearStoreDto;
     private List<AppProductDto> productDto;

@@ -21,6 +21,11 @@ public class AppMainServiceImpl implements AppMainService {
     private static final String NAMESPACE = "com.app.main.";
 
     @Override
+    public List<AppStoreDto> selectPopularityStoreList() {
+        return appMainDao.selectPopularityStoreList(NAMESPACE + "selectPopularityStoreList");
+    }
+
+    @Override
     public List<AppStoreDto> selectAllStoreList() {
         return appMainDao.selectAllStoreList(NAMESPACE + "selectAllStoreList");
     }

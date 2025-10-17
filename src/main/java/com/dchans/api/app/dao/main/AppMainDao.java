@@ -16,6 +16,11 @@ public class AppMainDao extends AbstractMapper {
     public AppMainDao(SqlSessionTemplate sqlSession) {
         super(sqlSession);
     }
+
+    public List<AppStoreDto> selectPopularityStoreList(String s) {
+        return selectList(s);
+    }
+
     public List<AppStoreDto> selectAllStoreList(String s) {
         return selectList(s);
     }
@@ -40,4 +45,6 @@ public class AppMainDao extends AbstractMapper {
     public List<AppBannerDto> selectMainBanner2List(String s) {
         return selectList(s);
     }
+
+
 }

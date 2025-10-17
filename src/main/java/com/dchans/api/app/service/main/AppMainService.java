@@ -9,6 +9,7 @@ import com.dchans.api.app.dto.store.AppStoreDto;
 import java.util.List;
 
 public interface AppMainService {
+    List<AppStoreDto> selectPopularityStoreList();
     List<AppStoreDto> selectAllStoreList();
     List<AppStoreDto> selectNearStoreList(AppStoreDto appStoreDto);
     List<AppProductDto> selectProductList();
@@ -17,4 +18,6 @@ public interface AppMainService {
     AppPolicyDto selectPrivacyDetail();
     List<AppBannerDto> selectMainBannerList();
     List<AppBannerDto> selectMainBanner2List();
+
+
 }

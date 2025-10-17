@@ -12,5 +12,5 @@ public class AppBannerDto {
     private String seq;
     private String name;
     private String content;
-    private List<String> imagePath;
+    private String imagePath;
 }

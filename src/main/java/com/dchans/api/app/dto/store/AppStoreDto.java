@@ -17,4 +17,6 @@ public class AppStoreDto {
     private double latitude;
     private double longitude;
     private double distance; // 계산된 거리
+    private String operatingHours;
+    private String imagePath;
 }

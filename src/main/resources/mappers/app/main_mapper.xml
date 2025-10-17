@@ -2,9 +2,22 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.app.main">
 
+    <select id="selectPopularityStoreList" resultType="com.dchans.api.app.dto.store.AppStoreDto">
+        select
+            s.seq,
+            s.store_name,
+            count(sr.seq) as reviewCount
+        from store s left join store_review sr on s.seq = sr.parent_seq
+        where s.status = 0
+        group by s.seq, s.store_name
+        order by reviewCount desc
+        limit 0,5
+    </select>
+
     <select id="selectAllStoreList" resultType="com.dchans.api.app.dto.store.AppStoreDto">
         select s.seq, s.store_code, s.store_name, s.description,
                group_concat(
+                   distinct
                        case c.category_code
                            when '0' then '신점'
                            when '1' then '철학관'
@@ -18,7 +31,9 @@
                ) as categoryName,
                SUBSTRING_INDEX(address, ' ', 2) as address,
                avg(sr.grade) grade,
-               count(sr.seq)as reviewCount
+               count(sr.seq)as reviewCount,
+               concat(s.start_time,'~', s.end_time) as operatingHours,
+               (select image_path from common_image where parent_seq = s.seq and type = 'store' order by created_at desc limit 1) as imagePath
         from store s
         cross join (
             select '0' as category_code union all
@@ -36,6 +51,7 @@
     <select id="selectNearStoreList" resultType="com.dchans.api.app.dto.store.AppStoreDto">
         select s.seq, s.store_code, s.store_name, s.description, latitude, longitude,
                group_concat(
+                   distinct
                        case c.category_code
                            when '0' then '신점'
                            when '1' then '철학관'
@@ -49,7 +65,9 @@
                ) as categoryName,
                SUBSTRING_INDEX(address, ' ', 2) as address,
                avg(sr.grade) grade,
-               count(sr.seq)as reviewCount
+               count(sr.seq)as reviewCount,
+               concat(s.start_time,'~', s.end_time) as operatingHours,
+               (select image_path from common_image where parent_seq = s.seq and type = 'store' order by created_at desc limit 1) as imagePath
         from store s
                  cross join (
             select '0' as category_code union all

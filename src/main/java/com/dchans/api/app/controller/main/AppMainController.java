@@ -27,6 +27,7 @@ public class AppMainController {
     @PostMapping("/main")
     public ResponseEntity<ApiResponseDto<AppMainDto>> getAppMainData(@RequestBody AppStoreDto appStoreDto) {
         AppMainDto mainDto = AppMainDto.builder()
+                .popularStoreDto(appMainService.selectPopularityStoreList())
                 .allStoreDto(appMainService.selectAllStoreList())
                 .nearStoreDto(appMainService.selectNearStoreList(appStoreDto))
                 .productDto(appMainService.selectProductList())
