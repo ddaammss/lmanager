@@ -82,8 +82,8 @@
     </select>
 
     <select id="selectProductList" resultType="com.dchans.api.app.dto.product.AppProductDto">
-        select name, price, ci.image_path
-        from shop s inner join common_image ci on s.seq = ci.parent_seq and ci.type = 'shop'
+        select name, format(price,0) as price, ci.image_path
+        from shop s left join common_image ci on s.seq = ci.parent_seq and ci.type = 'shop'
         order by s.created_at desc
         limit 0,5
     </select>

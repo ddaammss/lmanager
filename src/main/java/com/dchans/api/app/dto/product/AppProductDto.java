@@ -6,7 +6,9 @@ import lombok.Setter;
 @Getter
 @Setter
 public class AppProductDto {
+    private Integer id;
     private String name;
     private String price;
+    private String description;
     private String imagePath;
 }

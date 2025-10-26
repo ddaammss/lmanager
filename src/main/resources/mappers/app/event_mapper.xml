@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.app.event">
+    <select id="selectAppEventListData" resultType="com.dchans.api.app.dto.event.AppEventDto">
+        select seq, event_name,  concat(start_date,'-',end_date) as eventDate, content, end_date,
+               to_char(created_at,'YYYY-MM-DD') as createdAt,
+               (select image_path from common_image where parent_seq = e.seq and type = 'event' order by created_at desc limit 1) as imagePath
+        from event e
+        order by created_at desc
+    </select>
+
+
+
+    <select id="selectAppEventDetailData" resultType="com.dchans.api.app.dto.event.AppEventDto">
+        select seq, event_name,  concat(start_date,'-',end_date) as eventDate, content, end_date,
+               to_char(created_at,'YYYY-MM-DD') as createdAt
+        from event
+        where seq = #{seq}
+        order by created_at desc
+    </select>
+
+    <select id="selecAppEventImage" resultType="com.dchans.api.app.dto.image.AppImageDto">
+        select ci.image_path from event e inner join common_image ci on e.seq = ci.parent_seq and ci.type='event'
+        where e.seq = #{seq}
+    </select>
+
+</mapper>

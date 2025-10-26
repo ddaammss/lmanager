@@ -2,6 +2,8 @@ package com.dchans.api.app.controller.main;
 
 import com.dchans.api.admin.dto.common.ApiResponseDto;
 import com.dchans.api.app.dto.main.AppMainDto;
+import com.dchans.api.app.dto.product.AppProductDto;
+import com.dchans.api.app.dto.review.AppReviewDto;
 import com.dchans.api.app.dto.store.AppStoreDto;
 import com.dchans.api.app.service.main.AppMainService;
 import org.slf4j.Logger;
@@ -12,11 +14,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/app/api")
 public class AppMainController {
 
-    private final Logger logger = LoggerFactory.getLogger(this.getClass());
+    private final Logger log = LoggerFactory.getLogger(this.getClass());
 
     private final AppMainService appMainService;
 
@@ -25,7 +29,8 @@ public class AppMainController {
     }
 
     @PostMapping("/main")
-    public ResponseEntity<ApiResponseDto<AppMainDto>> getAppMainData(@RequestBody AppStoreDto appStoreDto) {
+    public ResponseEntity<ApiResponseDto<AppMainDto>> selectAppMainData(@RequestBody AppStoreDto appStoreDto) {
+
         AppMainDto mainDto = AppMainDto.builder()
                 .popularStoreDto(appMainService.selectPopularityStoreList())
                 .allStoreDto(appMainService.selectAllStoreList())

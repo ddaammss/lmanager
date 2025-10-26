@@ -5,15 +5,15 @@ import com.dchans.api.app.dto.policy.AppPolicyDto;
 import com.dchans.api.app.dto.product.AppProductDto;
 import com.dchans.api.app.dto.review.AppReviewDto;
 import com.dchans.api.app.dto.store.AppStoreDto;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.List;
 
 @Getter
 @Setter
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class AppMainDto {
     private List<AppStoreDto> popularStoreDto;
     private List<AppStoreDto> allStoreDto;
