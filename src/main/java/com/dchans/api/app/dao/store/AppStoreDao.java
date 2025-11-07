@@ -16,20 +16,25 @@ public class AppStoreDao extends AbstractMapper {
         super(sqlSession);
     }
 
+    public List<AppStoreDto> selectAppStoreListData(String s, AppStoreDto appStoreDto) {
+        return selectList(s, appStoreDto);
+    }
 
     public AppStoreDto selectStoreDetail(String s, AppStoreDto appStoreDto) {
         return selectOne(s, appStoreDto);
     }
 
-    public List<AppProductDto> selectProductList(String s,AppStoreDto appStoreDto) {
+    public List<AppProductDto> selectProductList(String s, AppStoreDto appStoreDto) {
         return selectList(s, appStoreDto);
     }
 
-    public List<AppReviewDto> selectReviewList(String s,AppStoreDto appStoreDto) {
+    public List<AppReviewDto> selectReviewList(String s, AppStoreDto appStoreDto) {
         return selectList(s, appStoreDto);
     }
 
-    public List<AppImageDto> selectImageList(String s,AppStoreDto appStoreDto) {
+    public List<AppImageDto> selectImageList(String s, AppStoreDto appStoreDto) {
         return selectList(s, appStoreDto);
     }
+
+
 }

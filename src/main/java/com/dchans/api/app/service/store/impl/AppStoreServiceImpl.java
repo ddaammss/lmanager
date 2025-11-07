@@ -6,12 +6,20 @@ import com.dchans.api.app.service.store.AppStoreService;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class AppStoreServiceImpl implements AppStoreService {
     @Resource(name = "AppStoreDao")
     private AppStoreDao appStoreDao;
     private static final String NAMESPACE = "com.app.store.";
 
+
+    @Override
+    public AppStoreDto selectAppStoreListData(AppStoreDto appStoreDto) {
+        List<AppStoreDto> response = appStoreDao.selectAppStoreListData(NAMESPACE + "selectAppStoreListData", appStoreDto);
+        return AppStoreDto.builder().storeListDto(response).build();
+    }
 
     @Override
     public AppStoreDto selectStoreDetail(AppStoreDto appStoreDto) {

@@ -32,4 +32,6 @@ public class AppStoreDto {
     private List<AppProductDto> productDto;
     private List<AppReviewDto> reviewDto;
     private List<AppImageDto> imageDto;
+    private List<AppStoreDto> storeListDto;
+
 }
