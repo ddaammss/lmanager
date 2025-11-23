@@ -1,5 +1,6 @@
 package com.dchans.api.app.dao.store;
 
+import com.dchans.api.app.dto.banner.AppBannerDto;
 import com.dchans.api.app.dto.image.AppImageDto;
 import com.dchans.api.app.dto.product.AppProductDto;
 import com.dchans.api.app.dto.review.AppReviewDto;
@@ -37,4 +38,7 @@ public class AppStoreDao extends AbstractMapper {
     }
 
 
+    public List<AppBannerDto> selectSubBannerList(String s, AppStoreDto appStoreDto) {
+        return selectList(s, appStoreDto);
+    }
 }

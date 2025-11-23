@@ -1,9 +1,8 @@
-package com.dchans.api.app.service.event;
+package com.dchans.api.app.service.event.impl;
 
 import com.dchans.api.app.dao.event.AppEventDao;
-import com.dchans.api.app.dao.store.AppStoreDao;
 import com.dchans.api.app.dto.event.AppEventDto;
-import com.dchans.api.app.dto.store.AppStoreDto;
+import com.dchans.api.app.service.event.AppEventService;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 

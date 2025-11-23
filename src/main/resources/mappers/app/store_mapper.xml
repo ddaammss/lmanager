@@ -31,7 +31,12 @@
             left join store_review sr on s.seq = sr.parent_seq
         where find_in_set(c.category_code, s.category_type) > 0
         and status = 0
+        <if test="storeName != null and storeName != ''">
         and store_name like concat('%',#{storeName},'%')
+        </if>
+        <if test="categoryType != null and categoryType != ''">
+        and category_type like concat('%',#{categoryType},'%')
+        </if>
         group by s.seq, s.store_name, s.description
         order by s.created_at desc
     </select>
@@ -62,7 +67,7 @@
             select '1' union all select '2' union all
             select '3' union all select '4' union all select '5'
         ) c
-                 left join store_review sr on s.seq = sr.parent_seq
+        left join store_review sr on s.seq = sr.parent_seq
         where find_in_set(c.category_code, s.category_type) > 0
           and status = 0
           and s.seq = #{seq}
@@ -70,7 +75,7 @@
     </select>
 
     <select id="selectProductList" resultType="com.dchans.api.app.dto.product.AppProductDto">
-        select product_name as name, product_price as price from store_product
+        select seq, parent_seq, product_name as name, product_price as price from store_product
         where parent_seq = #{seq}
     </select>
 
@@ -84,4 +89,10 @@
         where type = 'store'
         and parent_seq = #{seq}
     </select>
+
+    <select id="selectSubBannerList" resultType="com.dchans.api.app.dto.banner.AppBannerDto">
+        select name, content, ci.image_path from banner b inner join common_image ci on b.seq = ci.parent_seq and ci.type='subBanner'
+        where b.type = 1
+    </select>
+
 </mapper>

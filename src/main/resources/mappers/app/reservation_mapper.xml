@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.app.reservation">
+
+    <select id="selectStoreReservationDetail" resultType="com.dchans.api.app.dto.reservation.AppReservationDto">
+        select s.seq, s.store_code, s.store_name,
+               group_concat(
+                   distinct
+                       case c.category_code
+                           when '0' then '신점'
+                           when '1' then '철학관'
+                           when '2' then '타로'
+                           when '3' then '굿당'
+                           when '4' then '기도터'
+                           else '사찰'
+                           end
+                           order by c.category_code
+                separator ', '
+               ) as categoryName,
+               SUBSTRING_INDEX(address, ' ', 2) as address,
+               avg(sr.grade) as grade,
+               count(sr.seq) as reviewCount,
+               s.start_time,
+               s.end_time,
+               sp.product_name,
+               sp.product_price
+        from store s
+        cross join (
+            select '0' as category_code union all
+            select '1' union all select '2' union all
+            select '3' union all select '4' union all select '5'
+        ) c
+        left join store_review sr on s.seq = sr.parent_seq
+        inner join store_product sp on s.seq = sp.parent_seq and sp.seq = #{serviceSeq}
+        where find_in_set(c.category_code, s.category_type) > 0
+          and status = 0
+          and s.seq = #{seq}
+        group by s.seq, s.store_name, s.description
+    </select>
+
+    <select id="selectReservationProduct" resultType="com.dchans.api.app.dto.reservation.AppReservationDto">
+        select seq, parent_seq, product_name as name, product_price as price from store_product
+        where parent_seq = #{serviceSeq}
+    </select>
+
+    <select id="selectReviewList" resultType="com.dchans.api.app.dto.review.AppReviewDto">
+        select content, image_path, grade, created_at from store_review
+        where parent_seq = #{seq}
+    </select>
+
+    <select id="selectImageList" resultType="com.dchans.api.app.dto.store.AppStoreDto">
+        select image_path from common_image
+        where type = 'store'
+        and parent_seq = #{seq}
+    </select>
+</mapper>

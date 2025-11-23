@@ -1,5 +1,6 @@
 package com.dchans.api.app.dto.store;
 
+import com.dchans.api.app.dto.banner.AppBannerDto;
 import com.dchans.api.app.dto.image.AppImageDto;
 import com.dchans.api.app.dto.product.AppProductDto;
 import com.dchans.api.app.dto.review.AppReviewDto;
@@ -17,6 +18,7 @@ public class AppStoreDto {
     private String storeCode;
     private String storeName;
     private String description;
+    private String categoryType;
     private String categoryName;
     private String address;
     private String grade;
@@ -33,5 +35,6 @@ public class AppStoreDto {
     private List<AppReviewDto> reviewDto;
     private List<AppImageDto> imageDto;
     private List<AppStoreDto> storeListDto;
+    private List<AppBannerDto> subBannerDto;
 
 }

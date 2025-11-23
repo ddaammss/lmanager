@@ -16,13 +16,10 @@ WORKDIR /app
 # 빌드 스테이지에서 JAR 파일 복사
 COPY --from=build /app/build/libs/*.jar app.jar
 
-COPY ssl-certs/keystore.p12 /app/keystore.p12
+# ✅ keystore.p12 복사 제거됨 (볼륨 마운트 사용)
 
 EXPOSE 443
 
 ENV JAVA_OPTS="-Xms512m -Xmx1024m -Dspring.profiles.active=prod"
 
 ENTRYPOINT ["sh", "-c", "java $JAVA_OPTS -jar app.jar"]
-
-
-

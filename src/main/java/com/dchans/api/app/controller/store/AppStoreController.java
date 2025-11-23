@@ -24,7 +24,7 @@ public class AppStoreController {
     }
 
     @PostMapping("/store")
-    public ResponseEntity<ApiResponseDto<AppStoreDto>> selectAppStoreData(@RequestBody AppStoreDto appStoreDto) {
+    public ResponseEntity<ApiResponseDto<AppStoreDto>> selectAppStoreListData(@RequestBody AppStoreDto appStoreDto) {
         AppStoreDto storeDto = appStoreService.selectAppStoreListData(appStoreDto);
         return ResponseEntity.ok(ApiResponseDto.success(storeDto));
     }

@@ -6,8 +6,6 @@ import com.dchans.api.app.service.store.AppStoreService;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @Service
 public class AppStoreServiceImpl implements AppStoreService {
     @Resource(name = "AppStoreDao")
@@ -17,13 +15,16 @@ public class AppStoreServiceImpl implements AppStoreService {
 
     @Override
     public AppStoreDto selectAppStoreListData(AppStoreDto appStoreDto) {
-        List<AppStoreDto> response = appStoreDao.selectAppStoreListData(NAMESPACE + "selectAppStoreListData", appStoreDto);
-        return AppStoreDto.builder().storeListDto(response).build();
+        AppStoreDto appStoreDtoResponse = new AppStoreDto();
+        appStoreDtoResponse.setProductDto(appStoreDao.selectProductList(NAMESPACE + "selectProductList", appStoreDto));
+        appStoreDtoResponse.setImageDto(appStoreDao.selectImageList(NAMESPACE + "selectImageList", appStoreDto));
+        appStoreDtoResponse.setStoreListDto(appStoreDao.selectAppStoreListData(NAMESPACE + "selectAppStoreListData", appStoreDto));
+        appStoreDtoResponse.setSubBannerDto(appStoreDao.selectSubBannerList(NAMESPACE + "selectSubBannerList", appStoreDto));
+        return appStoreDtoResponse;
     }
 
     @Override
     public AppStoreDto selectStoreDetail(AppStoreDto appStoreDto) {
-
         AppStoreDto response = appStoreDao.selectStoreDetail(NAMESPACE + "selectStoreDetail", appStoreDto);
         if (response != null) {
             response.setProductDto(appStoreDao.selectProductList(NAMESPACE + "selectProductList", appStoreDto));

@@ -35,7 +35,8 @@ spring:
 jwt:
   secret: mySecretKey123!@#SecureTokenForJWTAuthentication2024
   access-token:
-    validity: 7200000  # 30분 (30 * 60 * 1000)
+    validity: 180  # 1시간
+    #validity: 3600  # 1시간
   refresh-token:
     validity: 604800000  # 7일 (7 * 24 * 60 * 60 * 1000)
 

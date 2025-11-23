@@ -7,6 +7,8 @@ import lombok.Setter;
 @Setter
 public class AppProductDto {
     private Integer id;
+    private String seq;
+    private String parentSeq;
     private String name;
     private String price;
     private String description;
