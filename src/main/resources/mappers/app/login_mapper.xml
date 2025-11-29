@@ -2,12 +2,25 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.app.login">
 
-    <select id="selectNaverUserData" resultType="com.dchans.api.app.dto.login.AppNaverDto">
-        select * from member where login_type = 'NAVER' and social_id = #{id}
+    <select id="selectNaverUserData" resultType="com.dchans.api.app.dto.login.AppNaverDto$NaverLoginResponseDto">
+        select
+            seq,
+            social_id as id,
+            email,
+            member_name as name,
+            profile_image as profileImage,
+            age,
+            birthday,
+            birth_year as birthYear,
+            gender,
+            phone
+        from member
+        where login_type = 'NAVER'
+        and social_id = #{id}
     </select>
 
 
-    <insert id="insertNaverUserData" parameterType="com.dchans.api.app.dto.login.AppNaverDto" >
+    <insert id="insertNaverUserData" parameterType="com.dchans.api.app.dto.login.AppNaverDto$NaverLoginRequestDto" >
         insert into member (
             login_type,
             social_id,
@@ -30,6 +43,68 @@
         )
         values (
            'NAVER',
+           #{id},
+           #{name},
+           #{email},
+           #{mobile},
+           #{profileImage},
+           #{gender},
+           #{age},
+           #{birthday},
+           #{birthYear},
+           0,
+           0,
+           0,
+           0,
+           1,
+           NOW(),
+           NOW(),
+           NOW()
+       )
+    </insert>
+
+
+    <select id="selectKakaoUserData" resultType="com.dchans.api.app.dto.login.AppNaverDto$NaverLoginResponseDto">
+        select
+            seq,
+            social_id as id,
+            email,
+            member_name as name,
+            profile_image as profileImage,
+            age,
+            birthday,
+            birth_year as birthYear,
+            gender,
+            phone
+        from member
+        where login_type = 'KAKAO'
+          and social_id = #{id}
+    </select>
+
+
+    <insert id="insertKakaoUserData" parameterType="com.dchans.api.app.dto.login.AppNaverDto$NaverLoginRequestDto" >
+        insert into member (
+            login_type,
+            social_id,
+            member_name,
+            email,
+            phone,
+            profile_image,
+            gender,
+            age_range,
+            birthday,
+            birth_year,
+            member_type,
+            status,
+            emoney,
+            point,
+            login_count,
+            created_at,
+            updated_at,
+            last_login_at
+        )
+        values (
+           'KAKAO',
            #{id},
            #{name},
            #{email},

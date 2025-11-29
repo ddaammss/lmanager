@@ -5,7 +5,11 @@ import com.dchans.api.app.dto.store.AppStoreDto;
 
 public interface AppLoginService {
 
-    AppNaverDto selectNaverUserData(AppNaverDto appNaverDto);
+    AppNaverDto.NaverLoginResponseDto selectNaverUserData(AppNaverDto.NaverLoginRequestDto requestDto);
 
-    void insertNaverUserData(AppNaverDto appNaverDto);
+    void insertNaverUserData(AppNaverDto.NaverLoginRequestDto requestDto);
+
+    AppNaverDto.NaverLoginResponseDto selectKakaoUserData(AppNaverDto.NaverLoginRequestDto requestDto);
+
+    void insertKakaoUserData(AppNaverDto.NaverLoginRequestDto requestDto);
 }

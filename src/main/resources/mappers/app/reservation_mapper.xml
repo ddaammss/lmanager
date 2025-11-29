@@ -38,19 +38,40 @@
         group by s.seq, s.store_name, s.description
     </select>
 
-    <select id="selectReservationProduct" resultType="com.dchans.api.app.dto.reservation.AppReservationDto">
-        select seq, parent_seq, product_name as name, product_price as price from store_product
-        where parent_seq = #{serviceSeq}
-    </select>
+<!--    <select id="selectReservationProduct" resultType="com.dchans.api.app.dto.reservation.AppReservationDto">-->
+<!--        select seq, parent_seq, product_name as name, product_price as price from store_product-->
+<!--        where parent_seq = #{serviceSeq}-->
+<!--    </select>-->
 
-    <select id="selectReviewList" resultType="com.dchans.api.app.dto.review.AppReviewDto">
-        select content, image_path, grade, created_at from store_review
-        where parent_seq = #{seq}
-    </select>
+<!--    <select id="selectReviewList" resultType="com.dchans.api.app.dto.review.AppReviewDto">-->
+<!--        select content, image_path, grade, created_at from store_review-->
+<!--        where parent_seq = #{seq}-->
+<!--    </select>-->
 
-    <select id="selectImageList" resultType="com.dchans.api.app.dto.store.AppStoreDto">
-        select image_path from common_image
-        where type = 'store'
-        and parent_seq = #{seq}
+<!--    <select id="selectImageList" resultType="com.dchans.api.app.dto.store.AppStoreDto">-->
+<!--        select image_path from common_image-->
+<!--        where type = 'store'-->
+<!--        and parent_seq = #{seq}-->
+<!--    </select>-->
+
+    <select id="selectAppStoreMyReservationData" resultType="com.dchans.api.app.dto.reservation.AppReservationDto$ReverservationResponseDto">
+        select
+            r.seq,
+            r.reservation_code,
+            r.reservation_date as reservationDate,
+            r.reservation_time as reservationTime,
+            s.store_code as storeCode,
+            s.store_name as storeName,
+            (select avg(sr.grade) from store_review sr where sr.parent_seq = r.parent_seq ) as grade,
+            (select count(sr.parent_seq) from store_review sr where sr.parent_seq = r.parent_seq ) as reviewCount,
+            sp.product_name as productName,
+            sp.product_price as productPrice,
+            s.seq storeSeq
+
+        from reservation r
+        inner join store s on r.parent_seq = s.seq
+        left join store_product sp on r.product_seq = sp.seq
+        where r.reserver_no = #{seq}
+        order by r.created_at desc
     </select>
 </mapper>

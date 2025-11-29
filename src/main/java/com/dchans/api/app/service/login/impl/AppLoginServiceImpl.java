@@ -14,13 +14,23 @@ public class AppLoginServiceImpl implements AppLoginService {
 
 
     @Override
-    public AppNaverDto selectNaverUserData(AppNaverDto appNaverDto) {
-        return appLoginDao.selectNaverUserData(NAMESPACE + "selectNaverUserData", appNaverDto);
+    public AppNaverDto.NaverLoginResponseDto selectNaverUserData(AppNaverDto.NaverLoginRequestDto requestDto) {
+        return appLoginDao.selectNaverUserData(NAMESPACE + "selectNaverUserData", requestDto);
     }
 
     @Override
-    public void insertNaverUserData(AppNaverDto appNaverDto) {
-        appLoginDao.insertNaverUserData(NAMESPACE + "insertNaverUserData", appNaverDto);
+    public void insertNaverUserData(AppNaverDto.NaverLoginRequestDto requestDto) {
+        appLoginDao.insertNaverUserData(NAMESPACE + "insertNaverUserData", requestDto);
 
+    }
+
+    @Override
+    public AppNaverDto.NaverLoginResponseDto selectKakaoUserData(AppNaverDto.NaverLoginRequestDto requestDto) {
+        return appLoginDao.selectKakaoUserData(NAMESPACE + "selectKakaoUserData", requestDto);
+    }
+
+    @Override
+    public void insertKakaoUserData(AppNaverDto.NaverLoginRequestDto requestDto) {
+        appLoginDao.insertKakaoUserData(NAMESPACE + "insertKakaoUserData", requestDto);
     }
 }

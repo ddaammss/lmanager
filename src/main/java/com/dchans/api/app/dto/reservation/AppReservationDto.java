@@ -33,4 +33,23 @@ public class AppReservationDto {
 
     private List<String> businessHours;
 
+    private List<ReverservationResponseDto> reverservationResponseDtos;
+
+    @Getter
+    @Setter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class ReverservationResponseDto {
+        private String seq;
+        private String storeSeq;
+        private String reservationCode;
+        private String reservationDate;
+        private String reservationTime;
+        private String storeCode;
+        private String storeName;
+        private String grade;
+        private String reviewCount;
+        private String productName;
+        private String productPrice;
+    }
 }

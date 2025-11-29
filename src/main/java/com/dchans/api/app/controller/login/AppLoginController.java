@@ -27,14 +27,30 @@ public class AppLoginController {
     }
 
     @PostMapping("/naver_login")
-    public ResponseEntity<ApiResponseDto<AppNaverDto>> naverLoginProcess(@RequestBody AppNaverDto appNaverDto) {
-        AppNaverDto naverDto = appLoginService.selectNaverUserData(appNaverDto);
-        if (naverDto == null) {
-            appLoginService.insertNaverUserData(appNaverDto);
+    public ResponseEntity<ApiResponseDto<AppNaverDto.NaverLoginResponseDto>> naverLoginProcess(@RequestBody AppNaverDto.NaverLoginRequestDto requestDto) {
+        AppNaverDto.NaverLoginResponseDto responseDto = appLoginService.selectNaverUserData(requestDto);
+        if (responseDto == null) {
+            appLoginService.insertNaverUserData(requestDto);
+            responseDto = appLoginService.selectNaverUserData(requestDto);
         }
-        appNaverDto.setJwtToken(jwtTokenService.generateAccessToken(appNaverDto.getName(), "MEMBER"));
+        String token = jwtTokenService.generateAccessToken(requestDto.getName(), "MEMBER");
+        responseDto.setJwtToken(token);
 
-        return ResponseEntity.ok(ApiResponseDto.success(appNaverDto));
+        return ResponseEntity.ok(ApiResponseDto.success(responseDto));
     }
+
+    @PostMapping("/kakao_login")
+    public ResponseEntity<ApiResponseDto<AppNaverDto.NaverLoginResponseDto>> kakaoLoginProcess(@RequestBody AppNaverDto.NaverLoginRequestDto requestDto) {
+        AppNaverDto.NaverLoginResponseDto responseDto = appLoginService.selectKakaoUserData(requestDto);
+        if (responseDto == null) {
+            appLoginService.insertKakaoUserData(requestDto);
+            responseDto = appLoginService.selectKakaoUserData(requestDto);
+        }
+        String token = jwtTokenService.generateAccessToken(requestDto.getName(), "MEMBER");
+        responseDto.setJwtToken(token);
+
+        return ResponseEntity.ok(ApiResponseDto.success(responseDto));
+    }
+
 
 }

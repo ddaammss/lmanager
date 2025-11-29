@@ -29,6 +29,13 @@ public class AppReservationServiceImpl implements AppReservationService {
         return response;
     }
 
+    @Override
+    public AppReservationDto selectAppStoreMyReservationData(AppReservationDto appReservationDto) {
+        AppReservationDto reservationDto = new AppReservationDto();
+        reservationDto.setReverservationResponseDtos(appReservationDao.selectAppStoreMyReservationData(NAMESPACE + "selectAppStoreMyReservationData", appReservationDto));
+        return reservationDto;
+    }
+
     private List<String> generateTimeList(String startTime, String endTime) {
         List<String> timeList = new ArrayList<>();
         LocalTime current = LocalTime.parse(startTime);

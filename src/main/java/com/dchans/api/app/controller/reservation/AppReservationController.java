@@ -28,4 +28,11 @@ public class AppReservationController {
         AppReservationDto reservationDto = appReservationService.selectAppStoreReservationData(appReservationDto);
         return ResponseEntity.ok(ApiResponseDto.success(reservationDto));
     }
+
+    @PostMapping("/my_reservation")
+    public ResponseEntity<ApiResponseDto<AppReservationDto>> selectAppStoreMyReservationData(@RequestBody AppReservationDto appReservationDto) {
+        AppReservationDto reservationDto = appReservationService.selectAppStoreMyReservationData(appReservationDto);
+        return ResponseEntity.ok(ApiResponseDto.success(reservationDto));
+    }
+
 }
