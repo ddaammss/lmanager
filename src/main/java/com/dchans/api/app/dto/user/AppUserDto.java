@@ -22,5 +22,7 @@ public class AppUserDto {
         private String birthYear;
         private String point;
         private String coupon;
+        private String gender;
+        private String phone;
     }
 }

@@ -13,6 +13,8 @@ public class AppReviewDto {
     private String createdAt;
     private String reply;
     private String replyCreatedAt;
+    private String storeName;
     private String imagePath;
+    private String profileImage;
 
 }

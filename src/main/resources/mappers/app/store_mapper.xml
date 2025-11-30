@@ -80,7 +80,15 @@
     </select>
 
     <select id="selectReviewList" resultType="com.dchans.api.app.dto.review.AppReviewDto">
-        select content, image_path, grade, created_at from store_review
+        select content,
+               (select member_name from member m where m.seq = sr.user_seq ) as userNickname,
+               (select profile_image from member m where m.seq = sr.user_seq ) as profileImage,
+               (select content from store_review_reply srr where srr.review_seq = sr.seq )as reply,
+               (select store_name from store s where s.seq = sr.parent_seq )as storeName,
+               image_path,
+               grade,
+               created_at
+        from store_review sr
         where parent_seq = #{seq}
     </select>
 

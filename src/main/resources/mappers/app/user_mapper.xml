@@ -5,13 +5,15 @@
     <select id="selectAppUserData" resultType="com.dchans.api.app.dto.user.AppUserDto$UserResponseDto">
         select
             seq,
-            social_id
+            social_id,
             member_name,
-            profile_image
+            profile_image,
             birthday,
             birth_year,
-            (select sum(point_amount) from point_history where user_seq = #{seq} and point_type = 0) as point,
-            (select count(seq) from coupon_history where user_seq = #{seq}) as coupon
+            (select ifnull(format(sum(point_amount), 0), 0) from point_history where user_seq = #{seq} and point_type = 0) as point,
+            (select count(seq) from coupon_history where user_seq = #{seq}) as coupon,
+            gender,
+            phone
         from member
         where seq = #{seq}
     </select>
