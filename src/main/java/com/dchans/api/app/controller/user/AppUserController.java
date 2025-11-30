@@ -1,9 +1,8 @@
 package com.dchans.api.app.controller.user;
 
 import com.dchans.api.admin.dto.common.ApiResponseDto;
-import com.dchans.api.app.dto.event.AppEventDto;
 import com.dchans.api.app.dto.user.AppUserDto;
-import com.dchans.api.app.service.event.AppEventService;
+import com.dchans.api.app.service.user.AppUserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
@@ -18,23 +17,22 @@ public class AppUserController {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-//    private final AppEventService appEventService;
-//
-//    public AppUserController(AppEventService appEventService) {
-//        this.appEventService = appEventService;
+    private final AppUserService appUserService;
+
+    public AppUserController(AppUserService appUserService) {
+        this.appUserService = appUserService;
+    }
+
+    @PostMapping("/info")
+    public ResponseEntity<ApiResponseDto<AppUserDto.UserResponseDto>> selectAppUserData(@RequestBody AppUserDto.UserRequestDto appUserDto) {
+        AppUserDto.UserResponseDto response = appUserService.selectAppUserData(appUserDto);
+        return ResponseEntity.ok(ApiResponseDto.success(response));
+    }
+
+//    @PostMapping("/detail")
+//    public ResponseEntity<ApiResponseDto<AppEventDto>> selectAppEventDetailData(@RequestBody AppEventDto appEventDto) {
+//        AppEventDto eventDto = appEventService.selectAppEventDetailData(appEventDto);
+//        return ResponseEntity.ok(ApiResponseDto.success(eventDto));
 //    }
-
-    /*@PostMapping("/info")
-    public ResponseEntity<ApiResponseDto<AppUserDto>> selectAppEventListData(@RequestBody AppUserDto appEventDto) {
-        AppEventDto eventDto = appEventService.selectAppEventListData(appEventDto);
-        return ResponseEntity.ok(ApiResponseDto.success(eventDto));
-    }
-
-    @PostMapping("/detail")
-    public ResponseEntity<ApiResponseDto<AppEventDto>> selectAppEventDetailData(@RequestBody AppEventDto appEventDto) {
-        AppEventDto eventDto = appEventService.selectAppEventDetailData(appEventDto);
-        return ResponseEntity.ok(ApiResponseDto.success(eventDto));
-    }
-*/
 
 }
