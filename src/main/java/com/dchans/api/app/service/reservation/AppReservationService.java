@@ -6,5 +6,5 @@ public interface AppReservationService {
 
     AppReservationDto selectAppStoreReservationData(AppReservationDto appReservationDto);
 
-    AppReservationDto selectAppStoreMyReservationData(AppReservationDto appReservationDto);
+    AppReservationDto selectAppMyReservationData(AppReservationDto appReservationDto);
 }

@@ -2,6 +2,8 @@ package com.dchans.api.app.dto.user;
 
 import lombok.*;
 
+import java.util.List;
+
 @Getter
 @Setter
 public class AppUserDto {
@@ -9,6 +11,8 @@ public class AppUserDto {
     @Setter
     public static class UserRequestDto {
         private String seq;
+        private String birthTime;
+        private String phone;
     }
 
     @Getter
@@ -20,6 +24,7 @@ public class AppUserDto {
         private String profileImage;
         private String birthday;
         private String birthYear;
+        private String birthTime;
         private String point;
         private String coupon;
         private String gender;

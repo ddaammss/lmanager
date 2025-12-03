@@ -10,6 +10,7 @@
             profile_image,
             birthday,
             birth_year,
+            birth_time,
             (select ifnull(format(sum(point_amount), 0), 0) from point_history where user_seq = #{seq} and point_type = 0) as point,
             (select count(seq) from coupon_history where user_seq = #{seq}) as coupon,
             gender,
@@ -17,4 +18,22 @@
         from member
         where seq = #{seq}
     </select>
+
+    <update id="updateUser" parameterType="com.dchans.api.app.dto.user.AppUserDto$UserResponseDto">
+        update member set phone = #{phone}, birth_time = #{birthTime}
+        where seq = #{seq}
+    </update>
+
+    <select id="selectAppUserPointData" resultType="com.dchans.api.app.dto.point.AppPointDto$PointResponseDto">
+        select
+            ph.seq,
+            (select ifnull(format(sum(point_amount), 0), 0) from point_history where user_seq = #{seq} and point_type = 0) as point,
+            (select store_name from store s where s.seq = ph.store_seq) as storeName,
+            reason,
+            point_amount,
+            ph.created_at
+        from point_history ph inner join member m on ph.user_seq = m.seq
+        where user_seq = #{seq}
+    </select>
+
 </mapper>

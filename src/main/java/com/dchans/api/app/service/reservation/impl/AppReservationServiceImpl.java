@@ -30,9 +30,9 @@ public class AppReservationServiceImpl implements AppReservationService {
     }
 
     @Override
-    public AppReservationDto selectAppStoreMyReservationData(AppReservationDto appReservationDto) {
+    public AppReservationDto selectAppMyReservationData(AppReservationDto appReservationDto) {
         AppReservationDto reservationDto = new AppReservationDto();
-        reservationDto.setReverservationResponseDtos(appReservationDao.selectAppStoreMyReservationData(NAMESPACE + "selectAppStoreMyReservationData", appReservationDto));
+        reservationDto.setReverservationResponseDtos(appReservationDao.selectAppMyReservationData(NAMESPACE + "selectAppStoreMyReservationData", appReservationDto));
         return reservationDto;
     }
 

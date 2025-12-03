@@ -17,7 +17,7 @@ public class AppReservationDao extends AbstractMapper {
         return selectOne(s, appReservationDto);
     }
 
-    public List<AppReservationDto.ReverservationResponseDto> selectAppStoreMyReservationData(String s, AppReservationDto appReservationDto) {
+    public List<AppReservationDto.ReverservationResponseDto> selectAppMyReservationData(String s, AppReservationDto appReservationDto) {
         return selectList(s, appReservationDto);
     }
 }

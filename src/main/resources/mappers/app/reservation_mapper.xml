@@ -54,7 +54,7 @@
 <!--        and parent_seq = #{seq}-->
 <!--    </select>-->
 
-    <select id="selectAppStoreMyReservationData" resultType="com.dchans.api.app.dto.reservation.AppReservationDto$ReverservationResponseDto">
+    <select id="selectAppMyReservationData" resultType="com.dchans.api.app.dto.reservation.AppReservationDto$ReverservationResponseDto">
         select
             r.seq,
             r.reservation_code,
@@ -67,7 +67,6 @@
             sp.product_name as productName,
             sp.product_price as productPrice,
             s.seq storeSeq
-
         from reservation r
         inner join store s on r.parent_seq = s.seq
         left join store_product sp on r.product_seq = sp.seq
